@@ -1,0 +1,22 @@
+token: ""
+commands-id: ""
+alerts-id: ""
+code-digits: 8
+host: 00.00.00.00
+port: 3307
+database: RoyalSecurity
+user: root
+password: root
+table: RS_Security
+table-ips: RS_IP
+help:
+  - "&8&l[&6&lRoyal&9&lSecurity&8&l]"
+  - ""
+  - "&6/rs &f- Afiseaza acest meniu"
+  - "&6/rs link &f- Iti unesti contul de discord cu cel ce minecraft"
+no-permission: "&cNu ai permisiunea de a folosi aceasta comanda"
+link-complete: "&fContul dumneavoastra a fost asociat contului de &9disocrd &f{0}"
+invalid-code: "&fCodul introdus este &cinvalid&f. Va rugam sa generati unul prin comadna &6/link [Nume Minecraft]&f pe &9Disocrd"
+not-player: "&fTrebuie sa fiti un jucator pentur a putea executa aceasta comanda"
+ip-logged: "&fV-ati logat pe baza &6ip-ului"
+message-send: "&fV-am trimit un mesaj de autentificate pe &9Discord"
