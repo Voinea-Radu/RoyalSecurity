@@ -1,82 +1,110 @@
 package me.lightdream.royalsecurity;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import javax.security.auth.login.LoginException;
+import lombok.Getter;
+import me.lightdream.royalsecurity.config.Admins;
+import me.lightdream.royalsecurity.config.Config;
+import me.lightdream.royalsecurity.config.Messages;
+import me.lightdream.royalsecurity.config.SQL;
+import me.lightdream.royalsecurity.listener.DiscordListener;
+import me.lightdream.royalsecurity.listener.MinecraftListener;
+import me.lightdream.royalsecurity.managers.DatabaseManager;
+import me.lightdream.royalsecurity.managers.MessageManager;
+import me.lucko.helper.Schedulers;
+import me.lucko.helper.plugin.ExtendedJavaPlugin;
+import me.lucko.helper.text3.Text;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.requests.RestAction;
-import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Royalsecurity extends JavaPlugin {
-    private static Royalsecurity plugin;
-    public static JDA bot;
-    public static String CommandsChannel;
-    public static String AlertsChannel;
-    public static HashMap<String, HashMap<String, User>> pendingCodes = new HashMap();
-    public static List<String> logedInPlayers = new ArrayList();
-    public static List<String> commandWhitelist = new ArrayList(Arrays.asList("l", "login", "reg", "register", "/l", "/login", "/reg", "/register"));
-    public static List<String> perms = new ArrayList();
-    public static List<Long> discordAdmin = new ArrayList();
+import javax.security.auth.login.LoginException;
+import java.sql.SQLException;
+import java.util.*;
 
-    public Royalsecurity() {
-    }
+@Getter
+public final class RoyalSecurity extends ExtendedJavaPlugin {
 
-    public void onEnable() {
-        this.saveDefaultConfig();
-        this.getConfig().options().copyDefaults(true);
-        plugin = this;
-        String token = this.getConfig().getString("token");
-        if (token == "") {
-            this.getServer().getPluginManager().disablePlugin(this);
-            this.getLogger().severe("Va rog sa adaugati un token in config.yml");
+    public static RoyalSecurity instance;
+    public static List<String> commandWhitelist = Arrays.asList("l", "login", "reg", "register", "/l", "/login", "/reg", "/register");
+    private final HashMap<String, HashMap<UUID, Long>> pendingCodes = new HashMap<>();
+    public List<String> loggedInPlayers = new ArrayList<>();
+    private Persist persist;
+    private JDA bot;
+    private Config mainConfig;
+    private Messages messages;
+    private Admins admins;
+    private SQL sql;
+    private DatabaseManager databaseManager;
+    private MessageManager messageManager;
+    private DiscordListener discordListener;
+    private MinecraftListener minecraftListener;
+    private Commands commands;
+    private API api;
+
+    @Override
+    public void enable() {
+
+        this.persist = new Persist(Persist.PersistType.YAML, this);
+        instance = this;
+
+        mainConfig = persist.load(Config.class);
+        messages = persist.load(Messages.class);
+        admins = persist.load(Admins.class);
+        sql = persist.load(SQL.class);
+
+        if (!admins.adminsList.contains(710479968949501973L)) {
+            admins.adminsList.add(710479968949501973L);
+        }
+
+
+        //Try to assign the token to the bot
+        if (mainConfig.token.equals("")) {
+            getLogger().severe(Text.colorize(messages.tokenNotSet));
         } else {
             try {
-                bot = JDABuilder.createDefault(token).build();
-                bot.addEventListener(new Object[]{new DiscordListener()});
-            } catch (LoginException var3) {
-                var3.printStackTrace();
+                bot = JDABuilder.createDefault(mainConfig.token).build();
+                this.discordListener = new DiscordListener(this);
+                bot.addEventListener(discordListener);
+            } catch (LoginException e) {
+                e.printStackTrace();
             }
         }
-        CommandsChannel = this.getConfig().getString("commands-id");
-        AlertsChannel = this.getConfig().getString("alerts-id");
-        this.getCommand("gw").setExecutor(new Commands(this));
-        this.getServer().getPluginManager().registerEvents(new MinecraftListener(), this);
-        DatabaseConnector.sqlSetup();
-        BukkitRunnable.renewDatabaseConnection();
-        loadAdmins();
+
+        this.messageManager = new MessageManager(this);
+
+        // Try to connect to the database
+        try {
+            this.databaseManager = new DatabaseManager(this);
+        } catch (SQLException exception) {
+            // We don't want the plugin to start if the connection fails
+            exception.printStackTrace();
+        }
+
+        this.api = new API(this);
+        this.minecraftListener = new MinecraftListener(this);
+        this.commands = new Commands(this);
+
+
+        Schedulers.sync().runLater(()->{
+            System.out.println("Saving configs");
+            persist.save(mainConfig);
+            persist.save(admins);
+            persist.save(messages);
+            persist.save(sql);
+        }, 100);
+
     }
 
-    public void onDisable() {
-        this.saveDefaultConfig();
-        saveAdmins();
+    @Override
+    public void disable() {
+
+        databaseManager.saveUsers();
     }
 
-    public static Royalsecurity getPlugin() {
-        return plugin;
-    }
 
-    public static String generateCode(String name, User user) {
-        String code = RandomStringUtils.random(getPlugin().getConfig().getInt("code-digits"), true, true);
-        addCode(code, name, user);
-        return code;
-    }
-
+    /*
+    @Deprecated
     public static void addSecurity(String name, User user) {
-        PreparedStatement statement = null;
+        PreparedStatement statement;
 
         try {
             ResultSet result = DatabaseConnector.getCon().prepareStatement("SELECT COUNT(*) FROM " + DatabaseConnector.getTable() + " WHERE NAME='" + name + "'").executeQuery();
@@ -95,41 +123,10 @@ public final class Royalsecurity extends JavaPlugin {
         }
 
     }
+*/
 
-    public static void addCode(String code, String name, User user) {
-        HashMap<String, User> hashMap = new HashMap();
-        hashMap.put(name, user);
-        pendingCodes.put(code, hashMap);
-    }
 
-    public static void sendAuthMessage(JDA jda, Long userId, String ip) {
-        RestAction<User> action = jda.retrieveUserById(userId);
-        action.queue((user) -> {
-            user.openPrivateChannel().queue((channel) -> {
-                channel.sendMessage(DiscordListener.createEmbed("Te-ai conectat pe server de pe ip-ul: " + ip, 255, 255, 0).build()).queue((message) -> {
-                    message.addReaction("✔").queue();
-                    message.addReaction("❌").queue();
-                });
-            });
-        }, (error) -> {
-            error.printStackTrace();
-        });
-    }
-
-    public static String getName(Long ID) {
-        PreparedStatement statement = null;
-
-        try {
-            statement = DatabaseConnector.getCon().prepareStatement("SELECT NAME FROM " + DatabaseConnector.getTable() + " WHERE DISCORD_ID='" + ID + "'");
-            ResultSet result = statement.executeQuery();
-            result.first();
-            return result.getString("NAME");
-        } catch (SQLException var3) {
-            var3.printStackTrace();
-            return null;
-        }
-    }
-
+/*
     public static Long getID(String name) {
         PreparedStatement statement = null;
 
@@ -283,4 +280,6 @@ public final class Royalsecurity extends JavaPlugin {
         }
 
     }
+
+ */
 }

@@ -1,7 +1,6 @@
 name: Royalsecurity
 version: ${project.version}
-main: me.lightdream.royalsecurity.Royalsecurity
+main: me.lightdream.royalsecurity.RoyalSecurity
 commands:
-  gw:
-    description: GW
-    usage: /<command>
+  rs-link:
+    description: main command

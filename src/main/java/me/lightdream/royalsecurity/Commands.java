@@ -1,64 +1,33 @@
 package me.lightdream.royalsecurity;
 
-import net.dv8tion.jda.api.requests.restaction.RoleAction;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
+import me.lucko.helper.text3.Text;
 
-import java.text.MessageFormat;
-import java.util.List;
+public class Commands {
 
-public class Commands implements CommandExecutor {
+    RoyalSecurity plugin;
 
-    Royalsecurity plugin;
-
-    public Commands(Royalsecurity plugin) {
+    public Commands(RoyalSecurity plugin) {
         this.plugin = plugin;
+        registerCommands();
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        FileConfiguration config = Royalsecurity.getPlugin().getConfig();
-        if(label.equalsIgnoreCase("gw")) {
-            if(args.length == 0) {
-                List<String> help = (List<String>) config.getList("help");
-                for(String str : help)
-                    sender.sendMessage(Royalsecurity.color(str));
-            } else {
-                if(args[0].equalsIgnoreCase("link")) {
-                    if(sender instanceof Player) {
-                        if(args.length == 2) {
-                            Player p = (Player) sender;
-                            if(Royalsecurity.pendingCodes.containsKey((args[1]))) {
-                                if(Royalsecurity.pendingCodes.get(args[1]).containsKey(p.getName())) {
-                                    Royalsecurity.addSecurity(p.getName(), Royalsecurity.pendingCodes.get(args[1]).get(p.getName()));
-                                    sender.sendMessage(Royalsecurity.color(MessageFormat.format(config.getString("link-complete"), Royalsecurity.pendingCodes.get(args[1]).get(p.getName()).getName())));
-                                    Royalsecurity.logedInPlayers.add(p.getName());
-                                    Royalsecurity.setIp(p.getName(), p.getAddress().getHostName());
-                                } else {
-                                    sender.sendMessage(Royalsecurity.color(config.getString("invalid-code")));
-                                }
-                            } else {
-                                sender.sendMessage(Royalsecurity.color(config.getString("invalid-code")));
-                            }
+    public void registerCommands() {
+        me.lucko.helper.Commands.create()
+                .assertPlayer()
+                .handler(c -> {
+                    if (plugin.getPendingCodes().containsKey((c.rawArg(0)))) {
+                        if (plugin.getPendingCodes().get(c.rawArg(0)).containsKey(c.sender().getUniqueId())) {
+                            plugin.getApi().link(c.sender().getUniqueId(), plugin.getPendingCodes().get(c.rawArg(0)).get(c.sender().getUniqueId()));
+                            c.sender().sendMessage(Text.colorize(plugin.getMessages().linkSuccessful));
+                            plugin.loggedInPlayers.add(c.sender().getUniqueId().toString());
                         } else {
-                            sender.sendMessage(Royalsecurity.color(config.getString("invalid-code")));
+                            c.sender().sendMessage(Text.colorize(plugin.getMessages().invalidCode));
                         }
                     } else {
-                        sender.sendMessage(Royalsecurity.color(config.getString("not-player")));
+                        c.sender().sendMessage(Text.colorize(plugin.getMessages().invalidCode));
                     }
-                }
-                else if(args[0].equalsIgnoreCase("help")) {
-                    List<String> help = (List<String>) config.getList("help");
-                    for(String str : help) {
-                        sender.sendMessage(Royalsecurity.color(str));
-                    }
-                }
-                else if(args[0].equalsIgnoreCase("add")) {
-                }
-            }
-        }
-        return true;
+
+
+                }).registerAndBind(plugin, "rs-link");
     }
 }
