@@ -82,21 +82,14 @@ public final class RoyalSecurity extends ExtendedJavaPlugin {
         this.api = new API(this);
         this.minecraftListener = new MinecraftListener(this);
         this.commands = new Commands(this);
-
-
-        Schedulers.sync().runLater(()->{
-            System.out.println("Saving configs");
-            persist.save(mainConfig);
-            persist.save(admins);
-            persist.save(messages);
-            persist.save(sql);
-        }, 100);
-
     }
 
     @Override
     public void disable() {
-
+        persist.save(admins);
+        persist.save(mainConfig);
+        persist.save(messages);
+        persist.save(sql);
         databaseManager.saveUsers();
     }
 
