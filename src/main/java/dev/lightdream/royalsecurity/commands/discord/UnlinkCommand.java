@@ -6,7 +6,6 @@ import dev.lightdream.royalsecurity.dto.User;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.List;
 
@@ -54,16 +53,46 @@ public class UnlinkCommand extends DiscordCommand {
     }
 
     @Override
-    public void execute(net.dv8tion.jda.api.entities.User user, MessageChannel channel, List<String> args) {
+    public void execute(net.dv8tion.jda.api.entities.User u, MessageChannel channel, List<String> args) {
+        if (args.size() == 0) {
+            List<User> users = Main.instance.databaseManager.getUser(u.getIdLong());
 
+            if (users.size() == 0) {
+                sendMessage(channel, Main.instance.jdaConfig.notLinked);
+                return;
+            }
+
+            if (users.size() == 1) {
+                unlink(channel, users.get(0));
+                return;
+            }
+
+            sendMessage(channel, Main.instance.jdaConfig.multipleLinked);
+            new AccountsCommand().execute(u, channel, args);
+            return;
+        }
+
+        User user = Main.instance.databaseManager.getUser(args.get(0));
+
+        if (user == null) {
+            sendMessage(channel, Main.instance.jdaConfig.invalidUser);
+            return;
+        }
+
+        if (!user.discordID.equals(u.getIdLong())) {
+            sendMessage(channel, Main.instance.jdaConfig.notOwner);
+            return;
+        }
+
+        unlink(channel, user);
     }
 
     @Override
     public boolean isMemberSafe() {
-        return false; //todo implement member safe
+        return true;
     }
 
-    private void unlink(MessageChannel channel, User user){
+    private void unlink(MessageChannel channel, User user) {
         user.unlink();
         sendMessage(channel, Main.instance.jdaConfig.unlinked);
     }

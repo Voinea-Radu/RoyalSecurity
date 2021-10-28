@@ -15,12 +15,13 @@ public class HelpCommand extends DiscordCommand {
 
     @Override
     public void execute(Member user, MessageChannel channel, List<String> args) {
-        Main.instance.discordCommandManager.sendHelp(channel);
+        execute(user.getUser(), channel, args);
     }
 
     @Override
     public void execute(User user, MessageChannel channel, List<String> args) {
         Main.instance.discordCommandManager.sendHelp(channel);
+
     }
 
     @Override

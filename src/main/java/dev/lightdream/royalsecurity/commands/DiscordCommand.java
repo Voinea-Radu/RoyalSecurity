@@ -80,6 +80,7 @@ public abstract class DiscordCommand {
         channel.sendMessageEmbeds(embed.build().build()).queue();
     }
 
+
     /**
      * False  if it requires the member to be not null
      * True   if it does not require the member to be not null

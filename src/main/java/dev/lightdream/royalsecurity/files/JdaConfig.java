@@ -44,9 +44,12 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     public JdaEmbed helpEmbed = new JdaEmbed(0, 0, 0, "Help", "",
             "+help\n" +
                     "+link [username]\n" +
-                    "+unlink\n"+
-                    "+changePassword [newPassword] - In DMs\n"+
-                    "+accounts",
+                    "+unlink <username>\n" +
+                    "+changePassword <username> [newPassword] - In DMs\n" +
+                    "+accounts\n" +
+                    "\n" +
+                    "[] - Mandatory arguments\n" +
+                    "<> - Optional / Contextual arguments",
             new ArrayList<>(), new ArrayList<>());
 
     public JdaEmbed accessGranted = new JdaEmbed(0, 255, 0, "Access granted", "", "",
@@ -59,6 +62,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
             "Your account does not seem to be linked to any minecraft account. " +
                     "You can link your account using the `+link` command", new ArrayList<>(), new ArrayList<>());
 
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public JdaEmbed accounts = new JdaEmbed(0, 0, 0, "Linked Accounts", "", "", Arrays.asList(
             new JdaField("Accounts", "%player_name%\n", true)
     ), new ArrayList<>());
@@ -73,5 +77,14 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
 
     public JdaEmbed serverCommand = new JdaEmbed(255, 0, 0, "Server Required", "",
             "This command is required to be run in a server rather then on private messages", new ArrayList<>(), new ArrayList<>());
+
+    public JdaEmbed dmsCommand = new JdaEmbed(255, 0, 0, "DMs Required", "",
+            "This command is required to be rin in DMs rather then on a server", new ArrayList<>(), new ArrayList<>());
+
+    public JdaEmbed passwordChanged = new JdaEmbed(255, 0, 0, "Password Changed", "",
+            "Your password has been successfully changed", new ArrayList<>(), new ArrayList<>());
+
+    public JdaEmbed unregistered = new JdaEmbed(0, 255, 0, "Unregistered", "",
+            "The target account has been successfully unregistered", new ArrayList<>(), new ArrayList<>());
 
 }

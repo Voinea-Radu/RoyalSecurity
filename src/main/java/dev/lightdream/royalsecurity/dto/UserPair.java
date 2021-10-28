@@ -18,14 +18,17 @@ public class UserPair {
         user.setIP(ip);
         if (Main.instance.databaseManager.getUser(member.getIdLong()).size() == 1) {
             member.modifyNickname(user.name).queue();
-            Main.instance.bot.getGuilds().forEach(guild -> {
-                Role role = Main.instance.bot.getRoleById(Main.instance.config.verifiedRankID);
+            Main.instance.bot.getGuilds().forEach(guild -> Main.instance.config.verifiedRankID.forEach(roleID -> {
+                Role role = Main.instance.bot.getRoleById(roleID);
                 if (role == null) {
-                    Main.instance.getLogger().severe("The provided verified rank ID is not valid");
                     return;
                 }
-                guild.addRoleToMember(member, role).queue();
-            });
+                try {
+                    guild.addRoleToMember(member, role).queue();
+                } catch (Throwable t) {
+                    Main.instance.getLogger().warning("Could not change the name of " + member.getEffectiveName() + " on " + guild.getName());
+                }
+            }));
         }
 
     }

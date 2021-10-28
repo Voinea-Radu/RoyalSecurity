@@ -4,7 +4,9 @@ import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.dto.User;
 import lombok.Getter;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bukkit.Bukkit;
 
 
 @Getter
@@ -39,4 +41,16 @@ public class DiscordEventManager extends ListenerAdapter {
             event.getMessage().delete().queue();
         }
     }
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (Main.instance.config.channels.contains(event.getChannel().getIdLong())) {
+            if (event.getAuthor().isBot()) {
+                Bukkit.getScheduler().runTaskLater(plugin, () -> event.getMessage().delete().queue(), 10 * 20);
+            } else {
+                event.getMessage().delete().queue();
+            }
+        }
+    }
+
 }

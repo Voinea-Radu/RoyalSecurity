@@ -58,12 +58,12 @@ public class User extends dev.lightdream.api.databases.User {
         save();
     }
 
-    public void setIP(String ip){
+    public void setIP(String ip) {
         this.ip = ip;
         save();
     }
 
-    public void unlink(){
+    public void unlink() {
         setDiscordID(null);
     }
 

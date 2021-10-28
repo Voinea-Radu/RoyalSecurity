@@ -1,8 +1,8 @@
 package dev.lightdream.royalsecurity.managers;
 
+import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.dto.User;
 import dev.lightdream.royalsecurity.dto.UserPair;
-import dev.lightdream.royalsecurity.Main;
 import net.dv8tion.jda.api.entities.Member;
 import org.apache.commons.lang.RandomStringUtils;
 

@@ -7,8 +7,6 @@ import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.dto.User;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -19,16 +17,12 @@ public class AccountsCommand extends DiscordCommand {
 
     @Override
     public void execute(Member member, MessageChannel channel, List<String> args) {
-        common(channel, member.getIdLong());
+        execute(member.getUser(), channel, args);
     }
 
     @Override
     public void execute(net.dv8tion.jda.api.entities.User user, MessageChannel channel, List<String> args) {
-        common(channel, user.getIdLong());
-    }
-
-    public void common(MessageChannel channel, Long discordID){
-        List<User> users = Main.instance.databaseManager.getUser(discordID);
+        List<User> users = Main.instance.databaseManager.getUser(user.getIdLong());
 
         JdaEmbed embed = Main.instance.jdaConfig.accounts.clone();
         JdaField field = embed.fields.get(0);

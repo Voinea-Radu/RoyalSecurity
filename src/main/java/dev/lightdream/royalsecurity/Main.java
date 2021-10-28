@@ -14,10 +14,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public final class Main extends LightDreamPlugin {
 
@@ -50,6 +48,7 @@ public final class Main extends LightDreamPlugin {
                     new LinkCommand(),
                     new UnlinkCommand(),
                     new ChangePassword(),
+                    new UnregisterCommand(),
                     new AccountsCommand()
             ));
         }
