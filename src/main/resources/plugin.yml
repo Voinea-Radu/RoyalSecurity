@@ -1,6 +1,10 @@
-name: Royalsecurity
+name: RoyalSecurity
 version: ${project.version}
-main: me.lightdream.royalsecurity.RoyalSecurity
+main: dev.lightdream.royalsecurity.Main
+depend:
+  - AuthMe
 commands:
-  rs-link:
-    description: main command
+  link:
+    description: NA
+  ld-api:
+    description: NA
