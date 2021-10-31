@@ -6,6 +6,8 @@ import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
 import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.exceptions.ErrorHandler;
+import net.dv8tion.jda.api.requests.ErrorResponse;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -49,15 +51,11 @@ public class User extends dev.lightdream.api.databases.User {
     public void sendSecure(MessageChannel originChannel, String code, Long discordID) {
         Main.instance.bot.retrieveUserById(discordID)
                 .queue(user -> user.openPrivateChannel()
-                        .queue(channel -> {
-                            try {
-                                channel.sendMessageEmbeds(Main.instance.jdaConfig.secure
-                                        .parse("code", code)
-                                        .build().build()).queue();
-                            } catch (Throwable t) {
-                                originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue();
-                            }
-                        }));
+                        .queue(channel -> channel.sendMessageEmbeds(Main.instance.jdaConfig.secure
+                                .parse("code", code)
+                                .build().build()).queue(null, new ErrorHandler()
+                                .handle(ErrorResponse.CANNOT_SEND_TO_USER, e ->
+                                        originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue()))));
     }
 
     public void setDiscordID(Long id) {
