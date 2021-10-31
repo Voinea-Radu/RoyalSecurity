@@ -31,8 +31,8 @@ public class LinkCommand extends DiscordCommand {
             sendMessage(channel, Main.instance.jdaConfig.alreadyLinked);
             return;
         }
-        
-        user.sendSecure(channel, Main.instance.securityManager.generateCode(user, member), member.getIdLong());
+
+        user.sendSecure(channel, Main.instance.securityManager.generateCode(user, member.getIdLong()), member.getIdLong());
         sendMessage(channel, Main.instance.jdaConfig.codeSent);
     }
 

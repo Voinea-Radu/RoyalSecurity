@@ -8,6 +8,8 @@ import dev.lightdream.royalsecurity.Main;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @DatabaseTable(tableName = "pairs")
 public class UserPair extends EditableDatabaseEntry {
 
@@ -18,36 +20,45 @@ public class UserPair extends EditableDatabaseEntry {
     @DatabaseField(columnName = "user", foreign = true)
     public User user;
     @DatabaseField(columnName = "memberID", dataType = DataType.SERIALIZABLE)
-    public Member member;
+    public Long memberID;
 
-    public UserPair(String code, User user, Member member) {
+    public UserPair(String code, User user, Long memberID) {
         super(Main.instance);
         this.code = code;
         this.user = user;
-        this.member = member;
+        this.memberID = memberID;
     }
 
     @SuppressWarnings("unused")
-    public UserPair(){
+    public UserPair() {
         super(Main.instance);
     }
 
     public void pair(String ip) {
+        AtomicReference<Member> member = new AtomicReference<>();
+
         try {
-            user.setDiscordID(member.getIdLong());
+            user.setDiscordID(memberID);
             user.setIP(ip);
-            if (Main.instance.databaseManager.getUser(member.getIdLong()).size() == 1) {
-                member.modifyNickname(user.name).queue();
+
+            if (Main.instance.databaseManager.getUser(memberID).size() == 1) {
+                Main.instance.bot.getGuilds().forEach(guild -> {
+                    Member m = guild.getMemberById(memberID);
+                    if (m != null) {
+                        member.set(m);
+                    }
+                });
+                member.get().modifyNickname(user.name).queue();
                 Main.instance.bot.getGuilds().forEach(guild -> Main.instance.config.verifiedRankID.forEach(roleID -> {
                     Role role = Main.instance.bot.getRoleById(roleID);
                     if (role == null) {
                         return;
                     }
-                    guild.addRoleToMember(member, role).queue();
+                    guild.addRoleToMember(member.get(), role).queue();
                 }));
             }
         } catch (Throwable t) {
-            Main.instance.getLogger().warning("Could not change the name/role of " + member.getEffectiveName());
+            Main.instance.getLogger().warning("Could not change the name/role of " + member.get().getEffectiveName());
         }
         save();
     }

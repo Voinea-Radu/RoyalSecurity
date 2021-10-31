@@ -17,10 +17,10 @@ public class SecurityManager {
         this.plugin = plugin;
     }
 
-    public String generateCode(User user, Member member) {
+    public String generateCode(User user, Long id) {
         String code = RandomStringUtils.random(plugin.config.codeDigits, true, true);
 
-        new UserPair(code, user, member);
+        new UserPair(code, user, id);
         return code;
     }
 
