@@ -27,6 +27,11 @@ public class UserPair extends EditableDatabaseEntry {
         this.member = member;
     }
 
+    @SuppressWarnings("unused")
+    public UserPair(){
+        super(Main.instance);
+    }
+
     public void pair(String ip) {
         try {
             user.setDiscordID(member.getIdLong());
