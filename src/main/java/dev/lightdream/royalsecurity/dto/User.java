@@ -57,7 +57,6 @@ public class User extends dev.lightdream.api.databases.User {
                             } catch (Throwable t) {
                                 originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue();
                             }
-
                         }));
     }
 
