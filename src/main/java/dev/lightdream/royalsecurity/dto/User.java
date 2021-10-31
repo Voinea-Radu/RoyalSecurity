@@ -51,7 +51,8 @@ public class User extends dev.lightdream.api.databases.User {
                 .queue(user -> user.openPrivateChannel()
                         .queue(channel -> channel.sendMessageEmbeds(Main.instance.jdaConfig.secure
                                 .parse("code", code)
-                                .build().build()).queue(), error -> originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue()));
+                                .build().build()).queue(error ->
+                                originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue())));
     }
 
     public void setDiscordID(Long id) {
