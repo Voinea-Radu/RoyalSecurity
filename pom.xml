@@ -78,7 +78,7 @@
         <dependency>
             <groupId>dev.lightdream</groupId>
             <artifactId>LightDreamAPI</artifactId>
-            <version>3.69</version>
+            <version>3.70</version>
         </dependency>
         <dependency>
             <groupId>fr.xephi</groupId>
