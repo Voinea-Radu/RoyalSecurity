@@ -14,21 +14,21 @@ public class UserPair {
     public Member member;
 
     public void pair(String ip) {
-        user.setDiscordID(member.getIdLong());
-        user.setIP(ip);
-        if (Main.instance.databaseManager.getUser(member.getIdLong()).size() == 1) {
-            member.modifyNickname(user.name).queue();
-            Main.instance.bot.getGuilds().forEach(guild -> Main.instance.config.verifiedRankID.forEach(roleID -> {
-                Role role = Main.instance.bot.getRoleById(roleID);
-                if (role == null) {
-                    return;
-                }
-                try {
+        try {
+            user.setDiscordID(member.getIdLong());
+            user.setIP(ip);
+            if (Main.instance.databaseManager.getUser(member.getIdLong()).size() == 1) {
+                member.modifyNickname(user.name).queue();
+                Main.instance.bot.getGuilds().forEach(guild -> Main.instance.config.verifiedRankID.forEach(roleID -> {
+                    Role role = Main.instance.bot.getRoleById(roleID);
+                    if (role == null) {
+                        return;
+                    }
                     guild.addRoleToMember(member, role).queue();
-                } catch (Throwable t) {
-                    Main.instance.getLogger().warning("Could not change the name of " + member.getEffectiveName() + " on " + guild.getName());
-                }
-            }));
+                }));
+            }
+        } catch (Throwable t) {
+            Main.instance.getLogger().warning("Could not change the name/role of " + member.getEffectiveName());
         }
 
     }

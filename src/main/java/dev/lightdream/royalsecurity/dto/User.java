@@ -50,7 +50,7 @@ public class User extends dev.lightdream.api.databases.User {
                 .queue(user -> user.openPrivateChannel()
                         .queue(channel -> channel.sendMessageEmbeds(Main.instance.jdaConfig.secure
                                 .parse("code", code)
-                                .build().build()).queue()), Throwable::printStackTrace);
+                                .build().build()).queue()), error -> System.out.println("Can not send messages to user with id " + discordID));
     }
 
     public void setDiscordID(Long id) {
