@@ -27,6 +27,7 @@ public class UserPair extends EditableDatabaseEntry {
         this.code = code;
         this.user = user;
         this.memberID = memberID;
+        save();
     }
 
     @SuppressWarnings("unused")
