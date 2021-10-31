@@ -1,17 +1,31 @@
 package dev.lightdream.royalsecurity.dto;
 
+import dev.lightdream.api.databases.EditableDatabaseEntry;
+import dev.lightdream.libs.j256.field.DataType;
+import dev.lightdream.libs.j256.field.DatabaseField;
+import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserPair {
+@DatabaseTable(tableName = "pairs")
+public class UserPair extends EditableDatabaseEntry {
 
+    @DatabaseField(columnName = "id", generatedId = true, canBeNull = false)
+    public int id;
+    @DatabaseField(columnName = "code")
+    public String code;
+    @DatabaseField(columnName = "user", foreign = true)
     public User user;
+    @DatabaseField(columnName = "memberID", dataType = DataType.SERIALIZABLE)
     public Member member;
+
+    public UserPair(String code, User user, Member member) {
+        super(Main.instance);
+        this.code = code;
+        this.user = user;
+        this.member = member;
+    }
 
     public void pair(String ip) {
         try {
@@ -30,7 +44,11 @@ public class UserPair {
         } catch (Throwable t) {
             Main.instance.getLogger().warning("Could not change the name/role of " + member.getEffectiveName());
         }
-
+        save();
     }
 
+    @Override
+    public Integer getID() {
+        return id;
+    }
 }

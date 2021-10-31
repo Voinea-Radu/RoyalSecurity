@@ -2,6 +2,7 @@ package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.api.IAPI;
 import dev.lightdream.royalsecurity.dto.User;
+import dev.lightdream.royalsecurity.dto.UserPair;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -23,6 +24,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
     @Override
     public void setup() {
         setup(User.class);
+        setup(UserPair.class);
     }
 
     @Override
@@ -61,9 +63,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
 
     @SuppressWarnings("unused")
     public @Nullable User getUser(int id) {
-        Optional<User> optionalUser = getAll(User.class).stream().filter(user -> user.id == id).findFirst();
-
-        return optionalUser.orElse(null);
+        return getAll(User.class).stream().filter(user -> user.id == id).findFirst().orElse(null);
     }
 
     @SuppressWarnings("unused")
@@ -82,6 +82,10 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
             }
             return user.discordID.equals(discordID);
         }).collect(Collectors.toList());
+    }
+
+    public UserPair getUserPair(String code){
+        return getAll(UserPair.class).stream().filter(userPair -> userPair.code.equals(code)).findFirst().orElse(null);
     }
 
 

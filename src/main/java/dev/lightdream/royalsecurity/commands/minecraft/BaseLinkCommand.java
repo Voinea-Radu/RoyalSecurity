@@ -23,7 +23,7 @@ public class BaseLinkCommand extends SubCommand {
             return;
         }
 
-        UserPair pair = Main.instance.securityManager.linkCodes.get(args.get(0));
+        UserPair pair = Main.instance.databaseManager.getUserPair(args.get(0));
 
         if (pair == null) {
             user.sendMessage(api, Main.instance.lang.invalidCode);

@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class SecurityManager {
 
     private final Main plugin;
-    public HashMap<String, UserPair> linkCodes = new HashMap<>();
+    //public HashMap<String, UserPair> linkCodes = new HashMap<>();
 
     public SecurityManager(Main plugin) {
         this.plugin = plugin;
@@ -20,7 +20,7 @@ public class SecurityManager {
     public String generateCode(User user, Member member) {
         String code = RandomStringUtils.random(plugin.config.codeDigits, true, true);
 
-        linkCodes.put(code, new UserPair(user, member));
+        new UserPair(code, user, member);
         return code;
     }
 
