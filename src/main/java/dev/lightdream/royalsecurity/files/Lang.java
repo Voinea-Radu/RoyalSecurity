@@ -14,4 +14,6 @@ public class Lang extends dev.lightdream.api.configs.Lang {
 
     public String kickMessage = "Please authorise this connection";
 
+    public String codeDetails = "User: %name%\n" +
+            "Discord ID: %discord_id%";
 }

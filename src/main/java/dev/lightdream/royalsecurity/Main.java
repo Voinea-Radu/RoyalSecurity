@@ -5,6 +5,7 @@ import dev.lightdream.api.configs.SQLConfig;
 import dev.lightdream.api.databases.User;
 import dev.lightdream.royalsecurity.commands.discord.*;
 import dev.lightdream.royalsecurity.commands.minecraft.BaseLinkCommand;
+import dev.lightdream.royalsecurity.commands.minecraft.CheckCode;
 import dev.lightdream.royalsecurity.files.Config;
 import dev.lightdream.royalsecurity.files.JdaConfig;
 import dev.lightdream.royalsecurity.files.Lang;
@@ -90,6 +91,7 @@ public final class Main extends LightDreamPlugin {
     @Override
     public void loadBaseCommands() {
         baseSubCommands.add(new BaseLinkCommand(this));
+        baseSubCommands.add(new CheckCode());
     }
 
     @Override
