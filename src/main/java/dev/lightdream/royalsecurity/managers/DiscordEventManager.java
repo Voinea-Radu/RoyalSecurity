@@ -3,6 +3,7 @@ package dev.lightdream.royalsecurity.managers;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.dto.User;
 import lombok.Getter;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -42,12 +43,16 @@ public class DiscordEventManager extends ListenerAdapter {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (Main.instance.config.channels.contains(event.getChannel().getIdLong())) {
             if (event.getAuthor().isBot()) {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> event.getMessage().delete().queue(), 10 * 20);
             } else {
+                if(event.getMessage().getContentRaw().startsWith("+adminText") && event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                    return;
+                }
                 event.getMessage().delete().queue();
             }
         }
