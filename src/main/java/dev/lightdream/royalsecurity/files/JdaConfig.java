@@ -87,4 +87,11 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     public JdaEmbed unregistered = new JdaEmbed(0, 255, 0, "Unregistered", "",
             "The target account has been successfully unregistered", new ArrayList<>(), new ArrayList<>());
 
+    public JdaEmbed invalidNumber = new JdaEmbed(255, 0, 0, "Invalid Number", "",
+            "This is not a valid number. Please check it and try again", new ArrayList<>(), new ArrayList<>());
+
+    public JdaEmbed notAllowed = new JdaEmbed(255, 0, 0, "Not Allowed", "",
+            "You do not have the necessary permission to do this.", new ArrayList<>(), new ArrayList<>());
+
+
 }

@@ -40,9 +40,6 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
 
         User user = new User(api, uuid, Bukkit.getOfflinePlayer(uuid).getName(), api.getSettings().baseLang);
         user.save();
-        System.out.println("Created user");
-        System.out.println(getAll(User.class, false));
-        System.out.println(getAll(User.class, true));
         return user;
     }
 

@@ -10,23 +10,30 @@ public class ScheduleManager {
 
     private final Main plugin;
 
+    @SuppressWarnings("StatementWithEmptyBody")
     public ScheduleManager(Main plugin) {
         this.plugin = plugin;
         if (!plugin.config.multiLobby) {
-            registerNicknameChange();
+            //registerNicknameChange();
         }
     }
 
+    @SuppressWarnings("unused")
     public void registerNicknameChange() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () ->
                 plugin.bot.getGuilds().forEach(guild ->
                         guild.getMembers().forEach(member -> {
+                            System.out.println("Searching member " + member.getEffectiveName() + " from guild " + guild.getName());
                             List<User> users = Main.instance.databaseManager.getUser(member.getIdLong());
                             if (users == null || users.size() == 0 ||
                                     member.getEffectiveName().equals(users.get(0).name)) {
                                 return;
                             }
-                            member.modifyNickname(users.get(0).name).queue();
+                            try {
+                                member.modifyNickname(users.get(0).name).queue();
+                            } catch (Throwable t) {
+                                Main.instance.getLogger().warning("Could not change the name of " + member.getEffectiveName() + " on " + guild.getName());
+                            }
                         })), 0, Main.instance.config.nicknameChangeInterval * 60 * 20L);
     }
 

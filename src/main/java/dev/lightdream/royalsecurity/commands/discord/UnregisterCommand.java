@@ -17,13 +17,13 @@ public class UnregisterCommand extends DiscordCommand {
 
     @Override
     public void execute(Member member, MessageChannel channel, List<String> args) {
-        execute(member.getUser(), channel, args);
-    }
-
-    @Override
-    public void execute(User user, MessageChannel channel, List<String> args) {
         if (args.size() == 0) {
             sendUsage(channel);
+            return;
+        }
+
+        if (!member.hasPermission(Permission.ADMINISTRATOR)) {
+            sendMessage(channel, Main.instance.jdaConfig.notAllowed);
             return;
         }
 
@@ -32,7 +32,13 @@ public class UnregisterCommand extends DiscordCommand {
     }
 
     @Override
+    public void execute(User user, MessageChannel channel, List<String> args) {
+
+
+    }
+
+    @Override
     public boolean isMemberSafe() {
-        return true;
+        return false;
     }
 }
