@@ -47,12 +47,15 @@ public class User extends dev.lightdream.api.databases.User {
     }
 
     public void sendSecure(MessageChannel originChannel, String code, Long discordID) {
-        Main.instance.bot.retrieveUserById(discordID)
-                .queue(user -> user.openPrivateChannel()
-                        .queue(channel -> channel.sendMessageEmbeds(Main.instance.jdaConfig.secure
-                                .parse("code", code)
-                                .build().build()).queue(error ->
-                                originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue())));
+        try {
+            Main.instance.bot.retrieveUserById(discordID)
+                    .queue(user -> user.openPrivateChannel()
+                            .queue(channel -> channel.sendMessageEmbeds(Main.instance.jdaConfig.secure
+                                    .parse("code", code)
+                                    .build().build()).queue()));
+        } catch (Throwable t) {
+            originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build()).queue();
+        }
     }
 
     public void setDiscordID(Long id) {
