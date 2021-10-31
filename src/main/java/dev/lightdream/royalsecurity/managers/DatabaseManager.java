@@ -29,7 +29,9 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
 
     @Override
     public <T> List<T> getAll(Class<T> clazz) {
-        return getAll(clazz, false);
+        List<T> output = getAll(clazz, false);
+        System.out.println(output);
+        return output;
     }
 
     //Users
