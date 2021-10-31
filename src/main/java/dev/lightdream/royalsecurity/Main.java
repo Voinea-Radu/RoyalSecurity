@@ -40,8 +40,6 @@ public final class Main extends LightDreamPlugin {
 
         init("RoyalSecurity", "link", "1.1");
 
-        instance = this;
-
         if (!config.multiLobby) {
             this.discordCommandManager = new DiscordCommandManager(this, Arrays.asList(
                     new HelpCommand(),
