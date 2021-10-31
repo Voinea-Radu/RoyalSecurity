@@ -23,7 +23,6 @@ public class ScheduleManager {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () ->
                 plugin.bot.getGuilds().forEach(guild ->
                         guild.getMembers().forEach(member -> {
-                            System.out.println("Searching member " + member.getEffectiveName() + " from guild " + guild.getName());
                             List<User> users = Main.instance.databaseManager.getUser(member.getIdLong());
                             if (users == null || users.size() == 0 ||
                                     member.getEffectiveName().equals(users.get(0).name)) {

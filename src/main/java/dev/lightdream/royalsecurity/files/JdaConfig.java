@@ -93,5 +93,8 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     public JdaEmbed notAllowed = new JdaEmbed(255, 0, 0, "Not Allowed", "",
             "You do not have the necessary permission to do this.", new ArrayList<>(), new ArrayList<>());
 
+    public JdaEmbed cannotSendMessage = new JdaEmbed(255,0,0,"Cannot Send Message", "",
+            "It seems like I can not send you a message in dms. Consider opening your dms to server members", new ArrayList<>(), new ArrayList<>());
+
 
 }

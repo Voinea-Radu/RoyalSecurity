@@ -32,7 +32,7 @@ public class LinkCommand extends DiscordCommand {
             return;
         }
 
-        user.sendSecure(Main.instance.securityManager.generateCode(user, member), member.getIdLong());
+        user.sendSecure(channel, Main.instance.securityManager.generateCode(user, member), member.getIdLong());
         sendMessage(channel, Main.instance.jdaConfig.codeSent);
     }
 
