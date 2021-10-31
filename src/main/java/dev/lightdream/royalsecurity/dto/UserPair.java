@@ -19,7 +19,7 @@ public class UserPair extends EditableDatabaseEntry {
     public String code;
     @DatabaseField(columnName = "user", foreign = true)
     public User user;
-    @DatabaseField(columnName = "memberID", dataType = DataType.SERIALIZABLE)
+    @DatabaseField(columnName = "memberID")
     public Long memberID;
 
     public UserPair(String code, User user, Long memberID) {
