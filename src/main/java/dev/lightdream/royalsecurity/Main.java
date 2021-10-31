@@ -90,6 +90,11 @@ public final class Main extends LightDreamPlugin {
     }
 
     @Override
+    public boolean registerBalanceChangeEvent() {
+        return false;
+    }
+
+    @Override
     public void loadBaseCommands() {
         baseSubCommands.add(new BaseLinkCommand(this));
     }
