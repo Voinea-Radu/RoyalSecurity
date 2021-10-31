@@ -37,7 +37,6 @@ public class BaseLinkCommand extends SubCommand {
 
         pair.pair(user.getPlayer().getAddress().getHostName());
         user.sendMessage(api, Main.instance.lang.linked);
-        pair.delete();
     }
 
     @Override

@@ -27,6 +27,7 @@ public class UserPair extends EditableDatabaseEntry {
         this.code = code;
         this.user = user;
         this.memberID = memberID;
+
         save();
     }
 
@@ -61,11 +62,16 @@ public class UserPair extends EditableDatabaseEntry {
         } catch (Throwable t) {
             Main.instance.getLogger().warning("Could not change the name/role of " + member.get().getEffectiveName());
         }
-        save();
+        delete();
     }
 
     @Override
     public Integer getID() {
         return id;
+    }
+
+    @Override
+    public void save() {
+        save(false);
     }
 }
