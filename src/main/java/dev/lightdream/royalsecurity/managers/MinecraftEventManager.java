@@ -2,6 +2,7 @@ package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.dto.User;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -18,20 +19,22 @@ public class MinecraftEventManager implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        User user = Main.instance.databaseManager.getUser(event.getPlayer());
+        Bukkit.getScheduler().runTaskAsynchronously(Main.instance, ()-> {
+            User user = Main.instance.databaseManager.getUser(event.getPlayer());
 
-        if(!user.hasSecurity()){
-            return;
-        }
+            if (!user.hasSecurity()) {
+                return;
+            }
 
-        if(event.getPlayer().getAddress().getHostName().equals(user.ip)){
-            return;
-        }
+            if (event.getPlayer().getAddress().getHostName().equals(user.ip)) {
+                return;
+            }
 
-        String ip = event.getPlayer().getAddress().getHostName();
+            String ip = event.getPlayer().getAddress().getHostName();
 
-        event.getPlayer().kickPlayer(Main.instance.lang.kickMessage);
-        user.sendAuth(ip);
+            event.getPlayer().kickPlayer(Main.instance.lang.kickMessage);
+            user.sendAuth(ip);
+        });
     }
 
 }
