@@ -30,7 +30,7 @@ public class BaseLinkCommand extends SubCommand {
             return;
         }
 
-        if (!pair.user.equals(user)) {
+        if (!pair.getUser().equals(user)) {
             user.sendMessage(api, Main.instance.lang.invalidCode);
             return;
         }

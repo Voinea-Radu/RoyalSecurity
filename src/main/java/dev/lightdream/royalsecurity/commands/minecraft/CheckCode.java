@@ -33,12 +33,12 @@ public class CheckCode extends SubCommand {
         System.out.println(Main.instance.lang);
         System.out.println(Main.instance.lang.codeDetails);
         System.out.println(pair);
-        System.out.println(pair.user);
-        System.out.println(pair.user.name);
+        System.out.println(pair.getUser());
+        System.out.println(pair.getUser().name);
         System.out.println(pair.memberID);
 
         user.sendMessage(api, new MessageBuilder(Main.instance.lang.codeDetails).addPlaceholders(new HashMap<String, String>() {{
-            put("name", pair.user.name);
+            put("name", pair.getUser().name);
             put("discord_id", String.valueOf(pair.memberID));
         }}));
     }

@@ -1,6 +1,7 @@
 package dev.lightdream.royalsecurity.dto;
 
 import dev.lightdream.api.databases.EditableDatabaseEntry;
+import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
 import dev.lightdream.libs.j256.field.DatabaseField;
 import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
@@ -33,10 +34,15 @@ public class UserPair extends EditableDatabaseEntry {
         super(Main.instance);
     }
 
+    @JsonIgnore
+    public User getUser(){
+        return Main.instance.databaseManager.getUser(userID);
+    }
+
     public void pair(String ip) {
 
         try {
-            User user = Main.instance.databaseManager.getUser(userID);
+            User user = getUser();
 
             if(user==null){
                 return;
