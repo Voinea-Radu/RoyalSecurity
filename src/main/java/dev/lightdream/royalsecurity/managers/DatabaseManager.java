@@ -30,7 +30,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
     @Override
     public <T> List<T> getAll(Class<T> clazz) {
         List<T> output = getAll(clazz, false);
-        System.out.println("State 1 list: " + output);
+        System.out.println("State 1 list size " + output.size());
         return output;
     }
 
