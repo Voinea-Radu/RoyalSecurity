@@ -43,7 +43,6 @@ public class UserPair extends EditableDatabaseEntry {
                 Main.instance.bot.getGuilds().forEach(guild -> {
                     Member member = guild.getMemberById(memberID);
                     if (member == null) {
-                        System.out.println("Could not find the member with id " + memberID + " on guild " + guild.getName());
                         return;
                     }
                     member.modifyNickname(user.name).queue();
@@ -57,7 +56,7 @@ public class UserPair extends EditableDatabaseEntry {
                 });
             }
         } catch (Throwable t) {
-            System.out.println("An error has occurred");
+            Main.instance.getLogger().info("An error has occurred");
             //Main.instance.getLogger().warning("Could not change the name/role of " + member.get().getEffectiveName());
         }
         delete();
