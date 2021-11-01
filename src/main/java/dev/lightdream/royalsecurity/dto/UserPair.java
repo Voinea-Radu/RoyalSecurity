@@ -14,15 +14,15 @@ public class UserPair extends EditableDatabaseEntry {
     public int id;
     @DatabaseField(columnName = "code")
     public String code;
-    @DatabaseField(columnName = "user", foreign = true)
-    public User user;
+    @DatabaseField(columnName = "userID")
+    public Integer userID;
     @DatabaseField(columnName = "memberID")
     public Long memberID;
 
     public UserPair(String code, User user, Long memberID) {
         super(Main.instance);
         this.code = code;
-        this.user = user;
+        this.userID = user.id;
         this.memberID = memberID;
 
         save();
@@ -36,6 +36,12 @@ public class UserPair extends EditableDatabaseEntry {
     public void pair(String ip) {
 
         try {
+            User user = Main.instance.databaseManager.getUser(userID);
+
+            if(user==null){
+                return;
+            }
+
             user.setDiscordID(memberID);
             user.setIP(ip);
 
