@@ -33,7 +33,7 @@ public class AccountsCommand extends DiscordCommand {
                         sendAccounts(users, channel, String.valueOf(id));
                         return;
                     }
-                    sendAccounts(users, channel, user.getName() + "#" + user.getAsTag());
+                    sendAccounts(users, channel, user.getAsTag());
                 });
                 return;
             }
