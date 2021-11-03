@@ -5,8 +5,6 @@ import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
 import dev.lightdream.libs.j256.field.DatabaseField;
 import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 
 @DatabaseTable(tableName = "pairs")
 public class UserPair extends EditableDatabaseEntry {
@@ -35,28 +33,19 @@ public class UserPair extends EditableDatabaseEntry {
     }
 
     @JsonIgnore
-    public User getUser(){
+    public User getUser() {
         return Main.instance.databaseManager.getUser(userID);
     }
 
     public void pair(String ip) {
+        User user = getUser();
 
-        try {
-            User user = getUser();
-
-            if(user==null){
-                return;
-            }
-
-            user.setDiscordID(memberID);
-            user.setIP(ip);
-
-            user.changeNickname();
-            user.giveRank();
-        } catch (Throwable t) {
-            Main.instance.getLogger().info("An error has occurred");
-            //Main.instance.getLogger().warning("Could not change the name/role of " + member.get().getEffectiveName());
+        if (user == null) {
+            return;
         }
+
+        user.setDiscordID(memberID);
+        user.setIP(ip);
         delete();
     }
 

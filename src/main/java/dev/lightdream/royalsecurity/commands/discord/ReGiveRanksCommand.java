@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Deprecated
 public class ReGiveRanksCommand extends DiscordCommand {
     public ReGiveRanksCommand() {
         super("reGiveRanks", Main.instance.lang.reGiveRanksDescription, Permission.ADMINISTRATOR, "");

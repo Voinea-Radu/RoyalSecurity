@@ -91,13 +91,13 @@ public class User extends dev.lightdream.api.databases.User {
                 '}';
     }
 
+    @Deprecated
     public void giveRank() {
         if (discordID == null) {
             return;
         }
 
         Main.instance.bot.getGuilds().forEach(guild -> {
-
             Member member = guild.getMemberById(discordID);
             if (member == null) {
                 return;
@@ -114,6 +114,7 @@ public class User extends dev.lightdream.api.databases.User {
         });
     }
 
+    @Deprecated
     public void changeNickname() {
         if (discordID == null) {
             return;
