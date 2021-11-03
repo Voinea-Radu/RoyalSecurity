@@ -22,8 +22,6 @@ public class StatsCommand extends DiscordCommand {
 
     @Override
     public void execute(User user, MessageChannel channel, List<String> args) {
-
-
         sendMessage(channel, Main.instance.jdaConfig.stats
                 .parse("ram", String.valueOf(Utils.getRam()))
                 .parse("cpu", String.valueOf(Utils.getCpuLoad()))

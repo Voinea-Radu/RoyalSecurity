@@ -19,6 +19,7 @@ public class ScheduleManager {
     }
 
     @SuppressWarnings("unused")
+    @Deprecated
     public void registerNicknameChange() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () ->
                 plugin.bot.getGuilds().forEach(guild ->

@@ -31,8 +31,8 @@ public class ReGiveRanksCommand extends DiscordCommand {
                 if (u.discordID == null) {
                     return;
                 }
-                u.giveRank();
-                u.changeNickname();
+                //u.giveRank();
+                //u.changeNickname();
                 counter.getAndIncrement();
             });
             sendMessage(channel, Main.instance.jdaConfig.reGiven

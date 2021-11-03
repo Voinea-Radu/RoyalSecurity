@@ -16,7 +16,6 @@ public class UnlinkCommand extends DiscordCommand {
 
     @Override
     public void execute(Member member, MessageChannel channel, List<String> args) {
-
         if (args.size() == 0) {
             List<User> users = Main.instance.databaseManager.getUser(member.getIdLong());
 

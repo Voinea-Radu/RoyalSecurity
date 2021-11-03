@@ -41,6 +41,6 @@ public class BaseLinkCommand extends SubCommand {
 
     @Override
     public List<String> onTabComplete(User user, List<String> list) {
-        return new ArrayList<>();
+        return null;
     }
 }

@@ -33,8 +33,7 @@ public class UnregisterCommand extends DiscordCommand {
 
     @Override
     public void execute(User user, MessageChannel channel, List<String> args) {
-
-
+        //impossible
     }
 
     @Override

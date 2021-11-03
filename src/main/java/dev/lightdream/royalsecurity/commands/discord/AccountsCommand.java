@@ -28,12 +28,11 @@ public class AccountsCommand extends DiscordCommand {
                     return;
                 }
                 List<User> users = Main.instance.databaseManager.getUser(id);
-                sendAccounts(users, channel);
-                return;
-            }else{
-                sendMessage(channel, Main.instance.jdaConfig.notAllowed);
+                sendAccounts(users, channel, member.getEffectiveName());
                 return;
             }
+            sendMessage(channel, Main.instance.jdaConfig.notAllowed);
+            return;
         }
         execute(member.getUser(), channel, args);
     }
@@ -41,12 +40,13 @@ public class AccountsCommand extends DiscordCommand {
     @Override
     public void execute(net.dv8tion.jda.api.entities.User user, MessageChannel channel, List<String> args) {
         List<User> users = Main.instance.databaseManager.getUser(user.getIdLong());
-
-        sendAccounts(users, channel);
+        sendAccounts(users, channel, user.getName());
     }
 
-    public void sendAccounts(List<User> users, MessageChannel channel) {
-        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone();
+    public void sendAccounts(List<User> users, MessageChannel channel, String userName) {
+        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone()
+                .parse("user", userName);
+
         JdaField field = embed.fields.get(0);
         String s = field.content;
         field.content = "";

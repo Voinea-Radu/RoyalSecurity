@@ -50,7 +50,7 @@ public class DiscordEventManager extends ListenerAdapter {
             if (event.getAuthor().isBot()) {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> event.getMessage().delete().queue(), 10 * 20);
             } else {
-                if(event.getMessage().getContentRaw().startsWith("+adminText") && event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                if (event.getMessage().getContentRaw().startsWith("+adminText") && event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                     return;
                 }
                 event.getMessage().delete().queue();

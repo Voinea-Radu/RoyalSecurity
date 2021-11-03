@@ -84,7 +84,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
         }).collect(Collectors.toList());
     }
 
-    public UserPair getUserPair(String code){
+    public UserPair getUserPair(String code) {
         return getAll(UserPair.class).stream().filter(userPair -> userPair.code.equals(code)).findFirst().orElse(null);
     }
 

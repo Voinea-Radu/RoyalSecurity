@@ -38,7 +38,7 @@ public class LinkCommand extends DiscordCommand {
 
     @Override
     public void execute(net.dv8tion.jda.api.entities.User user, MessageChannel channel, List<String> args) {
-
+        //impossible
     }
 
     @Override

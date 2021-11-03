@@ -44,7 +44,9 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
                     "+link [username]\n" +
                     "+unlink <username>\n" +
                     "+changePassword <username> [newPassword] - In DMs\n" +
-                    "+accounts\n" +
+                    "+accounts <discordID>\n" +
+                    "+stats\n"+
+                    "+unregister <discordID>\n"+
                     "\n" +
                     "[] - Mandatory arguments\n" +
                     "<> - Optional / Contextual arguments",
@@ -62,7 +64,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
 
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public JdaEmbed accounts = new JdaEmbed(0, 0, 0, "Linked Accounts", "", "", Arrays.asList(
-            new JdaField("Accounts", "%player_name%\n", true)
+            new JdaField("%user%'s Accounts", "%player_name%\n", true)
     ), new ArrayList<>());
 
     public JdaEmbed multipleLinked = new JdaEmbed(255, 0, 0, "Multiple Linked", "",
