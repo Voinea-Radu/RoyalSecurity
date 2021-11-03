@@ -51,22 +51,8 @@ public class UserPair extends EditableDatabaseEntry {
             user.setDiscordID(memberID);
             user.setIP(ip);
 
-            if (Main.instance.databaseManager.getUser(memberID).size() == 1) {
-                Main.instance.bot.getGuilds().forEach(guild -> {
-                    Member member = guild.getMemberById(memberID);
-                    if (member == null) {
-                        return;
-                    }
-                    member.modifyNickname(user.name).queue();
-                    Main.instance.config.verifiedRankID.forEach(roleID -> {
-                        Role role = Main.instance.bot.getRoleById(roleID);
-                        if (role == null) {
-                            return;
-                        }
-                        guild.addRoleToMember(member, role).queue();
-                    });
-                });
-            }
+            user.changeNickname();
+            user.giveRank();
         } catch (Throwable t) {
             Main.instance.getLogger().info("An error has occurred");
             //Main.instance.getLogger().warning("Could not change the name/role of " + member.get().getEffectiveName());

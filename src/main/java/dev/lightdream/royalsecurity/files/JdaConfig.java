@@ -10,8 +10,6 @@ import java.util.Arrays;
 
 public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
 
-    //public Long channel = 0L;
-
     public JdaEmbed auth = new JdaEmbed(255, 255, 0, "Auth Message", "", "", Arrays.asList(
             new JdaField("Username", "%player_name%", true),
             new JdaField("IP", "%ip%", true),
@@ -23,7 +21,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     ));
 
     public JdaEmbed secure = new JdaEmbed(0, 255, 0, "Secure Message",
-            "", "Use the command `/link %code%` in-game to confirm the link", new ArrayList<>(), new ArrayList<>());
+            "", "Please rejoin the server and use the command `/link %code%` in-game to confirm the link", new ArrayList<>(), new ArrayList<>());
 
     public JdaEmbed invalidUser = new JdaEmbed(255, 0, 0, "Invalid User", "",
             "This is not a valid minecraft username. Please make sure to login first on the server", new ArrayList<>(), new ArrayList<>());
@@ -52,8 +50,8 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
                     "<> - Optional / Contextual arguments",
             new ArrayList<>(), new ArrayList<>());
 
-    public JdaEmbed accessGranted = new JdaEmbed(0, 255, 0, "Access granted", "", "",
-            new ArrayList<>(), new ArrayList<>());
+    public JdaEmbed accessGranted = new JdaEmbed(0, 255, 0, "Access granted", "",
+            "Please wait a few seconds and join again ", new ArrayList<>(), new ArrayList<>());
 
     public JdaEmbed accessDenied = new JdaEmbed(255, 0, 0, "Access denied", "", "",
             new ArrayList<>(), new ArrayList<>());
@@ -93,8 +91,17 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     public JdaEmbed notAllowed = new JdaEmbed(255, 0, 0, "Not Allowed", "",
             "You do not have the necessary permission to do this.", new ArrayList<>(), new ArrayList<>());
 
-    public JdaEmbed cannotSendMessage = new JdaEmbed(255,0,0,"Cannot Send Message", "",
+    public JdaEmbed cannotSendMessage = new JdaEmbed(255, 0, 0, "Cannot Send Message", "",
             "It seems like I can not send you a message in dms. Consider opening your dms to server members", new ArrayList<>(), new ArrayList<>());
+
+    public JdaEmbed stats = new JdaEmbed(0, 0, 0, "Stats", "", "", Arrays.asList(
+            new JdaField("RAM", "%ram%", true),
+            new JdaField("CPU", "%cpu%", true),
+            new JdaField("Java Version", "%java%", true)
+    ), new ArrayList<>());
+
+    public JdaEmbed reGiven = new JdaEmbed(0, 255, 0, "Results", "",
+            "Given the rank and changed the nickname to %count% users", new ArrayList<>(), new ArrayList<>());
 
 
 }

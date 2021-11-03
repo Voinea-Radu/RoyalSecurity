@@ -37,16 +37,25 @@ public class DiscordCommandManager extends ListenerAdapter {
         Member member = event.getMember();
 
         if (message[0].startsWith("+")) {
-            commands.forEach(subCommands -> {
-                if (subCommands.aliases.contains(message[0].replace("+", "").toLowerCase())) {
-                    if (member != null) {
-                        if (subCommands.hasPermission(event.getMember())) {
-                            subCommands.execute(event.getMember(), event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+            commands.forEach(command -> {
+                if (command.aliases.contains(message[0].replace("+", "").toLowerCase())) {
+                    if (command.permission == null) {
+                        if (member != null) {
+                            if (command.hasPermission(event.getMember())) {
+                                command.execute(event.getMember(), event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+                                return;
+                            }
                             return;
                         }
+                        command.execute(null, event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
                         return;
                     }
-                    subCommands.execute(null, event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+                    if (command.hasPermission(event.getMember())) {
+                        command.execute(event.getMember(), event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+                        return;
+                    }
+                    command.sendMessage(event.getChannel(), Main.instance.jdaConfig.notAllowed);
+
                 }
             });
         }

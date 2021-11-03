@@ -18,7 +18,11 @@ public class MinecraftEventManager implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        User user = Main.instance.databaseManager.getUser(event.getPlayer());
+        User user = Main.instance.databaseManager.getUser(event.getPlayer().getName());
+
+        if (user == null) {
+            user = Main.instance.databaseManager.getUser(event.getPlayer().getUniqueId());
+        }
 
         if (!user.hasSecurity()) {
             return;

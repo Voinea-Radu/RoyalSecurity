@@ -48,6 +48,8 @@ public final class Main extends LightDreamPlugin {
                     new UnlinkCommand(),
                     new ChangePassword(),
                     new UnregisterCommand(),
+                    new StatsCommand(),
+                    new ReGiveRanksCommand(),
                     new AccountsCommand()
             ));
         }

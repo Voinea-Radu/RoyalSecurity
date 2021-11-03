@@ -5,7 +5,9 @@ import dev.lightdream.libs.j256.field.DatabaseField;
 import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
 import lombok.NoArgsConstructor;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
 import net.dv8tion.jda.api.requests.ErrorResponse;
 
@@ -87,5 +89,43 @@ public class User extends dev.lightdream.api.databases.User {
                 ", name='" + name + '\'' +
                 ", lang='" + lang + '\'' +
                 '}';
+    }
+
+    public void giveRank() {
+        if (discordID == null) {
+            return;
+        }
+
+        Main.instance.bot.getGuilds().forEach(guild -> {
+
+            Member member = guild.getMemberById(discordID);
+            if (member == null) {
+                return;
+            }
+
+            Main.instance.config.verifiedRankID.forEach(roleID -> {
+                Role role = Main.instance.bot.getRoleById(roleID);
+                if (role == null) {
+                    return;
+                }
+
+                guild.addRoleToMember(member, role).queue();
+            });
+        });
+    }
+
+    public void changeNickname() {
+        if (discordID == null) {
+            return;
+        }
+
+        Main.instance.bot.getGuilds().forEach(guild -> {
+            Member member = guild.getMemberById(discordID);
+            if (member == null) {
+                return;
+            }
+
+            member.modifyNickname(this.name).queue();
+        });
     }
 }
