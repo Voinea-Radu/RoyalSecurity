@@ -28,7 +28,12 @@ public class AccountsCommand extends DiscordCommand {
                     return;
                 }
                 List<User> users = Main.instance.databaseManager.getUser(id);
-                sendAccounts(users, channel, member.getEffectiveName());
+                net.dv8tion.jda.api.entities.User user = Main.instance.bot.getUserById(id);
+                if (user == null) {
+                    sendAccounts(users, channel, String.valueOf(id));
+                    return;
+                }
+                sendAccounts(users, channel, user.getName() + "#" + user.getAsTag());
                 return;
             }
             sendMessage(channel, Main.instance.jdaConfig.notAllowed);
