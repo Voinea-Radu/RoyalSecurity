@@ -104,7 +104,7 @@ public class User extends dev.lightdream.api.databases.User {
             }
 
             Main.instance.config.verifiedRankID.forEach(roleID -> {
-                Role role = Main.instance.bot.getRoleById(roleID);
+                Role role = guild.getRoleById(roleID);
                 if (role == null) {
                     return;
                 }

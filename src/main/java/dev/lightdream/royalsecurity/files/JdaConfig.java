@@ -95,8 +95,8 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
             "It seems like I can not send you a message in dms. Consider opening your dms to server members", new ArrayList<>(), new ArrayList<>());
 
     public JdaEmbed stats = new JdaEmbed(0, 0, 0, "Stats", "", "", Arrays.asList(
-            new JdaField("RAM", "%ram%", true),
-            new JdaField("CPU", "%cpu%", true),
+            new JdaField("RAM", "%ram%MB", true),
+            new JdaField("CPU", "%cpu%%", true),
             new JdaField("Java Version", "%java%", true)
     ), new ArrayList<>());
 
