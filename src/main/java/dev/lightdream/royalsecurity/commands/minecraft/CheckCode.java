@@ -21,7 +21,7 @@ public class CheckCode extends SubCommand {
             return;
         }
 
-        UserPair pair = Main.instance.databaseManager.getUserPairRaw(args.get(0));
+        UserPair pair = Main.instance.databaseManager.getUserPair(args.get(0));
 
         if (pair == null) {
             user.sendMessage(api, Main.instance.lang.invalidCode);

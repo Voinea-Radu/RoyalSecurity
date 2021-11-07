@@ -16,7 +16,7 @@ public class SecurityManager {
     public String generateCode(User user, Long id) {
         String code = RandomStringUtils.random(plugin.config.codeDigits, true, true);
 
-        if (Main.instance.databaseManager.getUserPairRaw(code) != null) {
+        if (Main.instance.databaseManager.getUserPair(code) != null) {
             return generateCode(user, id);
         }
 

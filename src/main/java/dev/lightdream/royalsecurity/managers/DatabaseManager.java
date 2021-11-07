@@ -34,6 +34,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
     }
 
     @SneakyThrows
+    @Deprecated
     public UserPair getUserPairRaw(String code) {
         String[] results = getDao(UserPair.class).queryRaw("SELECT * FROM pairs WHERE code=\"" + code + "\"").getFirstResult();
         if (results == null) {
@@ -97,7 +98,6 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
         }).collect(Collectors.toList());
     }
 
-    @Deprecated
     public UserPair getUserPair(String code) {
         return getAll(UserPair.class).stream().filter(userPair -> userPair.code.equals(code)).findFirst().orElse(null);
     }
