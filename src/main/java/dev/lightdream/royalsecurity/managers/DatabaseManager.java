@@ -99,7 +99,6 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
     }
 
     public UserPair getUserPair(String code) {
-        getDao(UserPair.class).clearObjectCache();
         return getAll(UserPair.class).stream().filter(userPair -> userPair.code.equals(code)).findFirst().orElse(null);
     }
 
