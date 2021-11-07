@@ -36,6 +36,9 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
     @SneakyThrows
     public UserPair getUserPairRaw(String code) {
         String[] results = getDao(UserPair.class).queryRaw("SELECT * FROM pairs WHERE code=\"" + code + "\"").getFirstResult();
+        if (results == null) {
+            return null;
+        }
         int id = Integer.parseInt(results[0]);
         Integer userID = Integer.parseInt(results[2]);
         Long discordID = Long.parseLong(results[3]);
