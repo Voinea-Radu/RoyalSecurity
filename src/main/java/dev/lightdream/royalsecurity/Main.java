@@ -82,12 +82,15 @@ public final class Main extends LightDreamPlugin {
 
     @Override
     public void disable() {
-
     }
 
     @Override
     public void registerFileManagerModules() {
+    }
 
+    @Override
+    public void registerUser(Player player) {
+        databaseManager.getUser(player);
     }
 
     @Override
