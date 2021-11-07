@@ -99,7 +99,9 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     public JdaEmbed stats = new JdaEmbed(0, 0, 0, "Stats", "", "", Arrays.asList(
             new JdaField("RAM", "%ram%MB", true),
             new JdaField("CPU", "%cpu%%", true),
-            new JdaField("Java Version", "%java%", true)
+            new JdaField("Java Version", "%java%", true),
+            new JdaField("Active codes", "%codes%", true),
+            new JdaField("Active accounts", "%users%", true)
     ), new ArrayList<>());
 
     public JdaEmbed reGiven = new JdaEmbed(0, 255, 0, "Results", "",

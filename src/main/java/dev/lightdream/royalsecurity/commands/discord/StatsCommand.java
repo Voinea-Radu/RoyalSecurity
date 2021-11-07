@@ -3,6 +3,7 @@ package dev.lightdream.royalsecurity.commands.discord;
 import dev.lightdream.api.utils.Utils;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.commands.DiscordCommand;
+import dev.lightdream.royalsecurity.dto.UserPair;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -26,6 +27,10 @@ public class StatsCommand extends DiscordCommand {
                 .parse("ram", String.valueOf(Utils.getRam()))
                 .parse("cpu", String.valueOf(Utils.getCpuLoad()))
                 .parse("java", Utils.getJava())
+                .parse("users", String.valueOf((int) Main.instance.databaseManager.getAll(
+                        dev.lightdream.royalsecurity.dto.User.class).stream().filter(
+                        dev.lightdream.royalsecurity.dto.User::hasSecurity).count()))
+                .parse("codes", String.valueOf(Main.instance.databaseManager.getAll(UserPair.class).size()))
         );
     }
 

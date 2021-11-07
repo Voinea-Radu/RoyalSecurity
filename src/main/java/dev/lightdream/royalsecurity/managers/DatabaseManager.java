@@ -3,6 +3,7 @@ package dev.lightdream.royalsecurity.managers;
 import dev.lightdream.api.IAPI;
 import dev.lightdream.royalsecurity.dto.User;
 import dev.lightdream.royalsecurity.dto.UserPair;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -30,6 +31,15 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
     @Override
     public <T> List<T> getAll(Class<T> clazz) {
         return getAll(clazz, false);
+    }
+
+    @SneakyThrows
+    public UserPair getUserPairRaw(String code) {
+        String[] results = getDao(UserPair.class).queryRaw("SELECT * FROM pairs WHERE code=" + code).getFirstResult();
+        int id = Integer.parseInt(results[0]);
+        Integer userID = Integer.parseInt(results[2]);
+        Long discordID = Long.parseLong(results[3]);
+        return new UserPair(id, code, userID, discordID);
     }
 
     //Users
@@ -84,6 +94,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
         }).collect(Collectors.toList());
     }
 
+    @Deprecated
     public UserPair getUserPair(String code) {
         return getAll(UserPair.class).stream().filter(userPair -> userPair.code.equals(code)).findFirst().orElse(null);
     }

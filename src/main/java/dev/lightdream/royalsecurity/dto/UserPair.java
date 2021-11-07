@@ -27,6 +27,14 @@ public class UserPair extends EditableDatabaseEntry {
         save();
     }
 
+    public UserPair(int id, String code, Integer userID, Long memberID) {
+        super(Main.instance);
+        this.id = id;
+        this.code = code;
+        this.userID = userID;
+        this.memberID = memberID;
+    }
+
     @SuppressWarnings("unused")
     public UserPair() {
         super(Main.instance);
