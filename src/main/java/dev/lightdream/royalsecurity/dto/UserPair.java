@@ -1,21 +1,26 @@
 package dev.lightdream.royalsecurity.dto;
 
-import dev.lightdream.api.databases.EditableDatabaseEntry;
+import dev.lightdream.api.databases.DatabaseEntry;
 import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
 import dev.lightdream.libs.j256.field.DatabaseField;
 import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(tableName = "pairs")
-public class UserPair extends EditableDatabaseEntry {
+@dev.lightdream.api.annotations.DatabaseTable(table = "pairs")
+public class UserPair extends DatabaseEntry {
 
     @DatabaseField(columnName = "id", generatedId = true, canBeNull = false)
+    @dev.lightdream.api.annotations.DatabaseField(columnName = "id", autoGenerate = true)
     public int id;
     @DatabaseField(columnName = "code")
+    @dev.lightdream.api.annotations.DatabaseField(columnName = "code")
     public String code;
     @DatabaseField(columnName = "userID")
+    @dev.lightdream.api.annotations.DatabaseField(columnName = "userID")
     public Integer userID;
     @DatabaseField(columnName = "memberID")
+    @dev.lightdream.api.annotations.DatabaseField(columnName = "memberID")
     public Long memberID;
 
     public UserPair(String code, User user, Long memberID) {
@@ -55,15 +60,5 @@ public class UserPair extends EditableDatabaseEntry {
         user.setDiscordID(memberID);
         user.setIP(ip);
         delete();
-    }
-
-    @Override
-    public Integer getID() {
-        return id;
-    }
-
-    @Override
-    public void save() {
-        save(false);
     }
 }

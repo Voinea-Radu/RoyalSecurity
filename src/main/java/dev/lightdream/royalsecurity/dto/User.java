@@ -16,12 +16,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "users")
+@dev.lightdream.api.annotations.DatabaseTable(table = "users")
 @NoArgsConstructor
 public class User extends dev.lightdream.api.databases.User {
 
     @DatabaseField(columnName = "discord_id")
+    @dev.lightdream.api.annotations.DatabaseField(columnName = "discord_id")
     public Long discordID;
     @DatabaseField(columnName = "ip")
+    @dev.lightdream.api.annotations.DatabaseField(columnName = "ip")
     public String ip;
 
     public User(IAPI api, UUID uuid, String name, String lang) {
@@ -72,11 +75,6 @@ public class User extends dev.lightdream.api.databases.User {
 
     public void unlink() {
         setDiscordID(null);
-    }
-
-    @Override
-    public void save() {
-        save(false);
     }
 
     @Override

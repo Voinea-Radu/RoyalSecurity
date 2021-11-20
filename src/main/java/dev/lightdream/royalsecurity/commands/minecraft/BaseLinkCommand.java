@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseLinkCommand extends SubCommand {
-    public BaseLinkCommand(@NotNull IAPI api) {
-        super(api, "", true, false, "[code]");
+    public BaseLinkCommand() {
+        super(Main.instance, "", true, false, "[code]");
     }
 
     @SuppressWarnings("ConstantConditions")

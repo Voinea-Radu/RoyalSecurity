@@ -1,8 +1,10 @@
 package dev.lightdream.royalsecurity;
 
 import dev.lightdream.api.LightDreamPlugin;
+import dev.lightdream.api.commands.SubCommand;
 import dev.lightdream.api.configs.SQLConfig;
 import dev.lightdream.api.databases.User;
+import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
 import dev.lightdream.royalsecurity.commands.discord.*;
 import dev.lightdream.royalsecurity.commands.minecraft.BaseLinkCommand;
 import dev.lightdream.royalsecurity.commands.minecraft.CheckCode;
@@ -17,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public final class Main extends LightDreamPlugin {
 
@@ -39,7 +42,7 @@ public final class Main extends LightDreamPlugin {
     public void onEnable() {
         instance = this;
 
-        init("RoyalSecurity", "link", "1.1");
+        init("RoyalSecurity", "royalsecurity", "link");
 
         if (!config.multiLobby) {
             this.discordCommandManager = new DiscordCommandManager(this, Arrays.asList(
@@ -49,7 +52,6 @@ public final class Main extends LightDreamPlugin {
                     new ChangePassword(),
                     new UnregisterCommand(),
                     new StatsCommand(),
-                    //new ReGiveRanksCommand(),
                     new AccountsCommand()
             ));
         }
@@ -81,6 +83,14 @@ public final class Main extends LightDreamPlugin {
     }
 
     @Override
+    public List<SubCommand> getBaseSubCommands() {
+        return Arrays.asList(
+                new BaseLinkCommand(),
+                new CheckCode()
+        );
+    }
+
+    @Override
     public void disable() {
     }
 
@@ -91,12 +101,6 @@ public final class Main extends LightDreamPlugin {
     @Override
     public void registerUser(Player player) {
         databaseManager.getUser(player);
-    }
-
-    @Override
-    public void loadBaseCommands() {
-        baseSubCommands.add(new BaseLinkCommand(this));
-        baseSubCommands.add(new CheckCode());
     }
 
     @Override
@@ -122,7 +126,7 @@ public final class Main extends LightDreamPlugin {
     }
 
     @Override
-    public dev.lightdream.api.managers.DatabaseManager getDatabaseManager() {
+    public IDatabaseManagerImpl getDatabaseManager() {
         return databaseManager;
     }
 
@@ -133,11 +137,3 @@ public final class Main extends LightDreamPlugin {
         databaseManager.save(user);
     }
 }
-
-/*
-
-TODO
-- unregister - admin
-- chnagepass - owner
-
- */
