@@ -1,8 +1,8 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.dto.User;
-import dev.lightdream.royalsecurity.dto.UserPair;
+import dev.lightdream.royalsecurity.database.User;
+import dev.lightdream.royalsecurity.database.UserPair;
 import org.apache.commons.lang.RandomStringUtils;
 
 public class SecurityManager {

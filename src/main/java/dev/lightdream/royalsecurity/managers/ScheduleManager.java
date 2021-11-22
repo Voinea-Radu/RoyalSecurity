@@ -1,7 +1,7 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.dto.User;
+import dev.lightdream.royalsecurity.database.User;
 import org.bukkit.Bukkit;
 
 import java.util.List;

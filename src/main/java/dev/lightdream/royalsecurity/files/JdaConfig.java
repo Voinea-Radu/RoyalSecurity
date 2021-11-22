@@ -17,7 +17,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
             new JdaField("Server", "mc.lightdream.dev", true)
     ), Arrays.asList(
             new Button(JDAButtonType.PRIMARY, "authorize_authentication_%ip%;%player_name%", "Yes it was me"),
-            new Button(JDAButtonType.DANGER, "deny_authentication", "No it was not me")
+            new Button(JDAButtonType.DANGER, "deny_authentication_%ip%;%player_name%", "No it was not me")
     ));
 
     public JdaEmbed secure = new JdaEmbed(0, 255, 0, "Secure Message",

@@ -1,4 +1,4 @@
-package dev.lightdream.royalsecurity.dto;
+package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.api.IAPI;
 import dev.lightdream.libs.j256.field.DatabaseField;
@@ -16,16 +16,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "users")
-@dev.lightdream.api.annotations.DatabaseTable(table = "users")
+@dev.lightdream.api.annotations.database.DatabaseTable(table = "users")
 @NoArgsConstructor
 public class User extends dev.lightdream.api.databases.User {
 
     @DatabaseField(columnName = "discord_id")
-    @dev.lightdream.api.annotations.DatabaseField(columnName = "discord_id")
+    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "discord_id")
     public Long discordID;
     @DatabaseField(columnName = "ip")
-    @dev.lightdream.api.annotations.DatabaseField(columnName = "ip")
+    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "ip")
     public String ip;
+
 
     public User(IAPI api, UUID uuid, String name, String lang) {
         super(api, uuid, name, lang);
@@ -127,4 +128,5 @@ public class User extends dev.lightdream.api.databases.User {
             member.modifyNickname(this.name).queue();
         });
     }
+
 }

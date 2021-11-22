@@ -25,7 +25,7 @@ public class ReGiveRanksCommand extends DiscordCommand {
     @Override
     public void execute(User user, MessageChannel channel, List<String> args) {
         Bukkit.getScheduler().runTaskAsynchronously(Main.instance, () -> {
-            List<dev.lightdream.royalsecurity.dto.User> users = Main.instance.databaseManager.getAll(dev.lightdream.royalsecurity.dto.User.class);
+            List<dev.lightdream.royalsecurity.database.User> users = Main.instance.databaseManager.getAll(dev.lightdream.royalsecurity.database.User.class);
             AtomicInteger counter = new AtomicInteger();
             users.forEach(u -> {
                 if (u.discordID == null) {

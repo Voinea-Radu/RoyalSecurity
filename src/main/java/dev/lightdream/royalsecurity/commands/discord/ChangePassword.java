@@ -2,7 +2,7 @@ package dev.lightdream.royalsecurity.commands.discord;
 
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.commands.DiscordCommand;
-import dev.lightdream.royalsecurity.dto.User;
+import dev.lightdream.royalsecurity.database.User;
 import fr.xephi.authme.api.v3.AuthMeApi;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;

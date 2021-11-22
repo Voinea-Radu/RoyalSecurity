@@ -1,18 +1,20 @@
 package dev.lightdream.royalsecurity.commands.minecraft;
 
-import dev.lightdream.api.IAPI;
 import dev.lightdream.api.commands.SubCommand;
 import dev.lightdream.api.databases.User;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.dto.UserPair;
-import org.jetbrains.annotations.NotNull;
+import dev.lightdream.royalsecurity.database.UserPair;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@dev.lightdream.api.annotations.commands.SubCommand(
+        usage = "[code]",
+        onlyForPlayers = true,
+        parentCommand = "link"
+)
 public class BaseLinkCommand extends SubCommand {
     public BaseLinkCommand() {
-        super(Main.instance, "", true, false, "[code]");
+        super(Main.instance);
     }
 
     @SuppressWarnings("ConstantConditions")

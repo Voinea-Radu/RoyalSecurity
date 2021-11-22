@@ -1,10 +1,12 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.dto.User;
+import dev.lightdream.royalsecurity.database.Cooldown;
+import dev.lightdream.royalsecurity.database.User;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 public class MinecraftEventManager implements Listener {
 
@@ -16,8 +18,8 @@ public class MinecraftEventManager implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerJoin(PlayerLoginEvent event) {
         User user = Main.instance.databaseManager.getUser(event.getPlayer().getName());
 
         if (user == null) {
@@ -28,13 +30,22 @@ public class MinecraftEventManager implements Listener {
             return;
         }
 
-        if (event.getPlayer().getAddress().getHostName().equals(user.ip)) {
+        if (event.getAddress().getHostName().equals(user.ip)) {
             return;
         }
 
-        String ip = event.getPlayer().getAddress().getHostName();
+        String ip = event.getAddress().getHostName();
 
-        event.getPlayer().kickPlayer(Main.instance.lang.kickMessage);
+        Cooldown cooldown = Main.instance.databaseManager.getCooldown(ip);
+
+        if(cooldown.isValid()){
+            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+            event.setKickMessage(Main.instance.lang.cooldown);
+            return;
+        }
+
+        event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+        event.setKickMessage(Main.instance.lang.authoriseConnection);
         user.sendAuth(ip);
     }
 

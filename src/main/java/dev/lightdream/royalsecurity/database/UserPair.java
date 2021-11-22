@@ -1,4 +1,4 @@
-package dev.lightdream.royalsecurity.dto;
+package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.api.databases.DatabaseEntry;
 import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
@@ -7,20 +7,20 @@ import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(tableName = "pairs")
-@dev.lightdream.api.annotations.DatabaseTable(table = "pairs")
+@dev.lightdream.api.annotations.database.DatabaseTable(table = "pairs")
 public class UserPair extends DatabaseEntry {
 
     @DatabaseField(columnName = "id", generatedId = true, canBeNull = false)
-    @dev.lightdream.api.annotations.DatabaseField(columnName = "id", autoGenerate = true)
+    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "id", autoGenerate = true)
     public int id;
     @DatabaseField(columnName = "code")
-    @dev.lightdream.api.annotations.DatabaseField(columnName = "code")
+    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "code")
     public String code;
     @DatabaseField(columnName = "userID")
-    @dev.lightdream.api.annotations.DatabaseField(columnName = "userID")
+    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "userID")
     public Integer userID;
     @DatabaseField(columnName = "memberID")
-    @dev.lightdream.api.annotations.DatabaseField(columnName = "memberID")
+    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "memberID")
     public Long memberID;
 
     public UserPair(String code, User user, Long memberID) {

@@ -4,14 +4,19 @@ import dev.lightdream.api.commands.SubCommand;
 import dev.lightdream.api.databases.User;
 import dev.lightdream.api.utils.MessageBuilder;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.dto.UserPair;
+import dev.lightdream.royalsecurity.database.UserPair;
 
 import java.util.HashMap;
 import java.util.List;
 
+@dev.lightdream.api.annotations.commands.SubCommand(
+        aliases = "checkCode",
+        usage = "[code]",
+        parentCommand = "link"
+)
 public class CheckCode extends SubCommand {
     public CheckCode() {
-        super(Main.instance, "checkCode", false, false, "[code]");
+        super(Main.instance);
     }
 
     @Override

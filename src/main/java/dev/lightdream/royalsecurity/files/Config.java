@@ -18,5 +18,6 @@ public class Config extends dev.lightdream.api.configs.Config {
             902534331082375188L,
             903291352261996644L
     );
+    public Long cooldown = 30*60*1000L;
 
 }

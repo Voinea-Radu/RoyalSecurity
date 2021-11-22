@@ -14,7 +14,8 @@ public class Lang extends dev.lightdream.api.configs.Lang {
     public String invalidCode = "Invalid code";
     public String linked = "Linked";
 
-    public String kickMessage = "Please authorise this connection";
+    public String authoriseConnection = "Please authorise this connection";
+    public String cooldown = "Your ip has a cooldown. Please try again in 30 minutes";
 
     public String codeDetails = "User: %name%\n" +
             "Discord ID: %discord_id%";

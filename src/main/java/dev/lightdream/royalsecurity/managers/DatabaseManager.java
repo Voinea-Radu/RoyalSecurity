@@ -4,8 +4,9 @@ import dev.lightdream.api.IAPI;
 import dev.lightdream.api.dto.LambdaExecutor;
 import dev.lightdream.api.managers.database.HikariDatabaseManager;
 import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
-import dev.lightdream.royalsecurity.dto.User;
-import dev.lightdream.royalsecurity.dto.UserPair;
+import dev.lightdream.royalsecurity.database.Cooldown;
+import dev.lightdream.royalsecurity.database.User;
+import dev.lightdream.royalsecurity.database.UserPair;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -27,6 +28,7 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
     public void setup() {
         setup(User.class);
         setup(UserPair.class);
+        setup(Cooldown.class);
     }
 
     //Users
@@ -83,6 +85,12 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
     public UserPair getUserPair(String code) {
         return get(UserPair.class, new HashMap<String, Object>() {{
             put("code", code);
+        }}).stream().findFirst().orElse(null);
+    }
+
+    public Cooldown getCooldown(String ip){
+        return get(Cooldown.class, new HashMap<String, Object>(){{
+            put("ip", ip);
         }}).stream().findFirst().orElse(null);
     }
 
