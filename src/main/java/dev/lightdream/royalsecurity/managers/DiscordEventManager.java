@@ -1,5 +1,6 @@
 package dev.lightdream.royalsecurity.managers;
 
+import dev.lightdream.api.utils.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
@@ -23,6 +24,7 @@ public class DiscordEventManager extends ListenerAdapter {
 
     @Override
     public void onButtonClick(ButtonClickEvent event) {
+        Debugger.info(event.getComponentId());
         if (event.getComponentId().contains("authorize_authentication_")) {
             String data = event.getComponentId().replace("authorize_authentication_", "");
             String ip = data.split(";")[0];
@@ -38,7 +40,7 @@ public class DiscordEventManager extends ListenerAdapter {
             }
 
             user.setIP(ip);
-        } else if (event.getComponentId().contains("deny_authentication")) {
+        } else if (event.getComponentId().contains("deny_authentication_")) {
             String data = event.getComponentId().replace("deny_authentication_", "");
             String ip = data.split(";")[0];
             String name = data.split(";")[1];
@@ -52,9 +54,7 @@ public class DiscordEventManager extends ListenerAdapter {
             }
 
             event.getChannel().sendMessageEmbeds(plugin.jdaConfig.accessDenied.build().build()).queue();
-            event.getMessage().delete().queue();
             new Cooldown(ip);
-
         }
     }
 
