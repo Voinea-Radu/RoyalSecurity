@@ -21,11 +21,7 @@ public class MinecraftEventManager implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerLoginEvent event) {
-        User user = Main.instance.databaseManager.getUser(event.getPlayer().getName());
-
-        if (user == null) {
-            user = Main.instance.databaseManager.getUser(event.getPlayer().getUniqueId());
-        }
+          User  user = Main.instance.databaseManager.getUser(event.getPlayer().getUniqueId());
 
         if (!user.hasSecurity()) {
             return;
@@ -33,7 +29,9 @@ public class MinecraftEventManager implements Listener {
 
         String ip = event.getAddress().getHostName();
 
-        if(Main.instance.databaseManager.getLockdown(user.discordID).status){
+        Debugger.info(Main.instance.databaseManager.getLockdown(user.discordID).status);
+
+        if (Main.instance.databaseManager.getLockdown(user.discordID).status) {
             new Cooldown(ip);
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             event.setKickMessage(Main.instance.lang.cooldown);
