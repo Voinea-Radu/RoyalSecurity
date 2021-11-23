@@ -1,11 +1,12 @@
 package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.api.annotations.database.DatabaseTable;
+import dev.lightdream.api.databases.DatabaseEntry;
 import dev.lightdream.libs.j256.field.DatabaseField;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(table = "cooldown")
-public class Cooldown {
+public class Cooldown extends DatabaseEntry {
 
     @DatabaseField(columnName = "id", generatedId = true, canBeNull = false)
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "id", autoGenerate = true)
@@ -18,8 +19,14 @@ public class Cooldown {
     public Long cooldown;
 
     public Cooldown(String ip, Long cooldown){
+        super(Main.instance);
         this.ip=ip;
         this.cooldown=cooldown;
+    }
+
+    @SuppressWarnings("unused")
+    public Cooldown() {
+        super(Main.instance);
     }
 
     public boolean isValid(){
