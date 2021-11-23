@@ -4,6 +4,7 @@ import dev.lightdream.api.IAPI;
 import dev.lightdream.api.dto.LambdaExecutor;
 import dev.lightdream.api.managers.database.HikariDatabaseManager;
 import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
+import dev.lightdream.api.utils.Debugger;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
@@ -98,6 +99,9 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
     }
 
     public @NotNull Lockdown getLockdown(Long discordID){
+        Debugger.info(get(Lockdown.class, new HashMap<String, Object>() {{
+            put("discord_id", discordID);
+        }}));
         return get(Lockdown.class, new HashMap<String, Object>() {{
             put("discord_id", discordID);
         }}).stream().findFirst().orElse(new Lockdown(discordID));
