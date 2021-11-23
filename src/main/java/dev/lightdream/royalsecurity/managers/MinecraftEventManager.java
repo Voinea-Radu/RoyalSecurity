@@ -1,5 +1,6 @@
 package dev.lightdream.royalsecurity.managers;
 
+import dev.lightdream.api.utils.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
@@ -39,6 +40,7 @@ public class MinecraftEventManager implements Listener {
         for (Cooldown cooldown : Main.instance.databaseManager.getCooldown(ip)) {
             if (cooldown != null) {
                 if (cooldown.isValid()) {
+                    Debugger.info("Kicking for cooldown");
                     event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
                     event.setKickMessage(Main.instance.lang.cooldown);
                     return;
