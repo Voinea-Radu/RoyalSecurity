@@ -37,6 +37,7 @@ public class MinecraftEventManager implements Listener {
             new Cooldown(ip);
             event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
             event.setKickMessage(Main.instance.lang.cooldown);
+            return;
         }
 
         if (event.getAddress().getHostName().equals(user.ip)) {
