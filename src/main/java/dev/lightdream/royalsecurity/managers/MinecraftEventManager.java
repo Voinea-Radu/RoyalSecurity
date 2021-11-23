@@ -38,10 +38,12 @@ public class MinecraftEventManager implements Listener {
 
         Cooldown cooldown = Main.instance.databaseManager.getCooldown(ip);
 
-        if(cooldown.isValid()){
-            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
-            event.setKickMessage(Main.instance.lang.cooldown);
-            return;
+        if (cooldown != null) {
+            if (cooldown.isValid()) {
+                event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+                event.setKickMessage(Main.instance.lang.cooldown);
+                return;
+            }
         }
 
         event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
