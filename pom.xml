@@ -6,7 +6,7 @@
 
     <groupId>dev.lightdream</groupId>
     <artifactId>royalsecurity</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>RoyalSecurity</name>
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>dev.lightdream</groupId>
             <artifactId>LightDreamAPI</artifactId>
-            <version>4.36</version>
+            <version>4.37</version>
         </dependency>
         <dependency>
             <groupId>fr.xephi</groupId>
