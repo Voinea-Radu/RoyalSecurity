@@ -31,11 +31,17 @@ public class MinecraftEventManager implements Listener {
             return;
         }
 
+        String ip = event.getAddress().getHostName();
+
+        if(Main.instance.databaseManager.getLockdown(user.discordID).status){
+            new Cooldown(ip);
+            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+            event.setKickMessage(Main.instance.lang.cooldown);
+        }
+
         if (event.getAddress().getHostName().equals(user.ip)) {
             return;
         }
-
-        String ip = event.getAddress().getHostName();
 
         for (Cooldown cooldown : Main.instance.databaseManager.getCooldown(ip)) {
             if (cooldown != null) {

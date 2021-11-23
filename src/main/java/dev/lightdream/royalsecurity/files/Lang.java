@@ -10,6 +10,7 @@ public class Lang extends dev.lightdream.api.configs.Lang {
     public String unregisterDescription = "Unregister the account of the target";
     public String reGiveRanksDescription = "Re-gives everyone its discord rank of verified on all bot's servers";
     public String statsDescription = "Shows technical details about the bot and its environment";
+    public String lockdownDescription = "Lock you account. All the ips that will try to access your account will be blacklisted.";
 
     public String invalidCode = "Invalid code";
     public String linked = "Linked";

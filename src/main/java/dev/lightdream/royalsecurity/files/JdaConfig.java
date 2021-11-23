@@ -107,5 +107,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
     public JdaEmbed reGiven = new JdaEmbed(0, 255, 0, "Results", "",
             "Given the rank and changed the nickname to %count% users", new ArrayList<>(), new ArrayList<>());
 
+    public JdaEmbed lockdown = new JdaEmbed(0, 255, 0, "Lockdown", "",
+            "Your account lockdown status is %status%", new ArrayList<>(), new ArrayList<>());
 
 }

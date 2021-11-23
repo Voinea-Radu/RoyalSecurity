@@ -52,7 +52,8 @@ public final class Main extends LightDreamPlugin {
                     new ChangePassword(),
                     new UnregisterCommand(),
                     new StatsCommand(),
-                    new AccountsCommand()
+                    new AccountsCommand(),
+                    new LockdownCommand()
             ));
         }
         this.securityManager = new SecurityManager(this);

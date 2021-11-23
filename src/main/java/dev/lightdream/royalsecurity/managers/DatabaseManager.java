@@ -5,6 +5,7 @@ import dev.lightdream.api.dto.LambdaExecutor;
 import dev.lightdream.api.managers.database.HikariDatabaseManager;
 import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
 import dev.lightdream.royalsecurity.database.Cooldown;
+import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
 import dev.lightdream.royalsecurity.database.UserPair;
 import org.bukkit.Bukkit;
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.locks.Lock;
 
 public class DatabaseManager extends HikariDatabaseManager implements IDatabaseManagerImpl {
 
@@ -29,6 +31,7 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
         setup(User.class);
         setup(UserPair.class);
         setup(Cooldown.class);
+        setup(Lockdown.class);
     }
 
     //Users
@@ -92,6 +95,12 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
         return get(Cooldown.class, new HashMap<String, Object>(){{
             put("ip", ip);
         }});
+    }
+
+    public @NotNull Lockdown getLockdown(Long discordID){
+        return get(Lockdown.class, new HashMap<String, Object>() {{
+            put("discord_id", discordID);
+        }}).stream().findFirst().orElse(new Lockdown(discordID));
     }
 
 
