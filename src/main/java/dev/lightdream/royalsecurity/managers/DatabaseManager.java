@@ -88,10 +88,10 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
         }}).stream().findFirst().orElse(null);
     }
 
-    public Cooldown getCooldown(String ip){
+    public List<Cooldown> getCooldown(String ip){
         return get(Cooldown.class, new HashMap<String, Object>(){{
             put("ip", ip);
-        }}).stream().findFirst().orElse(null);
+        }});
     }
 
 

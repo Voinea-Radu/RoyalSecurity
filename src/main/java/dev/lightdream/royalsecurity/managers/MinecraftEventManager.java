@@ -36,13 +36,13 @@ public class MinecraftEventManager implements Listener {
 
         String ip = event.getAddress().getHostName();
 
-        Cooldown cooldown = Main.instance.databaseManager.getCooldown(ip);
-
-        if (cooldown != null) {
-            if (cooldown.isValid()) {
-                event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
-                event.setKickMessage(Main.instance.lang.cooldown);
-                return;
+        for (Cooldown cooldown : Main.instance.databaseManager.getCooldown(ip)) {
+            if (cooldown != null) {
+                if (cooldown.isValid()) {
+                    event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+                    event.setKickMessage(Main.instance.lang.cooldown);
+                    return;
+                }
             }
         }
 
