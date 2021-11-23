@@ -8,9 +8,7 @@ import dev.lightdream.royalsecurity.Main;
 @DatabaseTable(table = "cooldown")
 public class Cooldown extends DatabaseEntry {
 
-    @DatabaseField(columnName = "id", generatedId = true, canBeNull = false)
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "id", autoGenerate = true)
-    public int id;
+
     @DatabaseField(columnName = "ip")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "ip")
     public String ip;

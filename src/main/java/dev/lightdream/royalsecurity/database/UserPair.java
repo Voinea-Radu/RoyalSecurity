@@ -10,9 +10,6 @@ import dev.lightdream.royalsecurity.Main;
 @dev.lightdream.api.annotations.database.DatabaseTable(table = "pairs")
 public class UserPair extends DatabaseEntry {
 
-    @DatabaseField(columnName = "id", generatedId = true, canBeNull = false)
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "id", autoGenerate = true)
-    public int id;
     @DatabaseField(columnName = "code")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "code")
     public String code;
