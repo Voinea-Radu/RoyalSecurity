@@ -4,7 +4,6 @@ import dev.lightdream.api.IAPI;
 import dev.lightdream.api.dto.LambdaExecutor;
 import dev.lightdream.api.managers.database.HikariDatabaseManager;
 import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
-import dev.lightdream.api.utils.Debugger;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.locks.Lock;
 
 public class DatabaseManager extends HikariDatabaseManager implements IDatabaseManagerImpl {
 
@@ -92,19 +90,20 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
         }}).stream().findFirst().orElse(null);
     }
 
-    public List<Cooldown> getCooldown(String ip){
-        return get(Cooldown.class, new HashMap<String, Object>(){{
+    public List<Cooldown> getCooldown(String ip) {
+        return get(Cooldown.class, new HashMap<String, Object>() {{
             put("ip", ip);
         }});
     }
 
-    public @NotNull Lockdown getLockdown(Long discordID){
-        Debugger.info(get(Lockdown.class, new HashMap<String, Object>() {{
+    public @NotNull Lockdown getLockdown(Long discordID) {
+        Lockdown lockdown = get(Lockdown.class, new HashMap<String, Object>() {{
             put("discord_id", discordID);
-        }}));
-        return get(Lockdown.class, new HashMap<String, Object>() {{
-            put("discord_id", discordID);
-        }}).stream().findFirst().orElse(new Lockdown(discordID));
+        }}).stream().findFirst().orElse(null);
+        if (lockdown == null) {
+            lockdown = new Lockdown(discordID);
+        }
+        return lockdown;
     }
 
 
