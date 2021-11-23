@@ -1,6 +1,7 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.royalsecurity.Main;
+import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
 import lombok.Getter;
 import net.dv8tion.jda.api.Permission;
@@ -42,7 +43,6 @@ public class DiscordEventManager extends ListenerAdapter {
             String ip = data.split(";")[0];
             String name = data.split(";")[1];
 
-            event.getChannel().sendMessageEmbeds(plugin.jdaConfig.accessGranted.build().build()).queue();
             event.getMessage().delete().queue();
             User user = plugin.databaseManager.getUser(name);
 
@@ -53,6 +53,7 @@ public class DiscordEventManager extends ListenerAdapter {
 
             event.getChannel().sendMessageEmbeds(plugin.jdaConfig.accessDenied.build().build()).queue();
             event.getMessage().delete().queue();
+            new Cooldown(ip);
 
         }
     }

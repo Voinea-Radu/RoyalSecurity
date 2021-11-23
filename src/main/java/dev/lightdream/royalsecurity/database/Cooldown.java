@@ -16,10 +16,11 @@ public class Cooldown extends DatabaseEntry {
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "cooldown")
     public Long cooldown;
 
-    public Cooldown(String ip, Long cooldown){
+    public Cooldown(String ip){
         super(Main.instance);
         this.ip=ip;
-        this.cooldown=cooldown;
+        this.cooldown=System.currentTimeMillis();
+        save();
     }
 
     @SuppressWarnings("unused")

@@ -6,7 +6,7 @@
 
     <groupId>dev.lightdream</groupId>
     <artifactId>royalsecurity</artifactId>
-    <version>1.10</version>
+    <version>1.11</version>
     <packaging>jar</packaging>
 
     <name>RoyalSecurity</name>
