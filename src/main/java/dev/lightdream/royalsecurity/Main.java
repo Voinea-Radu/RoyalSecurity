@@ -101,7 +101,7 @@ public final class Main extends LightDreamPlugin {
 
     @Override
     public void registerUser(Player player) {
-        databaseManager.getUser(player);
+        databaseManager.createUser(player);
     }
 
     @Override

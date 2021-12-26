@@ -8,7 +8,6 @@ import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
 import dev.lightdream.royalsecurity.database.UserPair;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,16 +33,25 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
     }
 
     //Users
-    public @NotNull User getUser(@NotNull UUID uuid) {
-        User user = get(User.class, new HashMap<String, Object>() {{
+    public @NotNull User createUser(@NotNull OfflinePlayer player) {
+        User user = getUser(player.getUniqueId());
+        if (user == null) {
+            user = getUser(player.getName());
+        }
+        if (user != null) {
+            user.uuid = player.getUniqueId();
+        } else {
+            user = new User(api, player.getUniqueId(), player.getName(), api.getSettings().baseLang);
+        }
+        user.save();
+        return user;
+    }
+
+    @SuppressWarnings("NullableProblems")
+    public @Nullable User getUser(@NotNull UUID uuid) {
+        return get(User.class, new HashMap<String, Object>() {{
             put("uuid", uuid);
         }}).stream().findFirst().orElse(null);
-        if (user == null) {
-            user = new User(api, uuid, Bukkit.getOfflinePlayer(uuid).getName(), api.getSettings().baseLang);
-            user.save();
-            return getUser(uuid);
-        }
-        return user;
     }
 
     @SuppressWarnings("unused")
@@ -55,11 +63,11 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
 
     @SuppressWarnings("unused")
     public @NotNull User getUser(@NotNull OfflinePlayer player) {
-        return getUser(player.getUniqueId());
+        return createUser(player);
     }
 
     public @NotNull User getUser(@NotNull Player player) {
-        return getUser(player.getUniqueId());
+        return createUser(player);
     }
 
     @SuppressWarnings("unused")

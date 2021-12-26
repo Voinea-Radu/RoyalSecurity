@@ -19,9 +19,10 @@ public class MinecraftEventManager implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    @SuppressWarnings("unused")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerLoginEvent event) {
-          User  user = Main.instance.databaseManager.getUser(event.getPlayer().getUniqueId());
+        User user = Main.instance.databaseManager.createUser(event.getPlayer());
 
         if (!user.hasSecurity()) {
             return;
