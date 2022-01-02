@@ -42,16 +42,16 @@ public class DiscordCommandManager extends ListenerAdapter {
                     if (command.permission == null) {
                         if (member != null) {
                             if (command.hasPermission(event.getMember())) {
-                                command.execute(event.getMember(), event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+                                command.execute(event.getMember(), event.getAuthor(), event.getTextChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
                                 return;
                             }
                             return;
                         }
-                        command.execute(null, event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+                        command.execute(null, event.getAuthor(), event.getTextChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
                         return;
                     }
                     if (command.hasPermission(event.getMember())) {
-                        command.execute(event.getMember(), event.getAuthor(), event.getChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
+                        command.execute(event.getMember(), event.getAuthor(), event.getTextChannel(), new ArrayList<>(Arrays.asList(message).subList(1, message.length)));
                         return;
                     }
                     command.sendMessage(event.getChannel(), Main.instance.jdaConfig.notAllowed);

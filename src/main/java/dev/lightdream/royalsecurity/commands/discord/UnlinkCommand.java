@@ -6,6 +6,7 @@ import dev.lightdream.royalsecurity.database.User;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class UnlinkCommand extends DiscordCommand {
     }
 
     @Override
-    public void execute(Member member, MessageChannel channel, List<String> args) {
+    public void execute(Member member, TextChannel channel, List<String> args) {
         if (args.size() == 0) {
             List<User> users = Main.instance.databaseManager.getUser(member.getIdLong());
 

@@ -6,6 +6,7 @@ import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class LockdownCommand extends DiscordCommand {
     }
 
     @Override
-    public void execute(Member member, MessageChannel channel, List<String> args) {
+    public void execute(Member member, TextChannel channel, List<String> args) {
         execute(member.getUser(), channel, args);
     }
 

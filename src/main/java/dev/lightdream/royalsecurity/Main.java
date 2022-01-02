@@ -53,6 +53,7 @@ public final class Main extends LightDreamPlugin {
                     new UnregisterCommand(),
                     new StatsCommand(),
                     new AccountsCommand(),
+                    new CheckAccountsCommand(),
                     new LockdownCommand()
             ));
         }

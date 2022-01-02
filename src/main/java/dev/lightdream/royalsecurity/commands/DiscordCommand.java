@@ -5,6 +5,7 @@ import dev.lightdream.royalsecurity.Main;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +51,7 @@ public abstract class DiscordCommand {
 
     }
 
-    public void execute(@Nullable Member member, User user, MessageChannel channel, List<String> args) {
+    public void execute(@Nullable Member member, User user, TextChannel channel, List<String> args) {
         if (!isMemberSafe()) {
             if (member == null) {
                 sendMessage(channel, Main.instance.jdaConfig.serverCommand);
@@ -64,7 +65,7 @@ public abstract class DiscordCommand {
         execute(member, channel, args);
     }
 
-    public abstract void execute(Member member, MessageChannel channel, List<String> args);
+    public abstract void execute(Member member, TextChannel channel, List<String> args);
 
     public abstract void execute(User user, MessageChannel channel, List<String> args);
 

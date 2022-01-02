@@ -6,6 +6,7 @@ import dev.lightdream.royalsecurity.database.User;
 import fr.xephi.authme.api.v3.AuthMeApi;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ChangePassword extends DiscordCommand {
     }
 
     @Override
-    public void execute(Member member, MessageChannel channel, List<String> args) {
+    public void execute(Member member, TextChannel channel, List<String> args) {
         sendMessage(channel, Main.instance.jdaConfig.dmsCommand);
     }
 

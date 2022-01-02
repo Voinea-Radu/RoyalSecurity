@@ -5,6 +5,7 @@ import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.User;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class LinkCommand extends DiscordCommand {
     }
 
     @Override
-    public void execute(Member member, MessageChannel channel, List<String> args) {
+    public void execute(Member member, TextChannel channel, List<String> args) {
         if (args.size() != 1) {
             sendUsage(channel);
             return;
