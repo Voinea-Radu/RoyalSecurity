@@ -43,6 +43,7 @@ public class AccountsCommand extends DiscordCommand {
         execute(member.getUser(), channel, args);
     }
 
+
     @Override
     public void execute(net.dv8tion.jda.api.entities.User user, MessageChannel channel, List<String> args) {
         List<User> users = Main.instance.databaseManager.getUser(user.getIdLong());
