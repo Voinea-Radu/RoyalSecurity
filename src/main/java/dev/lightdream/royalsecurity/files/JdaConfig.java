@@ -18,8 +18,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
             "",
             Arrays.asList(new JdaField("Username", "%player_name%", true),
                     new JdaField("IP", "%ip%", true),
-                    new JdaField("Date", "%date%", true),
-                    new JdaField("Server", "mc.lightdream.dev", true)),
+                    new JdaField("Date", "%date%", true)),
             Arrays.asList(new Button(JDAButtonType.PRIMARY, "authorize_authentication_%ip%;%player_name%", "Yes it was me"),
                     new Button(JDAButtonType.DANGER, "deny_authentication_%ip%;%player_name%", "No it was not me")));
 
