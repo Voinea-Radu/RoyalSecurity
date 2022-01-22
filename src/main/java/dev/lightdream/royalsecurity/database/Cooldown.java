@@ -1,25 +1,22 @@
 package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.api.annotations.database.DatabaseTable;
-import dev.lightdream.api.databases.DatabaseEntry;
-import dev.lightdream.libs.j256.field.DatabaseField;
+import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(table = "cooldown")
 public class Cooldown extends DatabaseEntry {
 
 
-    @DatabaseField(columnName = "ip")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "ip")
     public String ip;
-    @DatabaseField(columnName = "cooldown")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "cooldown")
     public Long cooldown;
 
-    public Cooldown(String ip){
+    public Cooldown(String ip) {
         super(Main.instance);
-        this.ip=ip;
-        this.cooldown=System.currentTimeMillis();
+        this.ip = ip;
+        this.cooldown = System.currentTimeMillis();
         save();
     }
 
@@ -28,8 +25,8 @@ public class Cooldown extends DatabaseEntry {
         super(Main.instance);
     }
 
-    public boolean isValid(){
-        return cooldown+ Main.instance.config.cooldown>System.currentTimeMillis();
+    public boolean isValid() {
+        return cooldown + Main.instance.config.cooldown > System.currentTimeMillis();
     }
 
 }

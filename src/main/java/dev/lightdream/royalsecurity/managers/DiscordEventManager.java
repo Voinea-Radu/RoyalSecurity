@@ -1,6 +1,6 @@
 package dev.lightdream.royalsecurity.managers;
 
-import dev.lightdream.api.utils.Debugger;
+import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;

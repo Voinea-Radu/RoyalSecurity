@@ -1,9 +1,8 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.api.IAPI;
-import dev.lightdream.api.dto.LambdaExecutor;
-import dev.lightdream.api.managers.database.HikariDatabaseManager;
-import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
+import dev.lightdream.databasemanager.dto.LambdaExecutor;
+import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
@@ -18,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class DatabaseManager extends HikariDatabaseManager implements IDatabaseManagerImpl {
+public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager {
 
     public DatabaseManager(IAPI api) {
         super(api);
@@ -41,13 +40,12 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
         if (user != null) {
             user.uuid = player.getUniqueId();
         } else {
-            user = new User(api, player.getUniqueId(), player.getName(), api.getSettings().baseLang);
+            user = new User(Main.instance, player.getUniqueId(), player.getName(), Main.instance.getSettings().baseLang);
         }
         user.save();
         return user;
     }
 
-    @SuppressWarnings("NullableProblems")
     public @Nullable User getUser(@NotNull UUID uuid) {
         return get(User.class, new HashMap<String, Object>() {{
             put("uuid", uuid);
@@ -82,7 +80,7 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
         if (sender instanceof Player) {
             return getUser((Player) sender);
         }
-        return api.getConsoleUser();
+        return Main.instance.getConsoleUser();
     }
 
     @SuppressWarnings("unused")
@@ -112,12 +110,6 @@ public class DatabaseManager extends HikariDatabaseManager implements IDatabaseM
             lockdown = new Lockdown(discordID);
         }
         return lockdown;
-    }
-
-
-    @Override
-    public HashMap<Class<?>, String> getDataTypes() {
-        return null;
     }
 
     @Override

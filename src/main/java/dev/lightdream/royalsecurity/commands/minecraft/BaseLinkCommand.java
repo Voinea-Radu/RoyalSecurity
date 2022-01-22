@@ -7,11 +7,9 @@ import dev.lightdream.royalsecurity.database.UserPair;
 
 import java.util.List;
 
-@dev.lightdream.api.annotations.commands.SubCommand(
-        usage = "[code]",
+@dev.lightdream.api.annotations.commands.SubCommand(usage = "[code]",
         onlyForPlayers = true,
-        parentCommand = "link"
-)
+        parentCommand = "link")
 public class BaseLinkCommand extends SubCommand {
     public BaseLinkCommand() {
         super(Main.instance);

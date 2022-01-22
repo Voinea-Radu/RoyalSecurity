@@ -2,9 +2,8 @@ package dev.lightdream.royalsecurity;
 
 import dev.lightdream.api.LightDreamPlugin;
 import dev.lightdream.api.commands.SubCommand;
-import dev.lightdream.api.configs.SQLConfig;
 import dev.lightdream.api.databases.User;
-import dev.lightdream.api.managers.database.IDatabaseManagerImpl;
+import dev.lightdream.databasemanager.dto.SQLConfig;
 import dev.lightdream.royalsecurity.commands.discord.*;
 import dev.lightdream.royalsecurity.commands.minecraft.BaseLinkCommand;
 import dev.lightdream.royalsecurity.commands.minecraft.CheckCode;
@@ -36,7 +35,6 @@ public final class Main extends LightDreamPlugin {
     public DatabaseManager databaseManager;
     public DiscordEventManager discordEventManager;
     public MinecraftEventManager minecraftEventManager;
-    public ScheduleManager scheduleManager;
 
     @Override
     public void onEnable() {
@@ -45,17 +43,15 @@ public final class Main extends LightDreamPlugin {
         init("RoyalSecurity", "royalsecurity", "link");
 
         if (!config.multiLobby) {
-            this.discordCommandManager = new DiscordCommandManager(this, Arrays.asList(
-                    new HelpCommand(),
-                    new LinkCommand(),
-                    new UnlinkCommand(),
-                    new ChangePassword(),
-                    new UnregisterCommand(),
-                    new StatsCommand(),
-                    new AccountsCommand(),
-                    new CheckAccountsCommand(),
-                    new LockdownCommand()
-            ));
+            this.discordCommandManager = new DiscordCommandManager(this,
+                    Arrays.asList(new HelpCommand(),
+                            new LinkCommand(),
+                            new UnlinkCommand(),
+                            new ChangePassword(),
+                            new UnregisterCommand(),
+                            new StatsCommand(),
+                            new AccountsCommand(),
+                            new LockdownCommand()));
         }
         this.securityManager = new SecurityManager(this);
         this.databaseManager = new DatabaseManager(this);
@@ -63,8 +59,6 @@ public final class Main extends LightDreamPlugin {
             this.discordEventManager = new DiscordEventManager(this);
         }
         this.minecraftEventManager = new MinecraftEventManager(this);
-        this.scheduleManager = new ScheduleManager(this);
-
     }
 
 
@@ -86,10 +80,7 @@ public final class Main extends LightDreamPlugin {
 
     @Override
     public List<SubCommand> getBaseSubCommands() {
-        return Arrays.asList(
-                new BaseLinkCommand(),
-                new CheckCode()
-        );
+        return Arrays.asList(new BaseLinkCommand(), new CheckCode());
     }
 
     @Override
@@ -103,6 +94,11 @@ public final class Main extends LightDreamPlugin {
     @Override
     public void registerUser(Player player) {
         databaseManager.createUser(player);
+    }
+
+    @Override
+    public dev.lightdream.api.managers.DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 
     @Override
@@ -125,11 +121,6 @@ public final class Main extends LightDreamPlugin {
         });
 
         return langs;
-    }
-
-    @Override
-    public IDatabaseManagerImpl getDatabaseManager() {
-        return databaseManager;
     }
 
     @Override

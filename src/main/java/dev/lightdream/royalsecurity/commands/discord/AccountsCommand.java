@@ -51,8 +51,7 @@ public class AccountsCommand extends DiscordCommand {
     }
 
     public void sendAccounts(List<User> users, MessageChannel channel, String userName) {
-        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone()
-                .parse("user", userName);
+        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone().parse("user", userName);
 
         JdaField field = embed.fields.get(0);
         String s = field.content;

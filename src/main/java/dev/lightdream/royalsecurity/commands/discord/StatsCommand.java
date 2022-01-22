@@ -24,15 +24,16 @@ public class StatsCommand extends DiscordCommand {
 
     @Override
     public void execute(User user, MessageChannel channel, List<String> args) {
-        sendMessage(channel, Main.instance.jdaConfig.stats
-                .parse("ram", String.valueOf(Utils.getRam()))
-                .parse("cpu", String.valueOf(Utils.getCpuLoad()))
-                .parse("java", Utils.getJava())
-                .parse("users", String.valueOf((int) Main.instance.databaseManager.getAll(
-                        dev.lightdream.royalsecurity.database.User.class).stream().filter(
-                        dev.lightdream.royalsecurity.database.User::hasSecurity).count()))
-                .parse("codes", String.valueOf(Main.instance.databaseManager.getAll(UserPair.class).size()))
-        );
+        sendMessage(channel,
+                Main.instance.jdaConfig.stats.parse("ram", String.valueOf(Utils.getRam()))
+                        .parse("cpu", String.valueOf(Utils.getCpuLoad()))
+                        .parse("java", Utils.getJava())
+                        .parse("users",
+                                String.valueOf((int) Main.instance.databaseManager.getAll(dev.lightdream.royalsecurity.database.User.class)
+                                        .stream()
+                                        .filter(dev.lightdream.royalsecurity.database.User::hasSecurity)
+                                        .count()))
+                        .parse("codes", String.valueOf(Main.instance.databaseManager.getAll(UserPair.class).size())));
     }
 
     @Override

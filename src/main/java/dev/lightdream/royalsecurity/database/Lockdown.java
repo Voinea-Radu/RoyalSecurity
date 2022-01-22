@@ -2,13 +2,14 @@ package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.api.annotations.database.DatabaseField;
 import dev.lightdream.api.annotations.database.DatabaseTable;
-import dev.lightdream.api.databases.DatabaseEntry;
+import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(table = "lockdown")
 public class Lockdown extends DatabaseEntry {
 
-    @DatabaseField(columnName = "discord_id", unique = true)
+    @DatabaseField(columnName = "discord_id",
+            unique = true)
     public Long discordID;
     @DatabaseField(columnName = "status")
     public boolean status;
@@ -20,6 +21,7 @@ public class Lockdown extends DatabaseEntry {
         save();
     }
 
+    @SuppressWarnings("unused")
     public Lockdown() {
         super(Main.instance);
     }

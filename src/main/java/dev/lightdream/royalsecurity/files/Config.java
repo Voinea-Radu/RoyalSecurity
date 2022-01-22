@@ -7,17 +7,10 @@ public class Config extends dev.lightdream.api.configs.Config {
 
     public boolean multiLobby = false;
     public int codeDigits = 8;
-    public List<Long> channels = Arrays.asList(
-            901849660052893736L,
-            904359681303138364L
-    );
-    @Deprecated
-    public int nicknameChangeInterval = 30; //minutes
-    @Deprecated
-    public List<Long> verifiedRankID = Arrays.asList(
-            902534331082375188L,
-            903291352261996644L
-    );
-    public Long cooldown = 30*60*1000L;
+    public List<Long> channels = Arrays.asList(901849660052893736L, 904359681303138364L);
+
+    public Long cooldown = 30 * 60 * 1000L;
+
+    public String requiredPermission = ""; //Use '' to disable it and 'none' to force everyone
 
 }

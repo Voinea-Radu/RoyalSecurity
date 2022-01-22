@@ -9,11 +9,9 @@ import dev.lightdream.royalsecurity.database.UserPair;
 import java.util.HashMap;
 import java.util.List;
 
-@dev.lightdream.api.annotations.commands.SubCommand(
-        aliases = "checkCode",
+@dev.lightdream.api.annotations.commands.SubCommand(aliases = "checkCode",
         usage = "[code]",
-        parentCommand = "link"
-)
+        parentCommand = "link")
 public class CheckCode extends SubCommand {
     public CheckCode() {
         super(Main.instance);

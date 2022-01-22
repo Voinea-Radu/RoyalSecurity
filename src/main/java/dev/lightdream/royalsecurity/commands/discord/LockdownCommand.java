@@ -1,6 +1,6 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
-import dev.lightdream.api.utils.Debugger;
+import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.Lockdown;
@@ -26,9 +26,7 @@ public class LockdownCommand extends DiscordCommand {
         Lockdown lockdown = Main.instance.databaseManager.getLockdown(u.getIdLong());
         lockdown.toggle();
         Debugger.info(lockdown.id);
-        sendMessage(channel, Main.instance.jdaConfig.lockdown
-                .parse("status", String.valueOf(lockdown.status))
-        );
+        sendMessage(channel, Main.instance.jdaConfig.lockdown.parse("status", String.valueOf(lockdown.status)));
     }
 
     @Override

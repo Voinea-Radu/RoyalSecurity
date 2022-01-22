@@ -70,11 +70,7 @@ public abstract class DiscordCommand {
     public abstract void execute(User user, MessageChannel channel, List<String> args);
 
     public void sendUsage(MessageChannel channel) {
-        channel.sendMessageEmbeds(Main.instance.jdaConfig.usage
-                .parse("command", aliases.get(0))
-                .parse("usage", usage)
-                .build().build()
-        ).queue();
+        channel.sendMessageEmbeds(Main.instance.jdaConfig.usage.parse("command", aliases.get(0)).parse("usage", usage).build().build()).queue();
     }
 
     public void sendMessage(MessageChannel channel, JdaEmbed embed) {

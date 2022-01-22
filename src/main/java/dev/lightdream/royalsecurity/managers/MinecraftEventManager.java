@@ -1,6 +1,6 @@
 package dev.lightdream.royalsecurity.managers;
 
-import dev.lightdream.api.utils.Debugger;
+import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+
+import java.util.Objects;
 
 public class MinecraftEventManager implements Listener {
 
@@ -19,12 +21,24 @@ public class MinecraftEventManager implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "ConstantConditions"})
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerLoginEvent event) {
         User user = Main.instance.databaseManager.createUser(event.getPlayer());
 
         if (!user.hasSecurity()) {
+            if (!Objects.equals(Main.instance.config.requiredPermission, "")) {
+                if (Main.instance.config.requiredPermission.equals("none")) {
+                    event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+                    event.setKickMessage(Main.instance.lang.required);
+                } else {
+                    if (user.getPlayer().hasPermission(Main.instance.config.requiredPermission)) {
+                        event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+                        event.setKickMessage(Main.instance.lang.required);
+                    }
+                }
+            }
+
             return;
         }
 
@@ -46,7 +60,6 @@ public class MinecraftEventManager implements Listener {
         for (Cooldown cooldown : Main.instance.databaseManager.getCooldown(ip)) {
             if (cooldown != null) {
                 if (cooldown.isValid()) {
-                    Debugger.info("Kicking for cooldown");
                     event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
                     event.setKickMessage(Main.instance.lang.cooldown);
                     return;

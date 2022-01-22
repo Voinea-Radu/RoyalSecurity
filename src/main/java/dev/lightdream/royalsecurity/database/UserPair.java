@@ -1,22 +1,16 @@
 package dev.lightdream.royalsecurity.database;
 
-import dev.lightdream.api.databases.DatabaseEntry;
+import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
-import dev.lightdream.libs.j256.field.DatabaseField;
-import dev.lightdream.libs.j256.table.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
 
-@DatabaseTable(tableName = "pairs")
 @dev.lightdream.api.annotations.database.DatabaseTable(table = "pairs")
 public class UserPair extends DatabaseEntry {
 
-    @DatabaseField(columnName = "code")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "code")
     public String code;
-    @DatabaseField(columnName = "userID")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "userID")
     public Integer userID;
-    @DatabaseField(columnName = "memberID")
     @dev.lightdream.api.annotations.database.DatabaseField(columnName = "memberID")
     public Long memberID;
 
@@ -27,14 +21,6 @@ public class UserPair extends DatabaseEntry {
         this.memberID = memberID;
 
         save();
-    }
-
-    public UserPair(int id, String code, Integer userID, Long memberID) {
-        super(Main.instance);
-        this.id = id;
-        this.code = code;
-        this.userID = userID;
-        this.memberID = memberID;
     }
 
     @SuppressWarnings("unused")
