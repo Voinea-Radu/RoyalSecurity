@@ -1,6 +1,7 @@
 package dev.lightdream.royalsecurity.database;
 
-import dev.lightdream.api.annotations.database.DatabaseTable;
+import dev.lightdream.databasemanager.annotations.database.DatabaseField;
+import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
 
@@ -8,9 +9,9 @@ import dev.lightdream.royalsecurity.Main;
 public class Cooldown extends DatabaseEntry {
 
 
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "ip")
+    @DatabaseField(columnName = "ip")
     public String ip;
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "cooldown")
+    @DatabaseField(columnName = "cooldown")
     public Long cooldown;
 
     public Cooldown(String ip) {

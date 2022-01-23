@@ -1,8 +1,11 @@
 package dev.lightdream.royalsecurity.files;
 
+import lombok.NoArgsConstructor;
+
 import java.util.Arrays;
 import java.util.List;
 
+@NoArgsConstructor
 public class Config extends dev.lightdream.api.configs.Config {
 
     public boolean multiLobby = false;

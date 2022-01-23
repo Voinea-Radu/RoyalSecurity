@@ -1,17 +1,19 @@
 package dev.lightdream.royalsecurity.database;
 
+import dev.lightdream.databasemanager.annotations.database.DatabaseField;
+import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
 import dev.lightdream.royalsecurity.Main;
 
-@dev.lightdream.api.annotations.database.DatabaseTable(table = "pairs")
+@DatabaseTable(table = "pairs")
 public class UserPair extends DatabaseEntry {
 
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "code")
+    @DatabaseField(columnName = "code")
     public String code;
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "userID")
+    @DatabaseField(columnName = "userID")
     public Integer userID;
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "memberID")
+    @DatabaseField(columnName = "memberID")
     public Long memberID;
 
     public UserPair(String code, User user, Long memberID) {

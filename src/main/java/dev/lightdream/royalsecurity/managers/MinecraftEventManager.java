@@ -4,6 +4,8 @@ import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
+import fr.xephi.authme.api.v3.AuthMeApi;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -54,6 +56,12 @@ public class MinecraftEventManager implements Listener {
         }
 
         if (event.getAddress().getHostName().equals(user.ip)) {
+            if (user.autoConnect) {
+                Bukkit.getScheduler().runTaskLater(Main.instance, () -> {
+                    AuthMeApi.getInstance().forceLogin(event.getPlayer());
+                    Bukkit.getScheduler().runTaskLater(Main.instance, () -> user.sendMessage(Main.instance, Main.instance.lang.autoConnected), 20L);
+                }, 40L);
+            }
             return;
         }
 

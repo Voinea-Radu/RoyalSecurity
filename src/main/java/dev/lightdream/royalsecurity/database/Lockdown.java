@@ -1,7 +1,7 @@
 package dev.lightdream.royalsecurity.database;
 
-import dev.lightdream.api.annotations.database.DatabaseField;
-import dev.lightdream.api.annotations.database.DatabaseTable;
+import dev.lightdream.databasemanager.annotations.database.DatabaseField;
+import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
 

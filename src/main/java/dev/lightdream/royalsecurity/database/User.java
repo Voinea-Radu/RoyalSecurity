@@ -1,6 +1,8 @@
 package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.api.IAPI;
+import dev.lightdream.databasemanager.annotations.database.DatabaseField;
+import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.royalsecurity.Main;
 import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -11,20 +13,23 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-@dev.lightdream.api.annotations.database.DatabaseTable(table = "users")
+@DatabaseTable(table = "users")
 @NoArgsConstructor
 public class User extends dev.lightdream.api.databases.User {
 
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "discord_id")
+    @DatabaseField(columnName = "discord_id")
     public Long discordID;
-    @dev.lightdream.api.annotations.database.DatabaseField(columnName = "ip")
+    @DatabaseField(columnName = "ip")
     public String ip;
+    @DatabaseField(columnName = "auto_connect")
+    public boolean autoConnect;
 
 
     public User(IAPI api, UUID uuid, String name, String lang) {
         super(api, uuid, name, lang);
         this.discordID = null;
         this.ip = "";
+        this.autoConnect = false;
     }
 
     public boolean hasSecurity() {
@@ -68,6 +73,11 @@ public class User extends dev.lightdream.api.databases.User {
 
     public void unlink() {
         setDiscordID(null);
+    }
+
+    public void autoConnect() {
+        autoConnect = !autoConnect;
+        save();
     }
 
 }

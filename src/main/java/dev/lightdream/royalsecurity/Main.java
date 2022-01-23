@@ -5,6 +5,7 @@ import dev.lightdream.api.commands.SubCommand;
 import dev.lightdream.api.databases.User;
 import dev.lightdream.databasemanager.dto.SQLConfig;
 import dev.lightdream.royalsecurity.commands.discord.*;
+import dev.lightdream.royalsecurity.commands.minecraft.AutoConnect;
 import dev.lightdream.royalsecurity.commands.minecraft.BaseLinkCommand;
 import dev.lightdream.royalsecurity.commands.minecraft.CheckCode;
 import dev.lightdream.royalsecurity.files.Config;
@@ -12,6 +13,7 @@ import dev.lightdream.royalsecurity.files.JdaConfig;
 import dev.lightdream.royalsecurity.files.Lang;
 import dev.lightdream.royalsecurity.managers.SecurityManager;
 import dev.lightdream.royalsecurity.managers.*;
+import lombok.SneakyThrows;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +38,7 @@ public final class Main extends LightDreamPlugin {
     public DiscordEventManager discordEventManager;
     public MinecraftEventManager minecraftEventManager;
 
+    @SneakyThrows
     @Override
     public void onEnable() {
         instance = this;
@@ -80,7 +83,10 @@ public final class Main extends LightDreamPlugin {
 
     @Override
     public List<SubCommand> getBaseSubCommands() {
-        return Arrays.asList(new BaseLinkCommand(), new CheckCode());
+        return Arrays.asList(
+                new BaseLinkCommand(),
+                new CheckCode(),
+                new AutoConnect());
     }
 
     @Override

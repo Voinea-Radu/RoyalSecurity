@@ -19,4 +19,7 @@ public class Lang extends dev.lightdream.api.configs.Lang {
     public String cooldown = "Your ip has a cooldown. Please try again in 30 minutes";
 
     public String codeDetails = "User: %name%\n" + "Discord ID: %discord_id%";
+
+    public String autoConnect = "Your auto connect status is now %status%";
+    public String autoConnected = "You have been auto-connected based on your ip. You can stop this by doing /link auto-connect";
 }
