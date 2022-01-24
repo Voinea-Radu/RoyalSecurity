@@ -22,14 +22,14 @@ public class User extends dev.lightdream.api.databases.User {
     @DatabaseField(columnName = "ip")
     public String ip;
     @DatabaseField(columnName = "auto_connect")
-    public boolean autoConnect;
+    public int autoConnect;
 
 
-    public User(IAPI api, UUID uuid, String name, String lang) {
-        super(api, uuid, name, lang);
+    public User(IAPI api, UUID uuid, String name) {
+        super(api, uuid, name);
         this.discordID = null;
         this.ip = "";
-        this.autoConnect = false;
+        this.autoConnect = 0;
     }
 
     public boolean hasSecurity() {
@@ -75,9 +75,17 @@ public class User extends dev.lightdream.api.databases.User {
         setDiscordID(null);
     }
 
-    public void autoConnect() {
-        autoConnect = !autoConnect;
+    public void changeAutoConnect() {
+        if(autoConnect==0){
+            autoConnect=1;
+        }else{
+            autoConnect=0;
+        }
         save();
+    }
+
+    public boolean autoConnect(){
+        return autoConnect==1;
     }
 
 }

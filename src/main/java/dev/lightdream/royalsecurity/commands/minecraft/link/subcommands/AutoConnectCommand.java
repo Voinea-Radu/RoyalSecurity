@@ -1,5 +1,6 @@
-package dev.lightdream.royalsecurity.commands.minecraft;
+package dev.lightdream.royalsecurity.commands.minecraft.link.subcommands;
 
+import dev.lightdream.api.IAPI;
 import dev.lightdream.api.commands.SubCommand;
 import dev.lightdream.api.databases.User;
 import dev.lightdream.api.utils.MessageBuilder;
@@ -10,24 +11,25 @@ import java.util.HashMap;
 import java.util.List;
 
 
-@dev.lightdream.api.annotations.commands.SubCommand(
-        aliases = {"autoConnect", "auto-connect"},
+@SuppressWarnings("unused")
+@dev.lightdream.api.annotations.commands.SubCommand(aliases = {"autoConnect"},
         onlyForPlayers = true,
-        parentCommand = "link")
-public class AutoConnect extends SubCommand {
-    public AutoConnect() {
-        super(Main.instance);
+        parent = AutoConnectCommand.class,
+        command = "auto-connect")
+public class AutoConnectCommand extends SubCommand {
+    public AutoConnectCommand(IAPI api) {
+        super(api);
     }
 
     @Override
     public void execute(User u, List<String> list) {
         dev.lightdream.royalsecurity.database.User user = (dev.lightdream.royalsecurity.database.User) u;
 
-        user.autoConnect();
+        user.changeAutoConnect();
 
-        user.sendMessage(Main.instance, new MessageBuilder(Main.instance.lang.autoConnect).addPlaceholders(new HashMap<String, String>() {{
+        new MessageBuilder(Main.instance.lang.autoConnect).addPlaceholders(new HashMap<String, String>() {{
             put("status", String.valueOf(user.autoConnect));
-        }}));
+        }}).send(user);
     }
 
     @Override

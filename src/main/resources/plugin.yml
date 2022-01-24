@@ -3,8 +3,3 @@ version: ${project.version}
 main: dev.lightdream.royalsecurity.Main
 depend:
   - AuthMe
-commands:
-  link:
-    description: NA
-  ld-api:
-    description: NA

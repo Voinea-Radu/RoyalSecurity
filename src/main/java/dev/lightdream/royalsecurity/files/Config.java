@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
-public class Config extends dev.lightdream.api.configs.Config {
+public class Config {
 
     public boolean multiLobby = false;
     public int codeDigits = 8;

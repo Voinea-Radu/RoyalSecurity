@@ -1,13 +1,8 @@
 package dev.lightdream.royalsecurity;
 
 import dev.lightdream.api.LightDreamPlugin;
-import dev.lightdream.api.commands.SubCommand;
-import dev.lightdream.api.databases.User;
 import dev.lightdream.databasemanager.dto.SQLConfig;
 import dev.lightdream.royalsecurity.commands.discord.*;
-import dev.lightdream.royalsecurity.commands.minecraft.AutoConnect;
-import dev.lightdream.royalsecurity.commands.minecraft.BaseLinkCommand;
-import dev.lightdream.royalsecurity.commands.minecraft.CheckCode;
 import dev.lightdream.royalsecurity.files.Config;
 import dev.lightdream.royalsecurity.files.JdaConfig;
 import dev.lightdream.royalsecurity.files.Lang;
@@ -19,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public final class Main extends LightDreamPlugin {
 
@@ -43,7 +36,7 @@ public final class Main extends LightDreamPlugin {
     public void onEnable() {
         instance = this;
 
-        init("RoyalSecurity", "royalsecurity", "link");
+        init("RoyalSecurity", "royalsecurity");
 
         if (!config.multiLobby) {
             this.discordCommandManager = new DiscordCommandManager(this,
@@ -57,7 +50,7 @@ public final class Main extends LightDreamPlugin {
                             new LockdownCommand()));
         }
         this.securityManager = new SecurityManager(this);
-        this.databaseManager = new DatabaseManager(this);
+        this.databaseManager = (DatabaseManager) getDatabaseManager();
         if (!config.multiLobby) {
             this.discordEventManager = new DiscordEventManager(this);
         }
@@ -74,19 +67,15 @@ public final class Main extends LightDreamPlugin {
     public void loadConfigs() {
         sqlConfig = fileManager.load(SQLConfig.class);
         config = fileManager.load(Config.class);
-        baseConfig = config;
-        lang = fileManager.load(Lang.class, fileManager.getFile(baseConfig.baseLang));
+        lang = fileManager.load(Lang.class);
         baseLang = lang;
         jdaConfig = fileManager.load(JdaConfig.class);
         baseJdaConfig = jdaConfig;
     }
 
     @Override
-    public List<SubCommand> getBaseSubCommands() {
-        return Arrays.asList(
-                new BaseLinkCommand(),
-                new CheckCode(),
-                new AutoConnect());
+    public dev.lightdream.api.managers.DatabaseManager registerDatabaseManager() {
+        return new DatabaseManager(this);
     }
 
     @Override
@@ -102,37 +91,5 @@ public final class Main extends LightDreamPlugin {
         databaseManager.createUser(player);
     }
 
-    @Override
-    public dev.lightdream.api.managers.DatabaseManager getDatabaseManager() {
-        return databaseManager;
-    }
 
-    @Override
-    public dev.lightdream.api.managers.MessageManager instantiateMessageManager() {
-        return new dev.lightdream.api.managers.MessageManager(this, Main.class);
-    }
-
-    @Override
-    public void registerLangManager() {
-        dev.lightdream.api.API.instance.langManager.register(Main.class, getLangs());
-    }
-
-    @Override
-    public HashMap<String, Object> getLangs() {
-        HashMap<String, Object> langs = new HashMap<>();
-
-        baseConfig.langs.forEach(lang -> {
-            dev.lightdream.api.configs.Lang l = fileManager.load(dev.lightdream.api.configs.Lang.class, fileManager.getFile(lang));
-            langs.put(lang, l);
-        });
-
-        return langs;
-    }
-
-    @Override
-    public void setLang(Player player, String s) {
-        User user = databaseManager.getUser(player);
-        user.setLang(s);
-        databaseManager.save(user);
-    }
 }

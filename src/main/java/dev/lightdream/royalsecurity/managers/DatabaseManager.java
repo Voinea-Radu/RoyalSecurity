@@ -40,7 +40,7 @@ public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager
         if (user != null) {
             user.uuid = player.getUniqueId();
         } else {
-            user = new User(Main.instance, player.getUniqueId(), player.getName(), Main.instance.getSettings().baseLang);
+            user = new User(Main.instance, player.getUniqueId(), player.getName());
         }
         user.save();
         return user;

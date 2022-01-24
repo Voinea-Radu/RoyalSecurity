@@ -1,18 +1,19 @@
-package dev.lightdream.royalsecurity.commands.minecraft;
+package dev.lightdream.royalsecurity.commands.minecraft.link;
 
-import dev.lightdream.api.commands.SubCommand;
+import dev.lightdream.api.IAPI;
+import dev.lightdream.api.commands.BaseCommand;
 import dev.lightdream.api.databases.User;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.UserPair;
 
 import java.util.List;
 
-@dev.lightdream.api.annotations.commands.SubCommand(usage = "[code]",
-        onlyForPlayers = true,
-        parentCommand = "link")
-public class BaseLinkCommand extends SubCommand {
-    public BaseLinkCommand() {
-        super(Main.instance);
+@dev.lightdream.api.annotations.commands.Command(
+        command = "link"
+)
+public class LinkCommand extends BaseCommand {
+    public LinkCommand(IAPI api) {
+        super(api);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -26,17 +27,17 @@ public class BaseLinkCommand extends SubCommand {
         UserPair pair = Main.instance.databaseManager.getUserPair(args.get(0));
 
         if (pair == null) {
-            user.sendMessage(api, Main.instance.lang.invalidCode);
+            user.sendMessage(Main.instance.lang.invalidCode);
             return;
         }
 
         if (!pair.getUser().equals(user)) {
-            user.sendMessage(api, Main.instance.lang.invalidCode);
+            user.sendMessage(Main.instance.lang.invalidCode);
             return;
         }
 
         pair.pair(user.getPlayer().getAddress().getHostName());
-        user.sendMessage(api, Main.instance.lang.linked);
+        user.sendMessage(Main.instance.lang.linked);
     }
 
     @Override

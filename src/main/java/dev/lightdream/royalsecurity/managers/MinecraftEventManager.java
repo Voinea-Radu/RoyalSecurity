@@ -56,10 +56,10 @@ public class MinecraftEventManager implements Listener {
         }
 
         if (event.getAddress().getHostName().equals(user.ip)) {
-            if (user.autoConnect) {
+            if (user.autoConnect()) {
                 Bukkit.getScheduler().runTaskLater(Main.instance, () -> {
                     AuthMeApi.getInstance().forceLogin(event.getPlayer());
-                    Bukkit.getScheduler().runTaskLater(Main.instance, () -> user.sendMessage(Main.instance, Main.instance.lang.autoConnected), 20L);
+                    Bukkit.getScheduler().runTaskLater(Main.instance, () -> user.sendMessage(Main.instance.lang.autoConnected), 20L);
                 }, 40L);
             }
             return;
