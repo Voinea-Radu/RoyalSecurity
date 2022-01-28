@@ -98,7 +98,7 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
             "Linked Accounts",
             "",
             "",
-            Arrays.asList(new JdaField("%user%'s Accounts", "%player_name%\n", true)),
+            Arrays.asList(new JdaField("%user%'s Accounts", "`%player_name%`\n", true)),
             new ArrayList<>());
 
     public JdaEmbed multipleLinked = new JdaEmbed(255,
