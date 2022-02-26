@@ -1,6 +1,8 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.api.IAPI;
+import dev.lightdream.databasemanager.DatabaseMain;
+import dev.lightdream.databasemanager.database.HikariDatabaseManager;
 import dev.lightdream.databasemanager.dto.LambdaExecutor;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
@@ -17,10 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class DatabaseManager extends dev.lightdream.api.managers.DatabaseManager {
+public class DatabaseManager extends HikariDatabaseManager {
 
-    public DatabaseManager(IAPI api) {
-        super(api);
+
+    public DatabaseManager(DatabaseMain main) {
+        super(main);
     }
 
     @Override

@@ -1,14 +1,15 @@
 package dev.lightdream.royalsecurity.files;
 
-import dev.lightdream.api.dto.jda.Button;
-import dev.lightdream.api.dto.jda.JdaEmbed;
-import dev.lightdream.api.dto.jda.JdaField;
-import dev.lightdream.api.enums.JDAButtonType;
+import dev.lightdream.jdaextension.dto.Button;
+import dev.lightdream.jdaextension.dto.JDAConfig;
+import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JdaField;
+import dev.lightdream.jdaextension.enums.JDAButtonType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
+public class JdaConfig extends JDAConfig {
 
     public JdaEmbed auth = new JdaEmbed(255,
             255,
