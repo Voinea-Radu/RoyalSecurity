@@ -1,8 +1,8 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
+import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LockdownCommand extends DiscordCommand {
     public LockdownCommand() {
-        super("lockdown", Main.instance.lang.lockdownDescription, null, "");
+        super(Main.instance, "lockdown", Main.instance.lang.lockdownDescription, null, "", true);
     }
 
     @Override

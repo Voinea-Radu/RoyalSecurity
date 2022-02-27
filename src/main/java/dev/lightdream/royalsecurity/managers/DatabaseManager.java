@@ -1,10 +1,7 @@
 package dev.lightdream.royalsecurity.managers;
 
-import dev.lightdream.api.IAPI;
 import dev.lightdream.databasemanager.DatabaseMain;
 import dev.lightdream.databasemanager.database.HikariDatabaseManager;
-import dev.lightdream.databasemanager.dto.LambdaExecutor;
-import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
@@ -19,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class DatabaseManager extends HikariDatabaseManager {
 
 
@@ -43,7 +41,7 @@ public class DatabaseManager extends HikariDatabaseManager {
         if (user != null) {
             user.uuid = player.getUniqueId();
         } else {
-            user = new User(Main.instance, player.getUniqueId(), player.getName());
+            user = new User(player.getUniqueId(), player.getName());
         }
         user.save();
         return user;
@@ -79,11 +77,11 @@ public class DatabaseManager extends HikariDatabaseManager {
     }
 
     @SuppressWarnings("unused")
-    public @Nullable dev.lightdream.api.databases.User getUser(@NotNull CommandSender sender) {
+    public @Nullable User getUser(@NotNull CommandSender sender) {
         if (sender instanceof Player) {
             return getUser((Player) sender);
         }
-        return Main.instance.getConsoleUser();
+        return null;
     }
 
     @SuppressWarnings("unused")
@@ -115,13 +113,4 @@ public class DatabaseManager extends HikariDatabaseManager {
         return lockdown;
     }
 
-    @Override
-    public HashMap<Class<?>, LambdaExecutor> getSerializeMap() {
-        return null;
-    }
-
-    @Override
-    public HashMap<Class<?>, LambdaExecutor> getDeserializeMap() {
-        return null;
-    }
 }

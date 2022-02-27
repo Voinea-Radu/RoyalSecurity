@@ -1,7 +1,7 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
+import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import fr.xephi.authme.api.v3.AuthMeApi;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UnregisterCommand extends DiscordCommand {
     public UnregisterCommand() {
-        super("unregister", Main.instance.lang.unregisterDescription, Permission.ADMINISTRATOR, "<username>");
+        super(Main.instance, "unregister", Main.instance.lang.unregisterDescription, Permission.ADMINISTRATOR, "<username>", true);
     }
 
     @Override

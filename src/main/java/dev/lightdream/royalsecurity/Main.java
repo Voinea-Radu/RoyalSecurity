@@ -1,6 +1,8 @@
 package dev.lightdream.royalsecurity;
 
-import dev.lightdream.api.LightDreamPlugin;
+import dev.lightdream.commandmanager.CommandMain;
+import dev.lightdream.commandmanager.dto.CommandLang;
+import dev.lightdream.commandmanager.manager.CommandManager;
 import dev.lightdream.databasemanager.DatabaseMain;
 import dev.lightdream.databasemanager.database.IDatabaseManager;
 import dev.lightdream.databasemanager.dto.DriverConfig;
@@ -8,6 +10,8 @@ import dev.lightdream.databasemanager.dto.SQLConfig;
 import dev.lightdream.filemanager.FileManager;
 import dev.lightdream.filemanager.FileManagerMain;
 import dev.lightdream.jdaextension.JDAExtensionMain;
+import dev.lightdream.jdaextension.commands.commands.HelpCommand;
+import dev.lightdream.jdaextension.commands.commands.StatsCommand;
 import dev.lightdream.jdaextension.dto.JDAConfig;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
 import dev.lightdream.jdaextension.managers.DiscordCommandManager;
@@ -18,20 +22,19 @@ import dev.lightdream.royalsecurity.commands.discord.*;
 import dev.lightdream.royalsecurity.files.Config;
 import dev.lightdream.royalsecurity.files.JdaConfig;
 import dev.lightdream.royalsecurity.files.Lang;
+import dev.lightdream.royalsecurity.managers.DatabaseManager;
+import dev.lightdream.royalsecurity.managers.DiscordEventManager;
+import dev.lightdream.royalsecurity.managers.MinecraftEventManager;
 import dev.lightdream.royalsecurity.managers.SecurityManager;
-import dev.lightdream.royalsecurity.managers.*;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.util.Arrays;
 
-public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain, FileManagerMain, JDAExtensionMain {
+public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain, FileManagerMain, JDAExtensionMain, CommandMain {
     public static Main instance;
 
     //Settings
@@ -48,6 +51,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     public DiscordEventManager discordEventManager;
     public MinecraftEventManager minecraftEventManager;
     public FileManager fileManager;
+    public CommandManager commandManager;
 
     //JDA
     public JDA bot;
@@ -71,12 +75,12 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
 
         if (!config.multiLobby) {
             this.discordCommandManager = new DiscordCommandManager(this,
-                    Arrays.asList(new HelpCommand(),
+                    Arrays.asList(new HelpCommand(this),
                             new LinkCommand(),
                             new UnlinkCommand(),
                             new ChangePassword(),
                             new UnregisterCommand(),
-                            new StatsCommand(),
+                            new StatsCommand(this),
                             new AccountsCommand(),
                             new LockdownCommand()));
         }
@@ -86,6 +90,13 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
             this.discordEventManager = new DiscordEventManager(this);
         }
         this.minecraftEventManager = new MinecraftEventManager(this);
+
+        commandManager = new CommandManager(this, "dev.lightdream.royalsecurity");
+    }
+
+    @Override
+    public CommandLang getLang() {
+        return null;
     }
 
     public void loadConfigs() {
@@ -94,6 +105,21 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         config = fileManager.load(Config.class);
         lang = fileManager.load(Lang.class);
         jdaConfig = fileManager.load(JdaConfig.class);
+    }
+
+    @Override
+    public String getProjectName() {
+        return "Royal Security";
+    }
+
+    @Override
+    public String getProjectVersion() {
+        return "1.21";
+    }
+
+    @Override
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 
     @Override
@@ -127,22 +153,17 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     }
 
     @Override
-    public String getPrefix() {
-        return null;
-    }
-
-    @Override
     public JdaEmbed getHelpEmbed() {
-        return null;
+        return jdaConfig.helpEmbed;
     }
 
     @Override
     public boolean debug() {
-        return false;
+        return config.debug;
     }
 
     @Override
     public void log(String s) {
-
+        System.out.println(s);
     }
 }

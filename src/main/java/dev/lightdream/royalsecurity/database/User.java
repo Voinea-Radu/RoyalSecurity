@@ -1,11 +1,9 @@
 package dev.lightdream.royalsecurity.database;
 
-import dev.lightdream.api.IAPI;
 import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
-import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
 import net.dv8tion.jda.api.requests.ErrorResponse;
@@ -36,7 +34,7 @@ public class User extends DatabaseEntry {
         this.autoConnect = 0;
     }
 
-    public User(){
+    public User() {
         super(Main.instance);
     }
 
