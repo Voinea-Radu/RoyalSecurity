@@ -75,14 +75,16 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
 
         if (!config.multiLobby) {
             this.discordCommandManager = new DiscordCommandManager(this,
-                    Arrays.asList(new HelpCommand(this),
+                    Arrays.asList(
+                            new HelpCommand(this),
                             new LinkCommand(),
                             new UnlinkCommand(),
                             new ChangePassword(),
                             new UnregisterCommand(),
                             new StatsCommand(this),
-                            new AccountsCommand(),
-                            new LockdownCommand()));
+                            new AccountsCommand()
+                    )
+            );
         }
         this.securityManager = new SecurityManager(this);
         this.databaseManager = new DatabaseManager(this);
@@ -96,7 +98,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
 
     @Override
     public CommandLang getLang() {
-        return null;
+        return lang;
     }
 
     public void loadConfigs() {

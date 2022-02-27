@@ -1,9 +1,9 @@
 package dev.lightdream.royalsecurity.managers;
 
 import dev.lightdream.databasemanager.DatabaseMain;
-import dev.lightdream.databasemanager.database.HikariDatabaseManager;
+import dev.lightdream.databasemanager.database.ProgrammaticHikariDatabaseManager;
+import dev.lightdream.databasemanager.dto.QueryConstrains;
 import dev.lightdream.royalsecurity.database.Cooldown;
-import dev.lightdream.royalsecurity.database.Lockdown;
 import dev.lightdream.royalsecurity.database.User;
 import dev.lightdream.royalsecurity.database.UserPair;
 import org.bukkit.OfflinePlayer;
@@ -12,12 +12,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-@SuppressWarnings("deprecation")
-public class DatabaseManager extends HikariDatabaseManager {
+public class DatabaseManager extends ProgrammaticHikariDatabaseManager {
 
 
     public DatabaseManager(DatabaseMain main) {
@@ -29,7 +27,6 @@ public class DatabaseManager extends HikariDatabaseManager {
         setup(User.class);
         setup(UserPair.class);
         setup(Cooldown.class);
-        setup(Lockdown.class);
     }
 
     //Users
@@ -48,16 +45,20 @@ public class DatabaseManager extends HikariDatabaseManager {
     }
 
     public @Nullable User getUser(@NotNull UUID uuid) {
-        return get(User.class, new HashMap<String, Object>() {{
-            put("uuid", uuid);
-        }}).stream().findFirst().orElse(null);
+        return get(User.class).query(new QueryConstrains().equals("uuid", uuid))
+                .query()
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @SuppressWarnings("unused")
     public @Nullable User getUser(@NotNull String name) {
-        return get(User.class, new HashMap<String, Object>() {{
-            put("name", name);
-        }}).stream().findFirst().orElse(null);
+        return get(User.class).query(new QueryConstrains().equals("name", name))
+                .query()
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @SuppressWarnings("unused")
@@ -71,9 +72,11 @@ public class DatabaseManager extends HikariDatabaseManager {
 
     @SuppressWarnings("unused")
     public @Nullable User getUser(int id) {
-        return get(User.class, new HashMap<String, Object>() {{
-            put("id", id);
-        }}).stream().findFirst().orElse(null);
+        return get(User.class).query(new QueryConstrains().equals("id", id))
+                .query()
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @SuppressWarnings("unused")
@@ -86,31 +89,22 @@ public class DatabaseManager extends HikariDatabaseManager {
 
     @SuppressWarnings("unused")
     public List<User> getUser(Long discordID) {
-        return get(User.class, new HashMap<String, Object>() {{
-            put("discord_id", discordID);
-        }});
+        return get(User.class).query(new QueryConstrains().equals("discord_id", discordID))
+                .query();
     }
 
     public UserPair getUserPair(String code) {
-        return get(UserPair.class, new HashMap<String, Object>() {{
-            put("code", code);
-        }}).stream().findFirst().orElse(null);
+        return get(UserPair.class).query(new QueryConstrains().equals("code", code))
+                .query()
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Cooldown> getCooldown(String ip) {
-        return get(Cooldown.class, new HashMap<String, Object>() {{
-            put("ip", ip);
-        }});
+        return get(Cooldown.class).query(new QueryConstrains().equals("ip", ip))
+                .query();
     }
 
-    public @NotNull Lockdown getLockdown(Long discordID) {
-        Lockdown lockdown = get(Lockdown.class, new HashMap<String, Object>() {{
-            put("discord_id", discordID);
-        }}).stream().findFirst().orElse(null);
-        if (lockdown == null) {
-            lockdown = new Lockdown(discordID);
-        }
-        return lockdown;
-    }
 
 }

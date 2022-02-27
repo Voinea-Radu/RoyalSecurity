@@ -113,7 +113,7 @@ public class JdaConfig extends JDAConfig {
             "This command is required to be rin in DMs rather then on a server"
     );
 
-    public JdaEmbed passwordChanged = JdaEmbed.red(
+    public JdaEmbed passwordChanged = JdaEmbed.green(
             "Password Changed",
             "Your password has been successfully changed"
     );

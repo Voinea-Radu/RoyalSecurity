@@ -1,6 +1,8 @@
 package dev.lightdream.royalsecurity.files;
 
-public class Lang {
+import dev.lightdream.commandmanager.dto.CommandLang;
+
+public class Lang extends CommandLang {
 
     public String linkCommandDescription = "Link your minecraft account to the discord one";
     public String unlinkCommandDescription = "Unlink your minecraft account from the discord one";

@@ -1,6 +1,5 @@
 package dev.lightdream.royalsecurity.managers;
 
-import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
@@ -45,15 +44,6 @@ public class MinecraftEventManager implements Listener {
         }
 
         String ip = event.getAddress().getHostName();
-
-        Debugger.info(Main.instance.databaseManager.getLockdown(user.discordID).status);
-
-        if (Main.instance.databaseManager.getLockdown(user.discordID).status) {
-            new Cooldown(ip);
-            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
-            event.setKickMessage(Main.instance.lang.cooldown);
-            return;
-        }
 
         if (event.getAddress().getHostName().equals(user.ip)) {
             if (user.autoConnect()) {

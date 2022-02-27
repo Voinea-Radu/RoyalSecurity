@@ -24,14 +24,16 @@ public class User extends DatabaseEntry {
     @DatabaseField(columnName = "ip")
     public String ip;
     @DatabaseField(columnName = "auto_connect")
-    public int autoConnect;
+    public boolean autoConnect;
 
 
     public User(UUID uuid, String name) {
         super(Main.instance);
+        this.name = name;
+        this.uuid = uuid;
         this.discordID = null;
         this.ip = "";
-        this.autoConnect = 0;
+        this.autoConnect = false;
     }
 
     public User() {
@@ -82,16 +84,12 @@ public class User extends DatabaseEntry {
     }
 
     public void changeAutoConnect() {
-        if (autoConnect == 0) {
-            autoConnect = 1;
-        } else {
-            autoConnect = 0;
-        }
+        autoConnect = !autoConnect;
         save();
     }
 
     public boolean autoConnect() {
-        return autoConnect == 1;
+        return autoConnect;
     }
 
 }
