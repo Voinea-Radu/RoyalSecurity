@@ -3,6 +3,7 @@ package dev.lightdream.royalsecurity.commands.minecraft.link.subcommands;
 import dev.lightdream.commandmanager.commands.SubCommand;
 import dev.lightdream.messagebuilder.MessageBuilder;
 import dev.lightdream.royalsecurity.Main;
+import dev.lightdream.royalsecurity.commands.minecraft.link.LinkCommand;
 import dev.lightdream.royalsecurity.database.User;
 import org.bukkit.command.CommandSender;
 
@@ -11,9 +12,10 @@ import java.util.List;
 
 
 @SuppressWarnings("unused")
-@dev.lightdream.commandmanager.annotations.SubCommand(aliases = {"autoConnect"},
+@dev.lightdream.commandmanager.annotations.SubCommand(
+        aliases = {"autoConnect"},
         onlyForPlayers = true,
-        parent = AutoConnectCommand.class,
+        parent = LinkCommand.class,
         command = "auto-connect")
 public class AutoConnectCommand extends SubCommand {
     public AutoConnectCommand() {
