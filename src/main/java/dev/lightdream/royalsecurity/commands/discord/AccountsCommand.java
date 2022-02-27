@@ -1,9 +1,9 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
-import dev.lightdream.api.dto.jda.JdaEmbed;
-import dev.lightdream.api.dto.jda.JdaField;
+import dev.lightdream.jdaextension.commands.DiscordCommand;
+import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JdaField;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.User;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AccountsCommand extends DiscordCommand {
     public AccountsCommand() {
-        super("accounts", Main.instance.lang.accountsDescription, null, "");
+        super(Main.instance, "accounts", Main.instance.lang.accountsDescription, null, "", true);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package dev.lightdream.royalsecurity.database;
 
-import dev.lightdream.api.IAPI;
 import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
+import dev.lightdream.databasemanager.dto.DatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
-import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
 import net.dv8tion.jda.api.requests.ErrorResponse;
@@ -14,22 +13,31 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @DatabaseTable(table = "users")
-@NoArgsConstructor
-public class User extends dev.lightdream.api.databases.User {
+public class User extends DatabaseEntry {
 
+    @DatabaseField(columnName = "uuid", unique = true)
+    public UUID uuid;
+    @DatabaseField(columnName = "name", unique = true)
+    public String name;
     @DatabaseField(columnName = "discord_id")
     public Long discordID;
     @DatabaseField(columnName = "ip")
     public String ip;
     @DatabaseField(columnName = "auto_connect")
-    public int autoConnect;
+    public boolean autoConnect;
 
 
-    public User(IAPI api, UUID uuid, String name) {
-        super(api, uuid, name);
+    public User(UUID uuid, String name) {
+        super(Main.instance);
+        this.name = name;
+        this.uuid = uuid;
         this.discordID = null;
         this.ip = "";
-        this.autoConnect = 0;
+        this.autoConnect = false;
+    }
+
+    public User() {
+        super(Main.instance);
     }
 
     public boolean hasSecurity() {
@@ -76,16 +84,12 @@ public class User extends dev.lightdream.api.databases.User {
     }
 
     public void changeAutoConnect() {
-        if(autoConnect==0){
-            autoConnect=1;
-        }else{
-            autoConnect=0;
-        }
+        autoConnect = !autoConnect;
         save();
     }
 
-    public boolean autoConnect(){
-        return autoConnect==1;
+    public boolean autoConnect() {
+        return autoConnect;
     }
 
 }

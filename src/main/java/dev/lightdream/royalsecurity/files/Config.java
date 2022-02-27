@@ -8,6 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Config {
 
+    public boolean debug = false;
     public boolean multiLobby = false;
     public int codeDigits = 8;
     public List<Long> channels = Arrays.asList(901849660052893736L, 904359681303138364L);

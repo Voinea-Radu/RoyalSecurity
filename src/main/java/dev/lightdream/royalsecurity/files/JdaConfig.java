@@ -1,16 +1,18 @@
 package dev.lightdream.royalsecurity.files;
 
-import dev.lightdream.api.dto.jda.Button;
-import dev.lightdream.api.dto.jda.JdaEmbed;
-import dev.lightdream.api.dto.jda.JdaField;
-import dev.lightdream.api.enums.JDAButtonType;
+import dev.lightdream.jdaextension.dto.Button;
+import dev.lightdream.jdaextension.dto.JDAConfig;
+import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JdaField;
+import dev.lightdream.jdaextension.enums.JDAButtonType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
+public class JdaConfig extends JDAConfig {
 
-    public JdaEmbed auth = new JdaEmbed(255,
+    public JdaEmbed auth = new JdaEmbed(
+            255,
             255,
             0,
             "Auth Message",
@@ -20,188 +22,126 @@ public class JdaConfig extends dev.lightdream.api.configs.JdaConfig {
                     new JdaField("IP", "%ip%", true),
                     new JdaField("Date", "%date%", true)),
             Arrays.asList(new Button(JDAButtonType.PRIMARY, "authorize_authentication_%ip%;%player_name%", "Yes it was me"),
-                    new Button(JDAButtonType.DANGER, "deny_authentication_%ip%;%player_name%", "No it was not me")));
+                    new Button(JDAButtonType.DANGER, "deny_authentication_%ip%;%player_name%", "No it was not me"))
+    );
 
-    public JdaEmbed secure = new JdaEmbed(0,
-            255,
-            0,
+    public JdaEmbed secure = JdaEmbed.green(
             "Secure Message",
-            "",
-            "Please rejoin the server and use the command `/link %code%` in-game to confirm the link",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "Please rejoin the server and use the command `/link %code%` in-game to confirm the link"
+    );
 
-    public JdaEmbed invalidUser = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed invalidUser = JdaEmbed.red(
             "Invalid User",
-            "",
-            "This is not a valid minecraft username. Please make sure to login first on the server",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "This is not a valid minecraft username. Please make sure to login first on the server"
+    );
 
-    public JdaEmbed alreadyLinked = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed alreadyLinked = JdaEmbed.red(
             "Already linked",
-            "",
-            "This minecraft account is already linked to a discord account. Please make sure that you typed the account name correctly" + " or contact an administrator",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "This minecraft account is already linked to a discord account. Please make sure that you typed the account name correctly" +
+                    " or contact an administrator"
+    );
 
-    public JdaEmbed codeSent = new JdaEmbed(0,
-            255,
-            0,
+    public JdaEmbed codeSent = JdaEmbed.green(
             "Code send",
-            "",
-            "I have sent you a code in private messages. Please use that command on the server.",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "I have sent you a code in private messages. Please use that command on the server."
+    );
 
-    public JdaEmbed unlinked = new JdaEmbed(0, 255, 0, "Unlinked", "", "Successfully unlinked account", new ArrayList<>(), new ArrayList<>());
+    public JdaEmbed unlinked = JdaEmbed.green(
+            "Unlinked",
+            "Successfully unlinked account"
+    );
 
-    public JdaEmbed usage = new JdaEmbed(0, 0, 0, "%command%", "", "+%command% %usage%", new ArrayList<>(), new ArrayList<>());
+    public JdaEmbed usage = JdaEmbed.black(
+            "%command%",
+            "+%command% %usage%"
+    );
 
-    public JdaEmbed helpEmbed = new JdaEmbed(0,
-            0,
-            0,
+    public JdaEmbed helpEmbed = JdaEmbed.black(
             "Help",
-            "",
-            "+help\n" + "+link [username]\n" + "+unlink <username>\n" + "+changePassword <username> [newPassword] - In DMs\n" + "+accounts <discordID>\n" + "+stats\n" + "+unregister <discordID>\n" + "\n" + "[] - Mandatory arguments\n" + "<> - Optional / Contextual arguments",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "+help\n" +
+                    "+link [username]\n" +
+                    "+unlink <username>\n" +
+                    "+changePassword <username> [newPassword] - In DMs\n" +
+                    "+accounts <discordID>\n" +
+                    "+stats\n" +
+                    "+unregister <discordID>\n" +
+                    "\n" +
+                    "[] - Mandatory arguments\n" +
+                    "<> - Optional / Contextual arguments"
+    );
 
-    public JdaEmbed accessGranted = new JdaEmbed(0,
-            255,
-            0,
+    public JdaEmbed accessGranted = JdaEmbed.green(
             "Access granted",
-            "",
-            "Please wait a few seconds and join again ",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "Please wait a few seconds and join again "
+    );
 
-    public JdaEmbed accessDenied = new JdaEmbed(255, 0, 0, "Access denied", "", "", new ArrayList<>(), new ArrayList<>());
+    public JdaEmbed accessDenied = JdaEmbed.red(
+            "Access denied",
+            ""
+    );
 
-    public JdaEmbed notLinked = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed notLinked = JdaEmbed.red(
             "Not Linked",
-            "",
-            "Your account does not seem to be linked to any minecraft account. " + "You can link your account using the `+link` command",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "Your account does not seem to be linked to any minecraft account. " +
+                    "You can link your account using the `+link` command"
+    );
 
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
-    public JdaEmbed accounts = new JdaEmbed(0,
+    public JdaEmbed accounts = new JdaEmbed(
+            0,
             0,
             0,
             "Linked Accounts",
             "",
             "",
             Arrays.asList(new JdaField("%user%'s Accounts", "`%player_name%`\n", true)),
-            new ArrayList<>());
+            new ArrayList<>()
+    );
 
-    public JdaEmbed multipleLinked = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed multipleLinked = JdaEmbed.red(
             "Multiple Linked",
-            "",
-            "You have multiple accounts please add the argument to your command `[username]` in order to execute this command",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "You have multiple accounts please add the argument to your command `[username]` in order to execute this command"
+    );
 
-    public JdaEmbed notOwner = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed notOwner = JdaEmbed.red(
             "Not Owner",
-            "",
-            "You seem to not be the owner of this minecraft account. If you think that this is an error please contact an administrator",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "You seem to not be the owner of this minecraft account. If you think that this is an error please contact an administrator"
+    );
 
-    public JdaEmbed serverCommand = new JdaEmbed(255,
-            0,
-            0,
-            "Server Required",
-            "",
-            "This command is required to be run in a server rather then on private messages",
-            new ArrayList<>(),
-            new ArrayList<>());
-
-    public JdaEmbed dmsCommand = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed dmsCommand = JdaEmbed.red(
             "DMs Required",
-            "",
-            "This command is required to be rin in DMs rather then on a server",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "This command is required to be rin in DMs rather then on a server"
+    );
 
-    public JdaEmbed passwordChanged = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed passwordChanged = JdaEmbed.green(
             "Password Changed",
-            "",
-            "Your password has been successfully changed",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "Your password has been successfully changed"
+    );
 
-    public JdaEmbed unregistered = new JdaEmbed(0,
-            255,
-            0,
+    public JdaEmbed unregistered = JdaEmbed.green(
             "Unregistered",
-            "",
-            "The target account has been successfully unregistered",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "The target account has been successfully unregistered"
+    );
 
-    public JdaEmbed invalidNumber = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed invalidNumber = JdaEmbed.red(
             "Invalid Number",
-            "",
-            "This is not a valid number. Please check it and try again",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "This is not a valid number. Please check it and try again"
+    );
 
-    public JdaEmbed notAllowed = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed notAllowed = JdaEmbed.red(
             "Not Allowed",
-            "",
-            "You do not have the necessary permission to do this.",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "You do not have the necessary permission to do this."
+    );
 
-    public JdaEmbed cannotSendMessage = new JdaEmbed(255,
-            0,
-            0,
+    public JdaEmbed cannotSendMessage = JdaEmbed.red(
             "Cannot Send Message",
-            "",
-            "It seems like I can not send you a message in dms. Consider opening your dms to server members",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "It seems like I can not send you a message in dms. Consider opening your dms to server members"
+    );
 
-    public JdaEmbed stats = new JdaEmbed(0,
-            0,
-            0,
-            "Stats",
-            "",
-            "",
-            Arrays.asList(new JdaField("RAM", "%ram%MB", true),
-                    new JdaField("CPU", "%cpu%%", true),
-                    new JdaField("Java Version", "%java%", true),
-                    new JdaField("Active codes", "%codes%", true),
-                    new JdaField("Active accounts", "%users%", true)),
-            new ArrayList<>());
 
-    public JdaEmbed lockdown = new JdaEmbed(0,
-            255,
-            0,
+    public JdaEmbed lockdown = JdaEmbed.green(
             "Lockdown",
-            "",
-            "Your account lockdown status is %status%",
-            new ArrayList<>(),
-            new ArrayList<>());
+            "Your account lockdown status is %status%"
+    );
 
 }

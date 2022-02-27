@@ -1,7 +1,7 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
+import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.User;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UnlinkCommand extends DiscordCommand {
     public UnlinkCommand() {
-        super("unlink", Main.instance.lang.unlinkCommandDescription, null, "[username]");
+        super(Main.instance, "unlink", Main.instance.lang.unlinkCommandDescription, null, "[username]", true);
     }
 
     @Override

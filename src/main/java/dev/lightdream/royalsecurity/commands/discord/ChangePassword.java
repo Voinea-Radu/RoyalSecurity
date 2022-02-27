@@ -1,7 +1,7 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
+import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.Main;
-import dev.lightdream.royalsecurity.commands.DiscordCommand;
 import dev.lightdream.royalsecurity.database.User;
 import fr.xephi.authme.api.v3.AuthMeApi;
 import net.dv8tion.jda.api.entities.Member;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ChangePassword extends DiscordCommand {
     public ChangePassword() {
-        super("changePassword", Main.instance.lang.changePasswordDescription, null, "<account> [new password] - IN DMs");
+        super(Main.instance, "changePassword", Main.instance.lang.changePasswordDescription, null, "<account> [new password] - IN DMs", true);
     }
 
     @Override

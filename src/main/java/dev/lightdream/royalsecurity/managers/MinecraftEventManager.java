@@ -1,6 +1,5 @@
 package dev.lightdream.royalsecurity.managers;
 
-import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
@@ -23,7 +22,7 @@ public class MinecraftEventManager implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @SuppressWarnings({"unused", "ConstantConditions"})
+    @SuppressWarnings({"unused"})
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerLoginEvent event) {
         User user = Main.instance.databaseManager.createUser(event.getPlayer());
@@ -34,7 +33,7 @@ public class MinecraftEventManager implements Listener {
                     event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
                     event.setKickMessage(Main.instance.lang.required);
                 } else {
-                    if (user.getPlayer().hasPermission(Main.instance.config.requiredPermission)) {
+                    if (event.getPlayer().hasPermission(Main.instance.config.requiredPermission)) {
                         event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
                         event.setKickMessage(Main.instance.lang.required);
                     }
@@ -46,20 +45,11 @@ public class MinecraftEventManager implements Listener {
 
         String ip = event.getAddress().getHostName();
 
-        Debugger.info(Main.instance.databaseManager.getLockdown(user.discordID).status);
-
-        if (Main.instance.databaseManager.getLockdown(user.discordID).status) {
-            new Cooldown(ip);
-            event.setResult(PlayerLoginEvent.Result.KICK_OTHER);
-            event.setKickMessage(Main.instance.lang.cooldown);
-            return;
-        }
-
         if (event.getAddress().getHostName().equals(user.ip)) {
             if (user.autoConnect()) {
                 Bukkit.getScheduler().runTaskLater(Main.instance, () -> {
                     AuthMeApi.getInstance().forceLogin(event.getPlayer());
-                    Bukkit.getScheduler().runTaskLater(Main.instance, () -> user.sendMessage(Main.instance.lang.autoConnected), 20L);
+                    Bukkit.getScheduler().runTaskLater(Main.instance, () -> event.getPlayer().sendMessage(Main.instance.lang.autoConnected), 20L);
                 }, 40L);
             }
             return;
