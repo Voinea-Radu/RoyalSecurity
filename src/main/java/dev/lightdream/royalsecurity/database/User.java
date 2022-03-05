@@ -3,8 +3,8 @@ package dev.lightdream.royalsecurity.database;
 import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.databasemanager.dto.DatabaseEntry;
+import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.royalsecurity.Main;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
 import net.dv8tion.jda.api.requests.ErrorResponse;
 
@@ -59,14 +59,18 @@ public class User extends DatabaseEntry {
                                 .queue()), Throwable::printStackTrace);
     }
 
-    public void sendSecure(MessageChannel originChannel, String code, Long discordID) {
+    public void sendSecure(CommandContext context, String code, Long discordID, boolean privateResponse) {
         Main.instance.bot.retrieveUserById(discordID)
                 .queue(user -> user.openPrivateChannel()
-                        .queue(channel -> channel.sendMessageEmbeds(Main.instance.jdaConfig.secure.parse("code", code).build().build())
-                                .queue(null,
-                                        new ErrorHandler().handle(ErrorResponse.CANNOT_SEND_TO_USER,
-                                                e -> originChannel.sendMessageEmbeds(Main.instance.jdaConfig.cannotSendMessage.build().build())
-                                                        .queue()))));
+                        .queue(channel -> {
+                            context.sendMessage(Main.instance.jdaConfig.codeSent, privateResponse);
+                            channel.sendMessageEmbeds(Main.instance.jdaConfig.secure.parse("code", code).build().build())
+                                    .queue(null,
+                                            new ErrorHandler().handle(ErrorResponse.CANNOT_SEND_TO_USER,
+                                                    e -> context.sendMessage(Main.instance.jdaConfig.cannotSendMessage, privateResponse)
+                                            ));
+                        }));
+
     }
 
     public void setDiscordID(Long id) {

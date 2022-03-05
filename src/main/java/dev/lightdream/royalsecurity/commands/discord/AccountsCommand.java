@@ -1,57 +1,30 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
 import dev.lightdream.jdaextension.commands.DiscordCommand;
+import dev.lightdream.jdaextension.dto.CommandArgument;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
 import dev.lightdream.jdaextension.dto.JdaField;
+import dev.lightdream.jdaextension.dto.context.CommandContext;
+import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
+import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.User;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class AccountsCommand extends DiscordCommand {
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public AccountsCommand() {
-        super(Main.instance, "accounts", Main.instance.lang.accountsDescription, null, "", true);
+        super(Main.instance, "accounts", Main.instance.lang.accountsDescription, null, true, Arrays.asList(
+                new CommandArgument(OptionType.STRING, "user_id", Main.instance.lang.userIDArgDescription, false)
+        ));
     }
 
-    @Override
-    public void execute(Member member, TextChannel channel, List<String> args) {
-        if (args.size() != 0) {
-            if (member.hasPermission(Permission.ADMINISTRATOR)) {
-                long id;
-                try {
-                    id = Long.parseLong(args.get(0));
-                } catch (NumberFormatException e) {
-                    sendMessage(channel, Main.instance.jdaConfig.invalidNumber);
-                    return;
-                }
-                List<User> users = Main.instance.databaseManager.getUser(id);
-                Main.instance.bot.retrieveUserById(id).queue(user -> {
-                    if (user == null) {
-                        sendAccounts(users, channel, String.valueOf(id));
-                        return;
-                    }
-                    sendAccounts(users, channel, user.getAsTag());
-                });
-                return;
-            }
-            sendMessage(channel, Main.instance.jdaConfig.notAllowed);
-            return;
-        }
-        execute(member.getUser(), channel, args);
-    }
-
-    @Override
-    public void execute(net.dv8tion.jda.api.entities.User user, MessageChannel channel, List<String> args) {
-        List<User> users = Main.instance.databaseManager.getUser(user.getIdLong());
-        sendAccounts(users, channel, user.getName());
-    }
-
-    public void sendAccounts(List<User> users, MessageChannel channel, String userName) {
-        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone().parse("user", userName);
+    public static void sendAccounts(CommandContext context, List<User> users, net.dv8tion.jda.api.entities.User user, boolean privateResponse) {
+        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone().parse("user", user.getName());
 
         JdaField field = embed.fields.get(0);
         String s = field.content;
@@ -60,7 +33,47 @@ public class AccountsCommand extends DiscordCommand {
         users.forEach(u -> field.content += s.replace("%player_name%", u.name));
         embed.fields.set(0, field);
 
-        sendMessage(channel, embed);
+        sendMessage(context, embed, privateResponse);
+    }
+
+    public static void staticExecute(CommandContext context, Long id, boolean privateResponse) {
+        List<User> users = Main.instance.databaseManager.getUser(id);
+        Main.instance.bot.retrieveUserById(id).queue(user -> {
+            if (user == null) {
+                sendMessage(context, Main.instance.jdaConfig.invalidUser, privateResponse);
+                return;
+            }
+            sendAccounts(context, users, user, privateResponse);
+        });
+    }
+
+    @Override
+    public void executeGuild(GuildCommandContext context) {
+        String userID_s = context.getArgument("user_id").getAsString();
+        if (userID_s.equals("")) {
+            executePrivate(context.toPrivate());
+            return;
+        }
+
+        if (context.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            sendMessage(context, Main.instance.jdaConfig.notAllowed);
+            return;
+        }
+
+        long id;
+        try {
+            id = Long.parseLong(userID_s);
+        } catch (NumberFormatException e) {
+            sendMessage(context, Main.instance.jdaConfig.invalidNumber);
+            return;
+        }
+        staticExecute(context, id, privateResponse);
+    }
+
+    @Override
+    public void executePrivate(PrivateCommandContext context) {
+        List<User> users = Main.instance.databaseManager.getUser(context.getUser().getIdLong());
+        sendAccounts(context, users, context.getUser(), privateResponse);
     }
 
     @Override
