@@ -139,9 +139,11 @@ public class JdaConfig extends JDAConfig {
     );
 
 
-    public JdaEmbed lockdown = JdaEmbed.green(
-            "Lockdown",
-            "Your account lockdown status is %status%"
+    public JdaEmbed payments = JdaEmbed.green(
+            "Payments",
+            "%name%'s payments:"
     );
+
+    public String payment = "%package_name% (x%package_quantity%)";
 
 }

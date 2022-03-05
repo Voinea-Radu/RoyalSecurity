@@ -16,5 +16,6 @@ public class Config {
     public Long cooldown = 30 * 60 * 1000L;
 
     public String requiredPermission = ""; //Use '' to disable it and 'none' to force everyone
+    public String tebexID = "";
 
 }

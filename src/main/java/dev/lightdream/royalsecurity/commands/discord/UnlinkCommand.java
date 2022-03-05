@@ -25,9 +25,8 @@ public class UnlinkCommand extends DiscordCommand {
 
     @Override
     public void executeGuild(GuildCommandContext context) {
-        String account = context.getArgument("account").getAsString();
 
-        if (Objects.equals(account, "")) {
+        if (context.getArgument("username") == null) {
             List<User> users = Main.instance.databaseManager.getUser(context.getMember().getIdLong());
 
             if (users.size() == 0) {
@@ -45,7 +44,7 @@ public class UnlinkCommand extends DiscordCommand {
             return;
         }
 
-        User user = Main.instance.databaseManager.getUser(account);
+        User user = Main.instance.databaseManager.getUser(context.getArgument("username").getAsString());
 
         if (user == null) {
             sendMessage(context, Main.instance.jdaConfig.invalidUser);
@@ -64,7 +63,7 @@ public class UnlinkCommand extends DiscordCommand {
 
     @Override
     public void executePrivate(PrivateCommandContext context) {
-        String account = context.getArgument("account").getAsString();
+        String account = context.getArgument("username").getAsString();
 
         if (Objects.equals(account, "")) {
             List<User> users = Main.instance.databaseManager.getUser(context.getUser().getIdLong());

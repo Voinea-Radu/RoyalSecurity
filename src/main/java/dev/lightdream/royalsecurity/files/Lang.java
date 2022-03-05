@@ -14,9 +14,9 @@ public class Lang extends CommandLang implements JDALang {
     public String required = "You are required to use the security. Please refer to our discord in order to link your account";
     public String helpCommandDescription = "Send the help command";
     public String statsCommandDescription = "Shows technical details about the bot and its environment";
+    public String paymentsCommandDescription = "Shows the payments done on someones minecraft account";
 
     public String userIDArgDescription = "User ID";
-    public String accountArgDescription = "Account";
     public String passwordArgDescription = "The new password";
     public String usernameArgDescription = "Minecraft username";
 

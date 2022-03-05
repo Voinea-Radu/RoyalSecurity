@@ -49,20 +49,19 @@ public class AccountsCommand extends DiscordCommand {
 
     @Override
     public void executeGuild(GuildCommandContext context) {
-        String userID_s = context.getArgument("user_id").getAsString();
-        if (userID_s.equals("")) {
+        if (context.getArgument("user_id") == null) {
             executePrivate(context.toPrivate());
             return;
         }
 
-        if (context.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+        if (!context.getMember().hasPermission(Permission.ADMINISTRATOR)) {
             sendMessage(context, Main.instance.jdaConfig.notAllowed);
             return;
         }
 
         long id;
         try {
-            id = Long.parseLong(userID_s);
+            id = Long.parseLong(context.getArgument("user_id").getAsString());
         } catch (NumberFormatException e) {
             sendMessage(context, Main.instance.jdaConfig.invalidNumber);
             return;
