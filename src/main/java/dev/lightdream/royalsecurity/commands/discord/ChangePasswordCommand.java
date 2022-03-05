@@ -13,11 +13,11 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChangePassword extends DiscordCommand {
-    public ChangePassword() {
+public class ChangePasswordCommand extends DiscordCommand {
+    public ChangePasswordCommand() {
         super(Main.instance, "changePassword", Main.instance.lang.changePasswordDescription, null, true, Arrays.asList(
-                new CommandArgument(OptionType.STRING, "account", Main.instance.lang.accountArgDescription, false),
-                new CommandArgument(OptionType.STRING, "password", Main.instance.lang.passwordArgDescription, false)
+                new CommandArgument(OptionType.STRING, "password", Main.instance.lang.passwordArgDescription, true),
+                new CommandArgument(OptionType.STRING, "username", Main.instance.lang.usernameArgDescription, false)
         ));
     }
 
@@ -29,9 +29,8 @@ public class ChangePassword extends DiscordCommand {
     @Override
     public void executePrivate(PrivateCommandContext context) {
         String password = context.getArgument("password").getAsString();
-        String account = context.getArgument("account").getAsString();
 
-        if (account.equals("")) {
+        if (context.getArgument("username") == null) {
             List<User> users = Main.instance.databaseManager.getUser(context.getUser().getIdLong());
 
             if (users.size() == 0) {
@@ -49,7 +48,7 @@ public class ChangePassword extends DiscordCommand {
             return;
         }
 
-        User user = Main.instance.databaseManager.getUser(account);
+        User user = Main.instance.databaseManager.getUser(context.getArgument("username").getAsString());
 
         if (user == null) {
             sendMessage(context, Main.instance.jdaConfig.invalidUser);

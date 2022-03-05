@@ -80,8 +80,9 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
                             new HelpCommand(this),
                             new LinkCommand(),
                             new UnlinkCommand(),
-                            new ChangePassword(),
+                            new ChangePasswordCommand(),
                             new UnregisterCommand(),
+                            new PaymentsCommand(),
                             new StatsCommand(this),
                             new AccountsCommand()
                     )
@@ -162,7 +163,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
 
     @Override
     public JDALang getJDALang() {
-        return null;
+        return lang;
     }
 
     @Override
