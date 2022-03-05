@@ -1,40 +1,41 @@
 package dev.lightdream.royalsecurity.commands.discord;
 
 import dev.lightdream.jdaextension.commands.DiscordCommand;
+import dev.lightdream.jdaextension.dto.CommandArgument;
+import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
+import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import dev.lightdream.royalsecurity.Main;
 import fr.xephi.authme.api.v3.AuthMeApi;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 
-import java.util.List;
+import java.util.Arrays;
 
 public class UnregisterCommand extends DiscordCommand {
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public UnregisterCommand() {
-        super(Main.instance, "unregister", Main.instance.lang.unregisterDescription, Permission.ADMINISTRATOR, "<username>", true);
+        super(Main.instance, "unregister", Main.instance.lang.unregisterDescription, Permission.ADMINISTRATOR, true, Arrays.asList(
+                new CommandArgument(OptionType.STRING, "username", Main.instance.lang.usernameArgDescription, true)
+        ));
     }
 
+
     @Override
-    public void execute(Member member, TextChannel channel, List<String> args) {
-        if (args.size() == 0) {
-            sendUsage(channel);
+    public void executeGuild(GuildCommandContext context) {
+        String account = context.getArgument("username").getAsString();
+
+        if (!context.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            sendMessage(context, Main.instance.jdaConfig.notAllowed);
             return;
         }
 
-        if (!member.hasPermission(Permission.ADMINISTRATOR)) {
-            sendMessage(channel, Main.instance.jdaConfig.notAllowed);
-            return;
-        }
-
-        AuthMeApi.getInstance().forceUnregister(args.get(0));
-        sendMessage(channel, Main.instance.jdaConfig.unregistered);
+        AuthMeApi.getInstance().forceUnregister(account);
+        sendMessage(context, Main.instance.jdaConfig.unregistered);
     }
 
     @Override
-    public void execute(User user, MessageChannel channel, List<String> args) {
-        //impossible
+    public void executePrivate(PrivateCommandContext privateCommandContext) {
+        //Impossible
     }
 
     @Override

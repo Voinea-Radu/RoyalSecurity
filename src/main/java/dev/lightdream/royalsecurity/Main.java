@@ -13,6 +13,7 @@ import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.commands.HelpCommand;
 import dev.lightdream.jdaextension.commands.commands.StatsCommand;
 import dev.lightdream.jdaextension.dto.JDAConfig;
+import dev.lightdream.jdaextension.dto.JDALang;
 import dev.lightdream.jdaextension.dto.JdaEmbed;
 import dev.lightdream.jdaextension.managers.DiscordCommandManager;
 import dev.lightdream.logger.Debugger;
@@ -157,6 +158,11 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     @Override
     public JdaEmbed getHelpEmbed() {
         return jdaConfig.helpEmbed;
+    }
+
+    @Override
+    public JDALang getJDALang() {
+        return null;
     }
 
     @Override
