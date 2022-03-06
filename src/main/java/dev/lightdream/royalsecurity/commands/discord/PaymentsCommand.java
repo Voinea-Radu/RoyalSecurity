@@ -79,7 +79,7 @@ public class PaymentsCommand extends DiscordCommand {
         return true;
     }
 
-    private void sendPayments(CommandContext context, String username){
+    private void sendPayments(CommandContext context, String username) {
         TebexUser user = getTebexUser(username);
 
         if (user == null) {
@@ -93,7 +93,16 @@ public class PaymentsCommand extends DiscordCommand {
         user.payments.forEach(p -> {
             Payment payment = getPayment(p.txn_id);
 
-            if (payment == null) {
+            if (payment == null || !payment.status.equalsIgnoreCase("Complete")) {
+                return;
+            }
+
+            if (payment.packages.size() == 0) {
+                embed.description += "\n" +
+                        new MessageBuilder(Main.instance.jdaConfig.payment)
+                                .addPlaceholders("package_name", "https://server.tebex.io/payments/" + payment.id)
+                                .addPlaceholders("package_quantity", "1")
+                                .parseString();
                 return;
             }
 
