@@ -146,4 +146,9 @@ public class JdaConfig extends JDAConfig {
 
     public String payment = "%package_name% (x%package_quantity%)";
 
+    public JdaEmbed passwordCanNotBeEmpty = JdaEmbed.red(
+            "Password can not be empty",
+            "Please make sure you press tab after you typed your password and that is not an empty password"
+    );
+
 }

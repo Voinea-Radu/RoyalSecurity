@@ -30,6 +30,11 @@ public class ChangePasswordCommand extends DiscordCommand {
     public void executePrivate(PrivateCommandContext context) {
         String password = context.getArgument("password").getAsString();
 
+        if (password.equals("")) {
+            sendMessage(context, Main.instance.jdaConfig.passwordCanNotBeEmpty);
+            return;
+        }
+
         if (context.getArgument("username") == null) {
             List<User> users = Main.instance.databaseManager.getUser(context.getUser().getIdLong());
 
