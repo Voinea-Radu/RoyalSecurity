@@ -2,8 +2,8 @@ package dev.lightdream.royalsecurity.commands.discord;
 
 import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.jdaextension.dto.CommandArgument;
-import dev.lightdream.jdaextension.dto.JdaEmbed;
-import dev.lightdream.jdaextension.dto.JdaField;
+import dev.lightdream.jdaextension.dto.JDAEmbed;
+import dev.lightdream.jdaextension.dto.JDAField;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
 import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
@@ -24,9 +24,9 @@ public class AccountsCommand extends DiscordCommand {
     }
 
     public static void sendAccounts(CommandContext context, List<User> users, net.dv8tion.jda.api.entities.User user, boolean privateResponse) {
-        JdaEmbed embed = Main.instance.jdaConfig.accounts.clone().parse("user", user.getName());
+        JDAEmbed embed = Main.instance.jdaConfig.accounts.clone().parse("user", user.getName());
 
-        JdaField field = embed.fields.get(0);
+        JDAField field = embed.fields.get(0);
         String s = field.content;
         field.content = "";
 

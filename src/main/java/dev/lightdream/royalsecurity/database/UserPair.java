@@ -1,13 +1,13 @@
 package dev.lightdream.royalsecurity.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
-import dev.lightdream.databasemanager.dto.DatabaseEntry;
-import dev.lightdream.libs.fasterxml.annotation.JsonIgnore;
+import dev.lightdream.databasemanager.dto.entry.impl.IntegerDatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(table = "pairs")
-public class UserPair extends DatabaseEntry {
+public class UserPair extends IntegerDatabaseEntry {
 
     @DatabaseField(columnName = "code")
     public String code;

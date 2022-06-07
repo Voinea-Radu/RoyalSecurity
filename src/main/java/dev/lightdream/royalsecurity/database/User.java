@@ -2,7 +2,7 @@ package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
-import dev.lightdream.databasemanager.dto.DatabaseEntry;
+import dev.lightdream.databasemanager.dto.entry.impl.IntegerDatabaseEntry;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.royalsecurity.Main;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @DatabaseTable(table = "users")
-public class User extends DatabaseEntry {
+public class User extends IntegerDatabaseEntry {
 
     @DatabaseField(columnName = "uuid", unique = true)
     public UUID uuid;

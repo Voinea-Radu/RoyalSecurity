@@ -1,9 +1,8 @@
 package dev.lightdream.royalsecurity.files;
 
 import dev.lightdream.commandmanager.dto.CommandLang;
-import dev.lightdream.jdaextension.dto.JDALang;
 
-public class Lang extends CommandLang implements JDALang {
+public class Lang extends CommandLang {
 
     public String linkCommandDescription = "Link your minecraft account to the discord one";
     public String unlinkCommandDescription = "Unlink your minecraft account from the discord one";
@@ -31,13 +30,4 @@ public class Lang extends CommandLang implements JDALang {
     public String autoConnect = "Your auto connect status is now %status%";
     public String autoConnected = "You have been auto-connected based on your ip. You can stop this by doing /link auto-connect";
 
-    @Override
-    public String getHelpCommandDescription() {
-        return helpCommandDescription;
-    }
-
-    @Override
-    public String getStatsCommandDescription() {
-        return statsCommandDescription;
-    }
 }

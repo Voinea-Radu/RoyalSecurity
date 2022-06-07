@@ -3,10 +3,11 @@ package dev.lightdream.royalsecurity.commands.discord;
 import com.google.gson.Gson;
 import dev.lightdream.jdaextension.commands.DiscordCommand;
 import dev.lightdream.jdaextension.dto.CommandArgument;
-import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JDAEmbed;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
 import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
+import dev.lightdream.logger.Debugger;
 import dev.lightdream.messagebuilder.MessageBuilder;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.User;
@@ -87,7 +88,7 @@ public class PaymentsCommand extends DiscordCommand {
             return;
         }
 
-        JdaEmbed embed = Main.instance.jdaConfig.payments.clone()
+        JDAEmbed embed = Main.instance.jdaConfig.payments.clone()
                 .parse("name", username);
 
         user.payments.forEach(p -> {
@@ -100,18 +101,18 @@ public class PaymentsCommand extends DiscordCommand {
             if (payment.packages.size() == 0) {
                 embed.description += "\n" +
                         new MessageBuilder(Main.instance.jdaConfig.payment)
-                                .addPlaceholders("package_name", "https://server.tebex.io/payments/" + payment.id)
-                                .addPlaceholders("package_quantity", "1")
-                                .parseString();
+                                .parse("package_name", "https://server.tebex.io/payments/" + payment.id)
+                                .parse("package_quantity", "1")
+                                .parse();
                 return;
             }
 
             payment.packages.forEach(aPackage ->
                     embed.description += "\n" +
                             new MessageBuilder(Main.instance.jdaConfig.payment)
-                                    .addPlaceholders("package_name", aPackage.name)
-                                    .addPlaceholders("package_quantity", String.valueOf(aPackage.quantity))
-                                    .parseString());
+                                    .parse("package_name", aPackage.name)
+                                    .parse("package_quantity", String.valueOf(aPackage.quantity))
+                                    .parse());
         });
 
         sendMessage(context, embed);
@@ -132,7 +133,11 @@ public class PaymentsCommand extends DiscordCommand {
             return null;
         }
 
-        return new Gson().fromJson(response.body().string(), TebexUser.class);
+        String responseString = response.body().string();
+
+        Debugger.log(responseString);
+
+        return new Gson().fromJson(responseString, TebexUser.class);
     }
 
     @SneakyThrows

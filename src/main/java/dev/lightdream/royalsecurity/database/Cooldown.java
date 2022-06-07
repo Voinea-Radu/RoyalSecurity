@@ -2,11 +2,11 @@ package dev.lightdream.royalsecurity.database;
 
 import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
-import dev.lightdream.databasemanager.dto.DatabaseEntry;
+import dev.lightdream.databasemanager.dto.entry.impl.StringDatabaseEntry;
 import dev.lightdream.royalsecurity.Main;
 
 @DatabaseTable(table = "cooldown")
-public class Cooldown extends DatabaseEntry {
+public class Cooldown extends StringDatabaseEntry {
 
 
     @DatabaseField(columnName = "ip")

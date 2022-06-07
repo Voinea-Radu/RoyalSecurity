@@ -10,15 +10,14 @@ import dev.lightdream.databasemanager.dto.SQLConfig;
 import dev.lightdream.filemanager.FileManager;
 import dev.lightdream.filemanager.FileManagerMain;
 import dev.lightdream.jdaextension.JDAExtensionMain;
-import dev.lightdream.jdaextension.commands.commands.HelpCommand;
 import dev.lightdream.jdaextension.commands.commands.StatsCommand;
 import dev.lightdream.jdaextension.dto.JDAConfig;
-import dev.lightdream.jdaextension.dto.JDALang;
-import dev.lightdream.jdaextension.dto.JdaEmbed;
+import dev.lightdream.jdaextension.dto.JDAEmbed;
 import dev.lightdream.jdaextension.managers.DiscordCommandManager;
 import dev.lightdream.logger.Debugger;
 import dev.lightdream.logger.LoggableMain;
 import dev.lightdream.logger.Logger;
+import dev.lightdream.messagebuilder.MessageBuilderManager;
 import dev.lightdream.royalsecurity.commands.discord.*;
 import dev.lightdream.royalsecurity.files.Config;
 import dev.lightdream.royalsecurity.files.JdaConfig;
@@ -64,7 +63,8 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
 
         Debugger.init(this);
         Logger.init(this);
-        fileManager = new FileManager(this, FileManager.PersistType.YAML);
+        fileManager = new FileManager(this);
+        MessageBuilderManager.init(fileManager);
         loadConfigs();
 
         try {
@@ -77,7 +77,6 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         if (!config.multiLobby) {
             this.discordCommandManager = new DiscordCommandManager(this,
                     Arrays.asList(
-                            new HelpCommand(this),
                             new LinkCommand(),
                             new UnlinkCommand(),
                             new ChangePasswordCommand(),
@@ -95,7 +94,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         }
         this.minecraftEventManager = new MinecraftEventManager(this);
 
-        commandManager = new CommandManager(this, "dev.lightdream.royalsecurity");
+        commandManager = new CommandManager(this);
     }
 
     @Override
@@ -112,18 +111,13 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     }
 
     @Override
-    public String getProjectName() {
-        return "Royal Security";
-    }
-
-    @Override
-    public String getProjectVersion() {
-        return "1.21";
-    }
-
-    @Override
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    @Override
+    public String getPackageName() {
+        return "dev.lightdream.royalsecurity";
     }
 
     @Override
@@ -142,6 +136,11 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     }
 
     @Override
+    public String getVersion() {
+        return "1.22";
+    }
+
+    @Override
     public JDA getBot() {
         return bot;
     }
@@ -149,21 +148,6 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     @Override
     public JDAConfig getJDAConfig() {
         return jdaConfig;
-    }
-
-    @Override
-    public dev.lightdream.jdaextension.managers.DiscordCommandManager getDiscordCommandManager() {
-        return discordCommandManager;
-    }
-
-    @Override
-    public JdaEmbed getHelpEmbed() {
-        return jdaConfig.helpEmbed;
-    }
-
-    @Override
-    public JDALang getJDALang() {
-        return lang;
     }
 
     @Override

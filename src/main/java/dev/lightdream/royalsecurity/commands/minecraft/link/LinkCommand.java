@@ -1,46 +1,46 @@
 package dev.lightdream.royalsecurity.commands.minecraft.link;
 
-import dev.lightdream.commandmanager.annotations.Command;
-import dev.lightdream.commandmanager.commands.BaseCommand;
+import dev.lightdream.commandmanager.commands.Command;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.User;
 import dev.lightdream.royalsecurity.database.UserPair;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@Command(
-        command = "link"
+@dev.lightdream.commandmanager.annotation.Command(
+        aliases = {"link"},
+        onlyForPlayers = true
 )
-public class LinkCommand extends BaseCommand {
+public class LinkCommand extends Command {
     public LinkCommand() {
         super(Main.instance);
     }
 
     @Override
-    public void execute(CommandSender commandSender, List<String> args) {
+    public void exec(@NotNull Player player, List<String> args) {
         if (args.size() != 1) {
-            sendUsage(commandSender);
+            sendUsage(player);
             return;
         }
 
-        User user = Main.instance.databaseManager.getUser(commandSender);
+        User user = Main.instance.databaseManager.getUser(player);
         UserPair pair = Main.instance.databaseManager.getUserPair(args.get(0));
-        Player player = (Player) commandSender;
 
         if (pair == null) {
-            commandSender.sendMessage(Main.instance.lang.invalidCode);
+            player.sendMessage(Main.instance.lang.invalidCode);
             return;
         }
 
         if (!pair.getUser().equals(user)) {
-            commandSender.sendMessage(Main.instance.lang.invalidCode);
+            player.sendMessage(Main.instance.lang.invalidCode);
             return;
         }
 
         pair.pair(player.getAddress().getHostName());
-        commandSender.sendMessage(Main.instance.lang.linked);
+        player.sendMessage(Main.instance.lang.linked);
     }
 
     @Override

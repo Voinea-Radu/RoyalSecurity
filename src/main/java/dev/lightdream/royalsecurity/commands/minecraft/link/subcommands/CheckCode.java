@@ -1,42 +1,44 @@
 package dev.lightdream.royalsecurity.commands.minecraft.link.subcommands;
 
-import dev.lightdream.commandmanager.commands.SubCommand;
+import dev.lightdream.commandmanager.commands.Command;
 import dev.lightdream.messagebuilder.MessageBuilder;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.commands.minecraft.link.LinkCommand;
 import dev.lightdream.royalsecurity.database.UserPair;
 import org.bukkit.command.CommandSender;
 
-import java.util.HashMap;
 import java.util.List;
 
 @SuppressWarnings("unused")
-@dev.lightdream.commandmanager.annotations.SubCommand(usage = "[code]",
+@dev.lightdream.commandmanager.annotation.Command(
+        usage = "[code]",
         parent = LinkCommand.class,
-        command = "checkCode")
-public class CheckCode extends SubCommand {
+        aliases = {"checkCode"}
+)
+public class CheckCode extends Command {
     public CheckCode() {
         super(Main.instance);
     }
 
     @Override
-    public void execute(CommandSender commandSender, List<String> args) {
+    public void exec(CommandSender sender, List<String> args) {
         if (args.size() == 0) {
-            sendUsage(commandSender);
+            sendUsage(sender);
             return;
         }
 
         UserPair pair = Main.instance.databaseManager.getUserPair(args.get(0));
 
         if (pair == null) {
-            commandSender.sendMessage(Main.instance.lang.invalidCode);
+            sender.sendMessage(Main.instance.lang.invalidCode);
             return;
         }
 
-        commandSender.sendMessage(new MessageBuilder(Main.instance.lang.codeDetails).addPlaceholders(new HashMap<String, String>() {{
-            put("name", pair.getUser().name);
-            put("discord_id", String.valueOf(pair.memberID));
-        }}).parseString());
+        sender.sendMessage(new MessageBuilder(Main.instance.lang.codeDetails)
+                .parse("name", pair.getUser().name)
+                .parse("discord_id", String.valueOf(pair.memberID))
+                .parse()
+        );
     }
 
     @Override
