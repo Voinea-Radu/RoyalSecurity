@@ -6,13 +6,9 @@ import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
 import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.User;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class LinkCommand extends DiscordCommand {
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")

@@ -8,7 +8,6 @@ import dev.lightdream.royalsecurity.Main;
 @DatabaseTable(table = "cooldown")
 public class Cooldown extends StringDatabaseEntry {
 
-
     @DatabaseField(columnName = "ip")
     public String ip;
     @DatabaseField(columnName = "cooldown")
