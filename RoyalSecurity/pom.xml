@@ -5,18 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>RoyalSecurity</artifactId>
+        <artifactId>RoyalSecurity-Parent</artifactId>
         <groupId>dev.lightdream</groupId>
         <version>1.22.1</version>
     </parent>
 
-    <artifactId>Plugin</artifactId>
+    <artifactId>RoyalSecurity</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
 
     <build>
         <plugins>
@@ -68,6 +67,12 @@
             <groupId>dev.lightdream</groupId>
             <artifactId>CommandManager</artifactId>
             <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.lightdream</groupId>
+            <artifactId>TicketSystem</artifactId>
+            <version>1.22.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

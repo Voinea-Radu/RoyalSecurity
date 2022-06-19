@@ -18,7 +18,6 @@ import dev.lightdream.logger.LoggableMain;
 import dev.lightdream.logger.Logger;
 import dev.lightdream.messagebuilder.MessageBuilderManager;
 import dev.lightdream.royalsecurity.commands.discord.*;
-import dev.lightdream.royalsecurity.commands.discord.*;
 import dev.lightdream.royalsecurity.files.Config;
 import dev.lightdream.royalsecurity.files.JdaConfig;
 import dev.lightdream.royalsecurity.files.Lang;
@@ -95,6 +94,8 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         this.minecraftEventManager = new MinecraftEventManager(this);
 
         commandManager = new CommandManager(this);
+
+        new dev.lightdream.ticketsystem.Main().onEnable(new SecurityImpl());
     }
 
     @Override

@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.lightdream</groupId>
-    <artifactId>RoyalSecurity</artifactId>
+    <artifactId>RoyalSecurity-Parent</artifactId>
     <version>1.22.1</version>
     <modules>
-        <module>Plugin</module>
-        <module>Discord</module>
+        <module>RoyalSecurity</module>
+        <module>TicketSystem</module>
     </modules>
     <packaging>pom</packaging>
 
