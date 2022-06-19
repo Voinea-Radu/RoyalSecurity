@@ -8,4 +8,9 @@ public class SecurityImpl implements ISecurity {
     public void sayHello() {
         System.out.println("Hello from the plugin security implementation!");
     }
+
+    @Override
+    public String getConfigPath() {
+        return "/TicketSystem/config/";
+    }
 }
