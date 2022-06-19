@@ -58,6 +58,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     @SneakyThrows
     @Override
     public void onEnable() {
+        new dev.lightdream.ticketsystem.Main().onEnable(new SecurityImpl());
         instance = this;
 
         Debugger.init(this);

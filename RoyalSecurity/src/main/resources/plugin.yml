@@ -1,0 +1,5 @@
+name: RoyalSecurity
+version: ${project.version}
+main: dev.lightdream.royalsecurity.Main
+depend:
+  - AuthMe
