@@ -17,6 +17,13 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>lightdream</id>
+            <url>https://repo.lightdream.dev/repository/LightDream-API/</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
