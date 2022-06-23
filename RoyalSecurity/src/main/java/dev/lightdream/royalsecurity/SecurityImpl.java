@@ -11,6 +11,6 @@ public class SecurityImpl implements ISecurity {
 
     @Override
     public String getConfigPath() {
-        return "/TicketSystem/config/";
+        return "/plugins/TicketSystem/";
     }
 }

@@ -27,10 +27,8 @@ import dev.lightdream.royalsecurity.managers.MinecraftEventManager;
 import dev.lightdream.royalsecurity.managers.SecurityManager;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.security.auth.login.LoginException;
 import java.util.Arrays;
 
 public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain, FileManagerMain, JDAExtensionMain, CommandMain {
@@ -67,10 +65,9 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         MessageBuilderManager.init(fileManager);
         loadConfigs();
 
-        try {
-            bot = JDABuilder.createDefault(jdaConfig.token).build();
-        } catch (LoginException e) {
-            Logger.error("The bot token seems to be missing or incorrect, please check if it!");
+        bot = JDAExtensionMain.generateBot(this, jdaConfig.token);
+
+        if (bot == null) {
             return;
         }
 
