@@ -1,6 +1,5 @@
 package dev.lightdream.royalsecurity.managers;
 
-import dev.lightdream.logger.Debugger;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
@@ -27,7 +26,6 @@ public class DiscordEventManager extends ListenerAdapter {
 
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
-        Debugger.info(event.getComponentId());
         if (event.getComponentId().contains("authorize_authentication_")) {
             String data = event.getComponentId().replace("authorize_authentication_", "");
             String ip = data.split(";")[0];

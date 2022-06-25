@@ -13,7 +13,6 @@ import dev.lightdream.jdaextension.JDAExtensionMain;
 import dev.lightdream.jdaextension.commands.commands.StatsCommand;
 import dev.lightdream.jdaextension.dto.JDAConfig;
 import dev.lightdream.jdaextension.managers.DiscordCommandManager;
-import dev.lightdream.logger.Debugger;
 import dev.lightdream.logger.LoggableMain;
 import dev.lightdream.logger.Logger;
 import dev.lightdream.messagebuilder.MessageBuilderManager;
@@ -58,7 +57,6 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     public void onEnable() {
         instance = this;
 
-        Debugger.init(this);
         Logger.init(this);
         fileManager = new FileManager(this);
         MessageBuilderManager.init(fileManager);

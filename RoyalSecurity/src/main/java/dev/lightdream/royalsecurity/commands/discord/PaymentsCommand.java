@@ -7,7 +7,6 @@ import dev.lightdream.jdaextension.dto.JDAEmbed;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
 import dev.lightdream.jdaextension.dto.context.GuildCommandContext;
 import dev.lightdream.jdaextension.dto.context.PrivateCommandContext;
-import dev.lightdream.logger.Debugger;
 import dev.lightdream.messagebuilder.MessageBuilder;
 import dev.lightdream.royalsecurity.Main;
 import dev.lightdream.royalsecurity.database.User;
