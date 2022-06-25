@@ -135,8 +135,6 @@ public class PaymentsCommand extends DiscordCommand {
 
         String responseString = response.body().string();
 
-        Debugger.log(responseString);
-
         return new Gson().fromJson(responseString, TebexUser.class);
     }
 
