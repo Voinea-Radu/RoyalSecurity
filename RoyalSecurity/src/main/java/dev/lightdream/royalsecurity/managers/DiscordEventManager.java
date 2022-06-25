@@ -6,10 +6,13 @@ import dev.lightdream.royalsecurity.database.Cooldown;
 import dev.lightdream.royalsecurity.database.User;
 import lombok.Getter;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nonnull;
 
 
 @Getter
@@ -23,7 +26,7 @@ public class DiscordEventManager extends ListenerAdapter {
     }
 
     @Override
-    public void onButtonClick(ButtonClickEvent event) {
+    public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
         Debugger.info(event.getComponentId());
         if (event.getComponentId().contains("authorize_authentication_")) {
             String data = event.getComponentId().replace("authorize_authentication_", "");

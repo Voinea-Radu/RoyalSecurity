@@ -7,7 +7,7 @@
     <parent>
         <artifactId>RoyalSecurity-Parent</artifactId>
         <groupId>dev.lightdream</groupId>
-        <version>1.22.1</version>
+        <version>1.22.2</version>
     </parent>
 
     <artifactId>RoyalSecurity</artifactId>
@@ -70,6 +70,8 @@
             <version>5.6.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- LightDream -->
         <dependency>
             <groupId>dev.lightdream</groupId>
             <artifactId>CommandManager</artifactId>
@@ -78,7 +80,7 @@
         <dependency>
             <groupId>dev.lightdream</groupId>
             <artifactId>TicketSystem</artifactId>
-            <version>1.22.1</version>
+            <version>1.22.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

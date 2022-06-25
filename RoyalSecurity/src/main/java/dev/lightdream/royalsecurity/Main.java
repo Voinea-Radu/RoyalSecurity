@@ -56,7 +56,6 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     @SneakyThrows
     @Override
     public void onEnable() {
-        new dev.lightdream.ticketsystem.Main().onEnable(new SecurityImpl());
         instance = this;
 
         Debugger.init(this);
@@ -68,6 +67,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         bot = JDAExtensionMain.generateBot(this, jdaConfig.token);
 
         if (bot == null) {
+            Logger.error("Bot has not been created. Exiting!");
             return;
         }
 
