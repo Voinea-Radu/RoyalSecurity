@@ -4,7 +4,10 @@ import dev.lightdream.databasemanager.annotations.database.DatabaseField;
 import dev.lightdream.databasemanager.annotations.database.DatabaseTable;
 import dev.lightdream.databasemanager.dto.entry.impl.IntegerDatabaseEntry;
 import dev.lightdream.jdaextension.dto.context.CommandContext;
+import dev.lightdream.logger.Logger;
 import dev.lightdream.royalsecurity.Main;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.exceptions.ErrorHandler;
 import net.dv8tion.jda.api.requests.ErrorResponse;
 
@@ -74,8 +77,37 @@ public class User extends IntegerDatabaseEntry {
     }
 
     public void setDiscordID(Long id) {
+        Long pastID = this.discordID;
         this.discordID = id;
         save();
+
+        Guild guild = Main.instance.bot.getGuildById(Main.instance.config.guildID);
+
+        if (guild == null) {
+            Logger.error("Guild not found!");
+            return;
+        }
+
+        Role role = Main.instance.bot.getRoleById(Main.instance.config.roleID);
+        if (role == null) {
+            Logger.error("Role not found!");
+            return;
+        }
+
+
+        if (id == null) {
+            if (Main.instance.databaseManager.getUser(id).size() == 0) {
+                Main.instance.bot.retrieveUserById(pastID).queue(member -> {
+                    guild.removeRoleFromMember(member, role).queue();
+                });
+            }
+
+            return;
+        }
+
+        Main.instance.bot.retrieveUserById(id).queue(member -> {
+            guild.addRoleToMember(member, role).queue();
+        });
     }
 
     public void setIP(String ip) {
