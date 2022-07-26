@@ -91,7 +91,9 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
 
         commandManager = new CommandManager(this);
 
-        new dev.lightdream.ticketsystem.Main().onEnable(new SecurityImpl());
+        if(!config.multiLobby){
+            new dev.lightdream.ticketsystem.Main().onEnable(new SecurityImpl());
+        }
     }
 
     @Override
