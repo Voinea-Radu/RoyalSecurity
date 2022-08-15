@@ -26,6 +26,7 @@ import dev.lightdream.royalsecurity.managers.MinecraftEventManager;
 import dev.lightdream.royalsecurity.managers.SecurityManager;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -52,6 +53,7 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
     //JDA
     public JDA bot;
 
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     @SneakyThrows
     @Override
     public void onEnable() {
@@ -62,7 +64,9 @@ public final class Main extends JavaPlugin implements DatabaseMain, LoggableMain
         MessageBuilderManager.init(fileManager);
         loadConfigs();
 
-        bot = JDAExtensionMain.generateBot(this, jdaConfig.token);
+        bot = JDAExtensionMain.generateBot(this, jdaConfig.token, Arrays.asList(
+                GatewayIntent.GUILD_MEMBERS
+        ));
 
         if (bot == null) {
             Logger.error("Bot has not been created. Exiting!");
