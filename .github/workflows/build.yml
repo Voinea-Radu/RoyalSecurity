@@ -43,7 +43,7 @@ jobs:
         with:
           committer_name: "Radu Voinea"
           committer_email: "contact@voienaradu.com"
-          commit_message: "Updated README.md versions"
+          commit_message: "Updated README.md"
           files: |
             README-template.md=README.md
         env:
