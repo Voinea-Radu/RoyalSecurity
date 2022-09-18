@@ -8,4 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Maven Publish
-        uses: L1ghtDream/maven-publish@1.0
+        uses: L1ghtDream/maven-publish@1.1
+        with:
+          TOKEN: "${{ secrets.GITHUB_TOKEN }}"
