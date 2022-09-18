@@ -36,6 +36,7 @@ jobs:
           title: "${{ env.VERSION }}"
           files: |
             target/*.jar
+            */target/*.jar
 
       - name: "README.md Render"
         uses: varunsridharan/action-dynamic-readme@main
