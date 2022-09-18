@@ -13,6 +13,8 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+      - name: Git submodule update
+        run: git pull --recurse-submodules
       - name: Build with Maven
         run: mvn package
       - name: Automatic Releases
