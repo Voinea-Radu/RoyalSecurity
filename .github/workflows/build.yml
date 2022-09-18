@@ -1,13 +1,52 @@
-name: Build
+name: Maven Publish
 
-on: [push]
+on: [ push ]
 permissions: write-all
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Maven Publish
-        uses: L1ghtDream/maven-publish@1.1.4
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Git submodule update
+        run: git submodule update --init
+
+      - name: Set env variable
+        run: |
+          echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          echo "ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> $GITHUB_ENV
+          echo "PACKAGE=$(ls src/main/java/*/*)" >> $GITHUB_ENV
+
+      - name: Build with Maven
+        run: mvn package
+
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ env.VERSION }}"
+          prerelease: false
+          title: "${{ env.VERSION }}"
+          files: |
+            target/*.jar
+
+      - name: "README.md Render"
+        uses: varunsridharan/action-dynamic-readme@main
+        with:
+          committer_name: "Radu Voinea"
+          committer_email: "contact@voienaradu.com"
+          commit_message: "Updated README.md versions"
+          files: |
+            README-template.md=README.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ env.VERSION }}
+          PACKAGE: ${{ env.PACKAGE }}
+          ARTIFACT: ${{ env.ARTIFACT }}
