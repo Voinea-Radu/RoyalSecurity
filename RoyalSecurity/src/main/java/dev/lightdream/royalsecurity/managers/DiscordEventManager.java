@@ -11,8 +11,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-
 
 @Getter
 public class DiscordEventManager extends ListenerAdapter {

@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class LinkCommand extends DiscordCommand {
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     public LinkCommand() {
-        super(Main.instance, "link", Main.instance.lang.linkCommandDescription, null,  true, Arrays.asList(
+        super(Main.instance, "link", Main.instance.lang.linkCommandDescription, null, true, Arrays.asList(
                 new CommandArgument(OptionType.STRING, "username", Main.instance.lang.usernameArgDescription, true)
         ));
     }
